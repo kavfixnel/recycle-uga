@@ -22,69 +22,6 @@
             makeGraph(id, title, type, pieData);
             makeDraggable(document.getElementById("bottle"));
         } // window.onload function
-
-        // makeGraph - creates and renders a graph based on the element's id,
-        // title, graph type, and data
-        // has constant theme, animationEnabled, startAngle, format, and indices
-        function makeGraph(id, name, type, dataPoints) {
-            var graph = new CanvasJS.Chart(id, {
-                theme: "light1",
-                animationEnabled: true,
-                title: {
-                    text: name
-                },
-                data: [{
-                    type: type,
-                    startAngle: 180,
-                    yValueFormatString: "##0.00\"%\"",
-                    indexLabel: "{label} {y}",
-                    dataPoints: dataPoints
-                }] // data 
-            }); // graph
-            
-            graph.render();
-        } // makeGraph
-        
-        // makes an element draggable by passing in the element
-        function makeDraggable(element) {
-            var differenceX = 0, differenceY = 0, startX = 0, startY = 0;
-            element.onmousedown = dragMouseDown;
-            
-            // on click of a draggable element
-            function dragMouseDown(e) {                
-                e = e || window.event;
-                e.preventDefault();
-
-                // get starting location of element
-                startX = e.clientX;
-                startY = e.clientY;
-
-                // on mouse up, stop, on move, drag
-                document.onmouseup = stopDragging;
-                document.onmousemove = dragElement;
-            }
-
-            // moves an element that is draggable
-            function dragElement(e) {
-                e = e || window.event;
-                e.preventDefault();
-
-                differenceX = startX - e.clientX;
-                differenceY = startY - e.clientY;
-
-                startX = e.clientX;
-                startY = e.clientY;
-
-                element.style.left = (element.offsetLeft - differenceX) + "px";
-                element.style.top = (element.offsetTop - differenceY) + "px";
-            }
-
-            // stops an element from dragging
-            function stopDragging() {
-                document.onmouseup = null;
-                document.onmousemove = null;
-            } // stopDragging
-        } // makeDraggable
         
     </script>
 </head>
@@ -109,7 +46,7 @@
     <div style="width: 322px; border: 1px solid #B7BF10; margin: 25px; display: inline-block;">
     </div>
     
-    <img id="bottle" src="bottle.jpg" alt="bottle" height="50" width = "50" style="position: absolute;"/>
+    <img id="bottle" src="images/bottle.jpg" alt="bottle" height="50" width = "50" style="position: absolute;"/>
     
     <!-- Load all the Bootstrap requirements at the end of the document -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -118,6 +55,10 @@
     
     <!-- CanvasJS for creating charts & graphs with animation-->
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    
+    <!-- Importing js files from javascripts folder in public -->
+    <script src="javascripts/graphs.js"></script>
+    <script src="javascripts/draggable.js"></script>
 </body>
 
 </html>
