@@ -1,19 +1,123 @@
+<!DOCTYPE html>
 <html>
-
 <head>
-  <title>UGA Recycling</title>
-  <!-- Bootstrap stylesheet -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>UGA Recycling</title>
+    <!-- Bootstrap stylesheet -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <!-- UGA fonts from UGA style guide-->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
+    
+    <!-- JavaScript functions-->
+    <script>
+        
+        // Renders graph on window load, testing
+        window.onload = function() {
+            
+            var id = "chartContainer";
+            var title = "UGA Disposal Practices, 2018";
+            var type = "pie";            
+            var pieData = [{y: 21.9, label: "Recycled", exploded: true}, {y: 78.1, label: "Landfilled"}];
+            
+            makeGraph(id, title, type, pieData);
+            makeDraggable(document.getElementById("bottle"));
+        } // window.onload function
+
+        // makeGraph - creates and renders a graph based on the element's id,
+        // title, graph type, and data
+        // has constant theme, animationEnabled, startAngle, format, and indices
+        function makeGraph(id, name, type, dataPoints) {
+            var graph = new CanvasJS.Chart(id, {
+                theme: "light1",
+                animationEnabled: true,
+                title: {
+                    text: name
+                },
+                data: [{
+                    type: type,
+                    startAngle: 180,
+                    yValueFormatString: "##0.00\"%\"",
+                    indexLabel: "{label} {y}",
+                    dataPoints: dataPoints
+                }] // data 
+            }); // graph
+            
+            graph.render();
+        } // makeGraph
+        
+        // makes an element draggable by passing in the element
+        function makeDraggable(element) {
+            var differenceX = 0, differenceY = 0, startX = 0, startY = 0;
+            element.onmousedown = dragMouseDown;
+            
+            // on click of a draggable element
+            function dragMouseDown(e) {                
+                e = e || window.event;
+                e.preventDefault();
+
+                // get starting location of element
+                startX = e.clientX;
+                startY = e.clientY;
+
+                // on mouse up, stop, on move, drag
+                document.onmouseup = stopDragging;
+                document.onmousemove = dragElement;
+            }
+
+            // moves an element that is draggable
+            function dragElement(e) {
+                e = e || window.event;
+                e.preventDefault();
+
+                differenceX = startX - e.clientX;
+                differenceY = startY - e.clientY;
+
+                startX = e.clientX;
+                startY = e.clientY;
+
+                element.style.left = (element.offsetLeft - differenceX) + "px";
+                element.style.top = (element.offsetTop - differenceY) + "px";
+            }
+
+            // stops an element from dragging
+            function stopDragging() {
+                document.onmouseup = null;
+                document.onmousemove = null;
+            } // stopDragging
+        } // makeDraggable
+        
+    </script>
 </head>
 
 <body>
-  <h1>Roosevelt @ UGA</h1>
-  <p>Welcome to UGA's Recycling and sustainability page</p>
-
-  <!-- Load all the Bootstrap requirements at the end of the document -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- Fixed navigation bar using bootsrap classes, UGA Bulldog Red color, UGA font-->
+    <nav class="navbar navbar-fixed-top" style="background-color: #BA0C2F;">
+        <div class="container">
+            <div class="navbar-header" style="font-size: 24pt; color:white; font-family: 'Merriweather', rserif; text-align: center">
+                Roosevelt@UGA Sustainability Project
+            </div>
+        </div>
+    </nav>
+    
+    <!-- (some) Information from Slide 3 of PP module (uses window.onload function)
+        also, the style has been written in-element so fix that later -->
+    <div id="this" style="width: 322px; border: 1px solid #B7BF10; margin: 25px; display: inline-block;">
+        <div id="chartContainer" style="height: 320px; width: 320px;"></div>
+        <p style="width: 300px; margin: 10px">&emsp; In 2018, UGA sent 5,474 tons of waste to landfills and recycled only <i>~1,200 tons</i> of materials (... and we have recycling bins across the entire campus).</p>
+    </div>
+    
+    <div style="width: 322px; border: 1px solid #B7BF10; margin: 25px; display: inline-block;">
+    </div>
+    
+    <img id="bottle" src="bottle.jpg" alt="bottle" height="50" width = "50" style="position: absolute;"/>
+    
+    <!-- Load all the Bootstrap requirements at the end of the document -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+    <!-- CanvasJS for creating charts & graphs with animation-->
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </body>
 
 </html>
