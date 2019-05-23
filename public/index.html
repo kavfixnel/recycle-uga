@@ -8,6 +8,14 @@
     <!-- UGA fonts from UGA style guide-->
     <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
     
+	<!-- CSS -->
+	<style>
+		.pages {
+			height: 1000px;
+		}
+	</style>
+	
+	
     <!-- JavaScript functions-->
     <script>
         
@@ -24,6 +32,9 @@
         } // window.onload function
         
     </script>
+	
+	
+
 </head>
 
 <body>
@@ -35,18 +46,83 @@
             </div>
         </div>
     </nav>
-    
-    <!-- (some) Information from Slide 3 of PP module (uses window.onload function)
-        also, the style has been written in-element so fix that later -->
-    <div id="this" style="width: 322px; border: 1px solid #B7BF10; margin: 25px; display: inline-block;">
-        <div id="chartContainer" style="height: 320px; width: 320px;"></div>
-        <p style="width: 300px; margin: 10px">&emsp; In 2018, UGA sent 5,474 tons of waste to landfills and recycled only <i>~1,200 tons</i> of materials (... and we have recycling bins across the entire campus).</p>
-    </div>
-    
-    <div style="width: 322px; border: 1px solid #B7BF10; margin: 25px; display: inline-block;">
-    </div>
-    
-    <img id="bottle" src="images/bottle.jpg" alt="bottle" height="50" width = "50" style="position: absolute;"/>
+	
+    <!-- Navigation refs -->
+	<div id="pageNav">
+     <ul>
+         <li><a href="#pre">Pre-Survey</a></li>
+         <li><a href="#info">Information</a></li>
+		 <li><a href="#game1">Game</a></li>
+		 <li><a href="#post">Post-Survey</a></li>
+         <li><a href="#contact">Contact Us</a></li>
+     </ul>
+	</div>
+	
+	<!-- Pre-Survey Page -->
+		<div id="page1" class="pages">
+			<a id="pre" class="smooth"></a>
+			<h1>Pre-Survey</h1>
+			<form action ="#info">
+				Full Name: <input type="text" name="name"><br>
+				Gender: <br>
+					<input type="radio" name="gender" value="male">Male<br>
+					<input type="radio" name="gender" value="female">Female<br>
+					<input type="radio" name="gender" value="other">Other<br>
+				811#: <input type="text" name="811"><br>
+				<input type="submit" value="Submit">				
+			</form>
+		</div>
+	
+	
+	<!-- Information Page -->
+		<div id="page2" class="pages">
+			<a id="info" class="smooth"></a>
+			<h1>Information</h1>
+			<!-- (some) Information from Slide 3 of PP module (uses window.onload function)
+			also, the style has been written in-element so fix that later -->
+			<div id="this" style="width: 322px; border: 1px solid #B7BF10; margin: 25px; display: inline-block;">
+				<div id="chartContainer" style="height: 320px; width: 320px;"></div>
+				<p style="width: 300px; margin: 10px">&emsp; In 2018, UGA sent 5,474 tons of waste to landfills and recycled only <i>~1,200 tons</i> of materials (... and we have recycling bins across the entire campus).</p>
+			</div>
+			
+			<div style="width: 322px; border: 1px solid #B7BF10; margin: 25px; display: inline-block;">
+			</div>
+			
+			<img id="bottle" src="images/bottle.jpg" alt="bottle" height="50" width = "50" style="position: absolute;"/>
+		</div>
+
+
+	<!-- Game 1 Page -->
+		<div id="page3" class="pages">
+			<a id="game1" class="smooth"></a>
+			<h1>Game</h1>
+		</div>
+		
+		
+	<!-- Post-Survey Page -->
+		<div id="page4" class="pages">
+			<a id="post" class="smooth"></a>
+			<h1>Post-Survey</h1>
+			<form action ="#info">
+				Full Name: <input type="text" name="name"><br>
+				Did you like the module? <br>
+					<input type="radio" name="review" value="male">Yes<br>
+					<input type="radio" name="review" value="female">No<br>
+					<input type="radio" name="review" value="other">I hate the environment<br>
+				Additional Comments: <input type="text" name="811"><br>
+				<input type="submit" value="Submit">				
+			</form>
+		</div>
+		
+		
+	<!-- Contact Page -->
+		<div id="page5" class="pages">
+			<a id="about" class="smooth"></a>
+			<h1>Contact Us</h1>
+			<p>Contact Us at 770-770-770</p>
+		</div>
+		
+		
     
     <!-- Load all the Bootstrap requirements at the end of the document -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -61,4 +137,19 @@
     <script src="javascripts/draggable.js"></script>
 </body>
 
+	<!-- JQuery Smooth Scroll NOT CURRENTLY WORKING-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="https://github.com/kswedberg/jquery-smooth-scroll/blob/master/jquery.smooth-scroll.min.js"></script>
+	<script>
+	$('.smooth').on('click', function() {
+		$.smoothScroll
+		({
+			scrollElement: $('body'),
+			scrollTarget: '#' + this.id
+		});
+    
+		return false;
+	});
+	</script>
+	
 </html>
