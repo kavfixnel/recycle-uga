@@ -13,6 +13,12 @@
 		.pages {
 			height: 1000px;
 		}
+		
+		/*canvas {
+			border:1px solid #d3d3d3;
+			background-color: #f1f1f1;
+		}*/
+		
 	</style>
 	
 	
@@ -20,8 +26,10 @@
     <script>
         
         // Renders graph on window load, testing
+
         window.onload = function() {
-            
+            startGame();
+			
             var id = "chartContainer";
             var title = "UGA Disposal Practices, 2018";
             var type = "pie";            
@@ -81,14 +89,15 @@
 			<!-- (some) Information from Slide 3 of PP module (uses window.onload function)
 			also, the style has been written in-element so fix that later -->
 			<div id="this" style="width: 322px; border: 1px solid #B7BF10; margin: 25px; display: inline-block;">
-				<div id="chartContainer" style="height: 320px; width: 320px;"></div>
-				<p style="width: 300px; margin: 10px">&emsp; In 2018, UGA sent 5,474 tons of waste to landfills and recycled only <i>~1,200 tons</i> of materials (... and we have recycling bins across the entire campus).</p>
-			</div>
+        <div id="chartContainer" style="height: 320px; width: 320px;"></div>
+        <p style="width: 300px; margin: 10px">&emsp; In 2018, UGA sent 5,474 tons of waste to landfills and recycled only <i>~1,200 tons</i> of materials (... and we have recycling bins across the entire campus).</p>
+    </div>
+    
+    <div style="width: 322px; border: 1px solid #B7BF10; margin: 25px; display: inline-block;">
+    </div>
+    
+    <img id="bottle" src="images/bottle.jpg" alt="bottle" height="50" width = "50" style="position: absolute;"/>
 			
-			<div style="width: 322px; border: 1px solid #B7BF10; margin: 25px; display: inline-block;">
-			</div>
-			
-			<img id="bottle" src="images/bottle.jpg" alt="bottle" height="50" width = "50" style="position: absolute;"/>
 		</div>
 
 
@@ -96,6 +105,7 @@
 		<div id="page3" class="pages">
 			<a id="game1" class="smooth"></a>
 			<h1>Game</h1>
+			<canvas id="canvas1"></canvas>
 		</div>
 		
 		
@@ -134,7 +144,8 @@
     
     <!-- Importing js files from javascripts folder in public -->
     <script src="javascripts/graphs.js"></script>
-    <script src="javascripts/draggable.js"></script>
+	<script src="javascripts/draggable.js"></script>
+	<script src="javascripts/game1.js"></script>
 </body>
 
 	<!-- JQuery Smooth Scroll NOT CURRENTLY WORKING-->
