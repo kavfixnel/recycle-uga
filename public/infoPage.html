@@ -1,0 +1,110 @@
+<html>
+    <head>
+        <title>UGA Recycling</title>
+        <!-- Bootstrap stylesheet -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <!-- UGA fonts from UGA style guide-->
+        <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
+        
+        <!-- main stylesheet -->
+        <link href="stylesheets/main.css" rel="stylesheet">
+        
+        <!-- on page js, mainly window.onload -->
+        <script>
+            window.onload = function() {
+                 // making graph one
+                var id = "graphContainer1";
+                var title = "UGA Disposal Practices, 2018";
+                var type = "pie";            
+                var pieData = [{y: 21.9, label: "Recycled", exploded: true}, {y: 78.1, label: "Landfilled"}];
+
+                makeGraph(id, title, type, pieData);
+
+                // making graph two
+                id = "graphContainer2";
+                title = "Energy Savings When Recycled, by Material";
+                type = "column";
+                pieData = [{y: 95, label: "Aluminum"}, 
+                            {y: 90, label: "Plastic"},
+                            {y: 60, label: "Paper"},
+                            {y: 33, label: "Glass"}];
+
+                makeGraph(id, title, type, pieData);
+                // source: https://www.greenlivingtips.com/articles/recycling-energy-savings.html
+                
+                // making text popup for graph one, two
+                makePopup("graphContainer1", "infoText1");
+                makePopup("graphContainer2", "infoText2");
+
+                for(var i = 1; i < 5; i++) {
+
+                    var graphnum = i.toString();
+
+                    if(i % 2 == 0) {
+                        document.getElementById("graphArea" + graphnum).style.float = "right";
+                        document.getElementById("graphContainer" + graphnum).style.float = "right";
+                        document.getElementById("graphArea" + graphnum).style.margin = "15px 5% 5px 35%";
+                    } else {
+                        document.getElementById("graphArea" + graphnum).style.float = "left";
+                        document.getElementById("graphContainer" + graphnum).style.float = "left";
+                        document.getElementById("graphArea" + graphnum).style.margin = "15px 35% 5px 5%";
+                    } // if-else
+
+                } // for all graphs
+                
+            } // on window load
+        </script>
+    </head>
+    <body>
+        <!-- Fixed navigation bar using bootsrap classes, UGA Bulldog Red color, UGA font-->
+        <nav class="navbar navbar-fixed-top" style="background-color: #BA0C2F;">
+            <div class="container">
+                <div class="navbar-header" style="font-size: 24pt; color:white; font-family: 'Merriweather', rserif; text-align: center">
+                    Roosevelt@UGA Sustainability Project
+                </div>
+            </div>
+        </nav>
+        
+        <div id="page2">
+            <a id="info" class="smooth"></a>
+
+            <!-- (some) Information from Slide 3 of PP module (uses window.onload function) -->
+            <div id="graphArea1" class="graphArea">
+                <div id="graphContainer1" class="graphContainer"></div>
+                <p id="infoText1" class="popup">&emsp; In 2018, UGA sent 5,474 tons of waste to landfills and recycled only <i>~1,200 tons</i> of materials (... and we have recycling bins across the entire campus).</p>
+            </div>
+
+            <div id="graphArea2" class="graphArea">
+                <div id="graphContainer2" class="graphContainer"></div>
+                <p id="infoText2" class="popup">&emsp; Not only does recycling waste save material that could end up in a landfill or in one of many bodies of water, it also saves copious amounts of energy compared to creating products from virgin materials (those that haven't been recycled).</p>
+            </div>
+
+            <div id="graphArea3" class="graphArea">
+                <div id="graphContainer3" class="graphContainer"></div>
+                <p id="infoText3" class="popup">&emsp; </p>
+            </div>
+
+            <div id="graphArea4" class="graphArea">
+                <div id="graphContainer4" class="graphContainer"></div>
+                <p id="infoText4" class="popup">&emsp; </p>
+            </div>
+        </div>
+
+        <button class="nextPageButton"><a href="gamePage.html">Next Page</a></button>
+        
+        <!-- Load all the Bootstrap requirements at the end of the document -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+        <!-- CanvasJS for creating charts & graphs with animation-->
+        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+        <!-- Importing js files from javascripts folder in public -->
+        <script src="javascripts/graphs.js"></script>
+        <script src="javascripts/draggable.js"></script>
+        <script src="javascripts/game1.js"></script>
+        <script src="javascripts/popup.js"></script>
+    </body>
+</html>

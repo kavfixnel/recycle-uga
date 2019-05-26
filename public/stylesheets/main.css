@@ -1,0 +1,57 @@
+/* used to define the trash/recycing bins on the game page */
+.gameImage {
+    width: 16%;
+    margin-left: 2%;
+    margin-right: 2%;
+    float: left;
+}
+
+/* graphArea is the div containing the graph container
+    as well as the info text */
+.graphArea {
+    width: 322px; 
+    border: 1px solid #B7BF10; 
+    background-color: lightgray;
+}
+
+/* the div inside of a graphArea that a graph is made in */
+.graphContainer {
+    height: 320px; 
+    width: 320px;
+}
+
+/* used for popup info text */
+.popup {
+    display: none;
+    width: 300px;
+    margin: 10px;
+}
+
+canvas {
+    /*border:1px solid #d3d3d3;
+    background-color: #f1f1f1; */
+}
+
+/* defined for all the buttons at the end of pages */
+.nextPageButton {
+    clear: both;
+    width: 8%;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-left: 46%;
+    margin-right: 46%;
+}
+
+/* used to center the survey forms */
+.surveyArea {
+    width: 24%;
+    margin-left: 38%;
+    margin-right: 38%;
+}
+
+/* centers the survey header */
+.surveyArea > h1 {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
