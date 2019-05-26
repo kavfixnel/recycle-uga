@@ -12,7 +12,6 @@ function makeGraph(id, name, type, dataPoints) {
                 type: type,
                 startAngle: 180,
                 yValueFormatString: "##0.00\"%\"",
-                indexLabel: "{label} {y}",
                 dataPoints: dataPoints
             }] // data 
         }); // graph

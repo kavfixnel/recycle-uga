@@ -12,7 +12,33 @@
 	<style>
 		.pages {
 			height: 1000px;
+            width: 100%;
 		}
+        
+        .popup {
+            display: none;
+            width: 300px;
+            margin: 10px;
+        }
+        
+        .gameImage {
+            width: 16%;
+            margin-left: 2%;
+            margin-right: 2%;
+            float: left;
+        }
+        
+        .graphArea {
+            width: 322px; 
+            border: 1px solid #B7BF10; 
+            margin: 25px; 
+            display: inline-block;
+        }
+        
+        .graphContainer {
+            height: 320px; 
+            width: 320px;
+        }
 	</style>
 	
 	
@@ -22,14 +48,50 @@
         // Renders graph on window load, testing
         window.onload = function() {
             
-            var id = "chartContainer";
+            // making graph one
+            var id = "graphContainerOne";
             var title = "UGA Disposal Practices, 2018";
             var type = "pie";            
             var pieData = [{y: 21.9, label: "Recycled", exploded: true}, {y: 78.1, label: "Landfilled"}];
             
             makeGraph(id, title, type, pieData);
+            
+            // making graph two
+            id = "graphContainerTwo";
+            title = "Energy Savings When Recycled, by Material";
+            type = "column";
+            pieData = [{y: 95, label: "Aluminum"}, 
+                        {y: 90, label: "Plastic"},
+                        {y: 60, label: "Paper"},
+                        {y: 33, label: "Glass"}];
+            
+            makeGraph(id, title, type, pieData);
+            // source: https://www.greenlivingtips.com/articles/recycling-energy-savings.html
+            
+            // making bottle draggable
             makeDraggable(document.getElementById("bottle"));
+            
+            // making text popup for graph one, two
+            makePopup("graphContainerOne", "infoTextOne");
+            makePopup("graphContainerTwo", "infoTextTwo");
+            
         } // window.onload function
+        
+        function makePopup(hoverid, popupid) {
+            //adding listeners for mouseover, mouseout of hovered object
+            document.getElementById(hoverid).addEventListener("mouseover", showPopup);
+            document.getElementById(hoverid).addEventListener("mouseout", closePopup);
+        
+            // shows the element identified by popup id (on hoverid element mouse over)
+            function showPopup() {
+                document.getElementById(popupid).style.display = "inline-block";
+            } // showPopup
+
+            // closes the element identified by popup id (on hoverid element mouse out)
+            function closePopup() {
+                document.getElementById(popupid).style.display = "none";
+            } // closePopup
+        } // makePopup
         
     </script>
 	
@@ -78,17 +140,26 @@
 		<div id="page2" class="pages">
 			<a id="info" class="smooth"></a>
 			<h1>Information</h1>
-			<!-- (some) Information from Slide 3 of PP module (uses window.onload function)
-			also, the style has been written in-element so fix that later -->
-			<div id="this" style="width: 322px; border: 1px solid #B7BF10; margin: 25px; display: inline-block;">
-				<div id="chartContainer" style="height: 320px; width: 320px;"></div>
-				<p style="width: 300px; margin: 10px">&emsp; In 2018, UGA sent 5,474 tons of waste to landfills and recycled only <i>~1,200 tons</i> of materials (... and we have recycling bins across the entire campus).</p>
+			<!-- (some) Information from Slide 3 of PP module (uses window.onload function) -->
+			<div class="graphArea">
+				<div id="graphContainerOne" class="graphContainer"></div>
+				<p id="infoTextOne" class="popup">&emsp; In 2018, UGA sent 5,474 tons of waste to landfills and recycled only <i>~1,200 tons</i> of materials (... and we have recycling bins across the entire campus).</p>
 			</div>
 			
-			<div style="width: 322px; border: 1px solid #B7BF10; margin: 25px; display: inline-block;">
+			<div class="graphArea">
+                <div id="graphContainerTwo" class="graphContainer"></div>
+                <p id="infoTextTwo" class="popup">&emsp; Not only does recycling waste save material that could end up in a landfill or in one of many bodies of water, it also saves copious amounts of energy compared to creating products from virgin materials (those that haven't been recycled).</p>
 			</div>
-			
-			<img id="bottle" src="images/bottle.jpg" alt="bottle" height="50" width = "50" style="position: absolute;"/>
+            
+            <div class="graphArea">
+                <div id="graphContainerThree" class="graphContainer"></div>
+                <p id="infoTextThree" class="popup">&emsp; </p>
+            </div>
+            
+            <div class="graphArea">
+                <div id="graphContainerFour" class="graphContainer"></div>
+                <p id="infoTextFour" class="popup">&emsp; </p>
+            </div>
 		</div>
 
 
@@ -96,6 +167,16 @@
 		<div id="page3" class="pages">
 			<a id="game1" class="smooth"></a>
 			<h1>Game</h1>
+            
+            <div id="gameArea" style="width: 50%; margin: 0 25%; background-color:green;">
+                <img id="paperbin" class="gameImage" src="images/paperbin.jpg" alt="Paper Bin" height="120"/>
+                <img id="glassbin" class="gameImage" src="images/glassbin.jpg" alt="Glass Bin" height="120"/>
+                <img id="plasticbin" class="gameImage" src="images/plasticbin.jpg" alt="Plastic Bin" height="120"/>
+                <img id="metalbin" class="gameImage" src="images/metalbin.jpg" alt="Metal Bin" height="120"/>
+                <img id="trashcan" class="gameImage" src="images/trashcan.png" alt="Trash Can" height="120"/>
+            </div>
+            
+            <img id="bottle" src="images/bottle.jpg" alt="bottle" height="50" width = "50" style="position: absolute;"/>
 		</div>
 		
 		

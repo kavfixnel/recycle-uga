@@ -36,5 +36,37 @@ function makeDraggable(element) {
     function stopDragging() {
         document.onmouseup = null;
         document.onmousemove = null;
+        
+        checkObjectForDropTargets();
     } // stopDragging
+    
+    //when the object is dropped, check if it intersects with
+    //the desired bins for the game
+    function checkObjectForDropTargets() {
+        
+        // get rectangle x/y coordinates for element targets
+        var paperBin = document.getElementById("paperbin");
+        var plasticBin = document.getElementById("plasticbin");
+        var glassBin = document.getElementById("glassbin");
+        var metalBin = document.getElementById("metalbin");
+        var trashCan = document.getElementById("trashcan");
+        
+        var targets = [paperBin, plasticBin, glassBin, metalBin, trashCan];
+        
+        var doesOverlap;
+        
+        for(var target in targets) {
+            
+            doesOverlap = isOverlapping(element, target);
+            
+            if(doesOverlap) {
+                break;
+            }
+        }
+        
+        if(doesOverlap) {
+            element.style.display = "none";
+        }
+        
+    } // checkObjectForDropTargets
 } // makeDraggable
