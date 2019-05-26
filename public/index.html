@@ -1,251 +1,68 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>UGA Recycling</title>
-    <!-- Bootstrap stylesheet -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    
-    <!-- UGA fonts from UGA style guide-->
-    <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
-    
-	<!-- CSS -->
-	<style>
-		.pages {
-			height: 1000px;
-            width: 100%;
-		}
-        
-        .popup {
-            display: none;
-            width: 300px;
-            margin: 10px;
-        }
-        
-        .gameImage {
-            width: 16%;
-            margin-left: 2%;
-            margin-right: 2%;
-            float: left;
-        }
-        
-        .graphArea {
-            width: 322px; 
-            border: 1px solid #B7BF10; 
-            margin: 25px; 
-            display: inline-block;
-        }
-        
-        .graphContainer {
-            height: 320px; 
-            width: 320px;
-        }
-		
-		canvas {
-			border:1px solid #d3d3d3;
-			background-color: #f1f1f1;
-		}
-        
-	</style>
-	
-	
-    <!-- JavaScript functions-->
-    <script>
-        
-        // Renders graph on window load, testing
+    <head>
+        <title>UGA Recycling</title>
+        <!-- Bootstrap stylesheet -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-        window.onload = function() {
-            
-            // making graph one
-            var id = "graphContainerOne";
-            startGame();
-			
-            id = "chartContainer";
-            var title = "UGA Disposal Practices, 2018";
-            var type = "pie";            
-            var pieData = [{y: 21.9, label: "Recycled", exploded: true}, {y: 78.1, label: "Landfilled"}];
-            
-            makeGraph(id, title, type, pieData);
-            
-            // making graph two
-            id = "graphContainerTwo";
-            title = "Energy Savings When Recycled, by Material";
-            type = "column";
-            pieData = [{y: 95, label: "Aluminum"}, 
-                        {y: 90, label: "Plastic"},
-                        {y: 60, label: "Paper"},
-                        {y: 33, label: "Glass"}];
-            
-            makeGraph(id, title, type, pieData);
-            // source: https://www.greenlivingtips.com/articles/recycling-energy-savings.html
-            
-            // making bottle draggable
-            makeDraggable(document.getElementById("bottle"));
-            
-            // making text popup for graph one, two
-            makePopup("graphContainerOne", "infoTextOne");
-            makePopup("graphContainerTwo", "infoTextTwo");
-            
-        } // window.onload function
-        
-        function makePopup(hoverid, popupid) {
-            //adding listeners for mouseover, mouseout of hovered object
-            document.getElementById(hoverid).addEventListener("mouseover", showPopup);
-            document.getElementById(hoverid).addEventListener("mouseout", closePopup);
-        
-            // shows the element identified by popup id (on hoverid element mouse over)
-            function showPopup() {
-                document.getElementById(popupid).style.display = "inline-block";
-            } // showPopup
+        <!-- UGA fonts from UGA style guide-->
+        <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
 
-            // closes the element identified by popup id (on hoverid element mouse out)
-            function closePopup() {
-                document.getElementById(popupid).style.display = "none";
-            } // closePopup
-        } // makePopup
-        
-    </script>
-	
-	
+        <!-- main stylesheet -->
+        <link href="stylesheets/main.css" rel="stylesheet">
 
-</head>
+        <!-- JavaScript functions-->
+        <script>
 
-<body>
-    <!-- Fixed navigation bar using bootsrap classes, UGA Bulldog Red color, UGA font-->
-    <nav class="navbar navbar-fixed-top" style="background-color: #BA0C2F;">
-        <div class="container">
-            <div class="navbar-header" style="font-size: 24pt; color:white; font-family: 'Merriweather', rserif; text-align: center">
-                Roosevelt@UGA Sustainability Project
+        </script>
+
+    </head>
+
+    <body>
+        <!-- Fixed navigation bar using bootsrap classes, UGA Bulldog Red color, UGA font-->
+        <nav class="navbar navbar-fixed-top" style="background-color: #BA0C2F;">
+            <div class="container">
+                <div class="navbar-header" style="font-size: 24pt; color:white; font-family: 'Merriweather', rserif; text-align: center">
+                    Roosevelt@UGA Sustainability Project
+                </div>
             </div>
+        </nav>
+
+        <!-- Navigation refs previously used for one-page module
+        <div id="pageNav">
+         <ul>
+             <li><a href="#pre">Pre-Survey</a></li>
+             <li><a href="#info">Information</a></li>
+             <li><a href="#game1">Game</a></li>
+             <li><a href="#post">Post-Survey</a></li>
+             <li><a href="#contact">Contact Us</a></li>
+         </ul>
         </div>
-    </nav>
-	
-    <!-- Navigation refs -->
-	<div id="pageNav">
-     <ul>
-         <li><a href="#pre">Pre-Survey</a></li>
-         <li><a href="#info">Information</a></li>
-		 <li><a href="#game1">Game</a></li>
-		 <li><a href="#post">Post-Survey</a></li>
-         <li><a href="#contact">Contact Us</a></li>
-     </ul>
-	</div>
-	
-	<!-- Pre-Survey Page -->
-		<div id="page1" class="pages">
-			<a id="pre" class="smooth"></a>
-			<h1>Pre-Survey</h1>
-			<form action ="#info">
-				Full Name: <input type="text" name="name"><br>
-				Gender: <br>
-					<input type="radio" name="gender" value="male">Male<br>
-					<input type="radio" name="gender" value="female">Female<br>
-					<input type="radio" name="gender" value="other">Other<br>
-				811#: <input type="text" name="811"><br>
-				<input type="submit" value="Submit">				
-			</form>
-		</div>
-	
-	
-	<!-- Information Page -->
-		<div id="page2" class="pages">
-			<a id="info" class="smooth"></a>
-			<h1>Information</h1>
+        -->
 
-			<!-- (some) Information from Slide 3 of PP module (uses window.onload function) -->
-			<div class="graphArea">
-				<div id="graphContainerOne" class="graphContainer"></div>
-				<p id="infoTextOne" class="popup">&emsp; In 2018, UGA sent 5,474 tons of waste to landfills and recycled only <i>~1,200 tons</i> of materials (... and we have recycling bins across the entire campus).</p>
-			</div>
-			
-			<div class="graphArea">
-                <div id="graphContainerTwo" class="graphContainer"></div>
-                <p id="infoTextTwo" class="popup">&emsp; Not only does recycling waste save material that could end up in a landfill or in one of many bodies of water, it also saves copious amounts of energy compared to creating products from virgin materials (those that haven't been recycled).</p>
-			</div>
-            
-            <div class="graphArea">
-                <div id="graphContainerThree" class="graphContainer"></div>
-                <p id="infoTextThree" class="popup">&emsp; </p>
-            </div>
-            
-            <div class="graphArea">
-                <div id="graphContainerFour" class="graphContainer"></div>
-                <p id="infoTextFour" class="popup">&emsp; </p>
-            </div>
-		</div>
+        <!-- Contact Page, saving for later (not sure where to link from)
+        <div id="page5" class="pages">
+            <a id="about" class="smooth"></a>
+            <h1>Contact Us</h1>
+            <p>Contact Us at 770-770-770</p>
+        </div>
+        -->
 
+        <button class="nextPageButton"><a href="preSurveyPage.html">Next Page</a></button>
 
-	<!-- Game 1 Page -->
-		<div id="page3" class="pages">
-			<a id="game1" class="smooth"></a>
-			<h1>Game</h1>
-            <canvas id="canvas1"></canvas>
+        <!-- Load all the Bootstrap requirements at the end of the document -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-            
-            <div id="gameArea" style="width: 50%; margin: 0 25%; background-color:green;">
-                <img id="paperbin" class="gameImage" src="images/paperbin.jpg" alt="Paper Bin" height="120"/>
-                <img id="glassbin" class="gameImage" src="images/glassbin.jpg" alt="Glass Bin" height="120"/>
-                <img id="plasticbin" class="gameImage" src="images/plasticbin.jpg" alt="Plastic Bin" height="120"/>
-                <img id="metalbin" class="gameImage" src="images/metalbin.jpg" alt="Metal Bin" height="120"/>
-                <img id="trashcan" class="gameImage" src="images/trashcan.png" alt="Trash Can" height="120"/>
-            </div>
-            
-            <img id="bottle" src="images/bottle.jpg" alt="bottle" height="50" width = "50" style="position: absolute;"/>
-			<canvas id="canvas1"></canvas>
-		</div>
-		
-		
-	<!-- Post-Survey Page -->
-		<div id="page4" class="pages">
-			<a id="post" class="smooth"></a>
-			<h1>Post-Survey</h1>
-			<form action ="#info">
-				Full Name: <input type="text" name="name"><br>
-				Did you like the module? <br>
-					<input type="radio" name="review" value="male">Yes<br>
-					<input type="radio" name="review" value="female">No<br>
-					<input type="radio" name="review" value="other">I hate the environment<br>
-				Additional Comments: <input type="text" name="811"><br>
-				<input type="submit" value="Submit">				
-			</form>
-		</div>
-		
-		
-	<!-- Contact Page -->
-		<div id="page5" class="pages">
-			<a id="about" class="smooth"></a>
-			<h1>Contact Us</h1>
-			<p>Contact Us at 770-770-770</p>
-		</div>
-		
-		
-    
-    <!-- Load all the Bootstrap requirements at the end of the document -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    
-    <!-- CanvasJS for creating charts & graphs with animation-->
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-    
-    <!-- Importing js files from javascripts folder in public -->
-    <script src="javascripts/graphs.js"></script>
-	<script src="javascripts/draggable.js"></script>
-	<script src="javascripts/game1.js"></script>
-</body>
+        <!-- CanvasJS for creating charts & graphs with animation-->
+        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
-	<!-- JQuery Smooth Scroll NOT CURRENTLY WORKING-->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-	<script src="https://github.com/kswedberg/jquery-smooth-scroll/blob/master/jquery.smooth-scroll.min.js"></script>
-	<script>
-	$('.smooth').on('click', function() {
-		$.smoothScroll
-		({
-			scrollElement: $('body'),
-			scrollTarget: '#' + this.id
-		});
-    
-		return false;
-	});
-	</script>
+        <!-- Importing js files from javascripts folder in public -->
+        <script src="javascripts/graphs.js"></script>
+        <script src="javascripts/draggable.js"></script>
+        <script src="javascripts/game1.js"></script>
+        <script src="javascripts/popup.js"></script>
+    </body>
 	
 </html>
