@@ -38,9 +38,11 @@
                 makePopup("graphContainer2", "infoText2");
 
                 for(var i = 1; i < 5; i++) {
-
+                    
+                    // the number of the current graph, used to get the correct id #s
                     var graphnum = i.toString();
 
+                    // if the graph id is even, float right & text left, else float left & text right
                     if(i % 2 == 0) {
                         document.getElementById("graphArea" + graphnum).style.float = "right";
                         document.getElementById("graphContainer" + graphnum).style.float = "right";

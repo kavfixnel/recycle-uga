@@ -12,9 +12,6 @@ function makePopup(hoverid, popupid) {
         //showing the text
         document.getElementById(popupid).style.display = "block";
         
-        //expanding the div to fit the text
-        document.getElementById(popupid).parentElement.style.width = "644px";
-        
         // if the parent is floated right, float left, or vice versa
         if(document.getElementById(popupid).parentElement.style.float == "right") {
             document.getElementById(popupid).style.float = "left";
@@ -27,6 +24,5 @@ function makePopup(hoverid, popupid) {
     // closes the element identified by popup id (on hoverid element mouse out)
     function closePopup() {
         document.getElementById(popupid).style.display = "none";
-        document.getElementById(popupid).parentElement.style.width = "322px";
     } // closePopup
 } // makePopup
