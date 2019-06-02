@@ -7,7 +7,7 @@
 }
 
 /* graphArea is the div containing the graph container
-    as well as the info text */
+    as well as the info text (but not necessarily the actual graph)*/
 .graphArea {
     width: 322px; 
     height: 322px;
@@ -34,6 +34,18 @@
     margin: 10px;
     animation-name: slideIn;
     animation-duration: 1.2s;
+    font-family: 'Merriweather-Sans', 'sans-serif';
+}
+
+.question {
+    display: none;
+    font-weight: bold;
+    text-align: center;
+    width: calc(100% - 660px);
+    margin: 10px;
+    animation-name: slideIn;
+    animation-duration: 2s;
+    font-family: 'Merriweather-Sans', 'sans-serif';
 }
 
 /* used to fade in popup text */
@@ -42,19 +54,38 @@
     to {opacity: 1}
 }
 
-canvas {
-    /*border:1px solid #d3d3d3;
-    background-color: #f1f1f1; */
-}
-
 /* defined for all the buttons at the end of pages */
 .nextPageButton {
-    clear: both;
+    height: 4%;
     width: 8%;
-    margin-top: 25px;
+    margin-top: 20px;
     margin-bottom: 25px;
     margin-left: 46%;
     margin-right: 46%;
+    cursor: pointer;
+    font-family: 'Merriweather', 'serif';
+    color: #FFFFFF;
+    background-color: #BA0C2F;
+    border: 1px solid #997a81;
+    border-radius: 28px;
+    font-size: 14px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #1F1F1F;
+    display: inline-block;
+    text-align: center;
+    padding-top: 3px;
+    padding-left: 1px;
+}
+ 
+.nextPageButton:hover {
+    background-color:#c4163b;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.nextPageButton:active {
+    position:relative;
+	top:1px;
 }
 
 /* used to center the survey forms */
@@ -69,4 +100,14 @@ canvas {
     text-align: center;
     margin-top: 40px;
     margin-bottom: 20px;
+}
+
+/* for text fields on survey pages */
+input[type=text] {
+    width: 100%;
+}
+
+/* labels for form text on survey pages */
+label {
+    margin-top: 10px;
 }

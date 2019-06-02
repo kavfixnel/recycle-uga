@@ -1,11 +1,13 @@
 <html>
     <head>
         <title>UGA Recycling</title>
+        
         <!-- Bootstrap stylesheet -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
         <!-- UGA fonts from UGA style guide-->
         <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans&display=swap" rel="stylesheet">
         
         <!-- main stylesheet -->
         <link href="stylesheets/main.css" rel="stylesheet">
@@ -17,27 +19,46 @@
                 var id = "graphContainer1";
                 var title = "UGA Disposal Practices, 2018";
                 var type = "pie";            
-                var pieData = [{y: 21.9, label: "Recycled", exploded: true}, {y: 78.1, label: "Landfilled"}];
+                var pieData = [{y: 21.9, indexLabel: "Recycled", label: "Recycled", exploded: true}, 
+                               {y: 78.1, indexLabel: "Landfilled", label: "Landfilled"}];
 
                 makeGraph(id, title, type, pieData);
+                // source: the powerpoint module
 
                 // making graph two
                 id = "graphContainer2";
                 title = "Energy Savings When Recycled, by Material";
                 type = "column";
-                pieData = [{y: 95, label: "Aluminum"}, 
-                            {y: 90, label: "Plastic"},
-                            {y: 60, label: "Paper"},
-                            {y: 33, label: "Glass"}];
+                pieData = [{y: 95, indexLabel: "Aluminum", label: "Aluminum"}, 
+                            {y: 90, indexLabel: "Plastic", label: "Plastic"},
+                            {y: 60, indexLabel: "Paper", label: "Paper"},
+                            {y: 33, indexLabel: "Glass", label: "Glass"}];
 
                 makeGraph(id, title, type, pieData);
                 // source: https://www.greenlivingtips.com/articles/recycling-energy-savings.html
                 
-                // making text popup for graph one, two
-                makePopup("graphContainer1", "infoText1");
-                makePopup("graphContainer2", "infoText2");
-
-                for(var i = 1; i < 5; i++) {
+                id="graphContainer3";
+                title = "Contaminated Materials Recycled by Percentage";
+                type = "pie";
+                pieData = [{y: 17.5, indexLabel: "Contaminated", label: "Contaminated", exploded: true},
+                            {y: 82.5, indexLabel: "Recycled", label: "Recycled"}];
+                
+                makeGraph(id, title, type, pieData);
+                // source: https://www.redandblack.com/athensnews/wishful-recycling-turns-wasteful-athens-clarke-county-warns-of-recycling/article_7c927d42-6f64-11e8-8ed1-ef48e8d384a2.html
+                
+                // making text popups
+                makePopupText("graphArea1", "infoText1");
+                makePopupText("graphArea2", "infoText2");
+                makePopupText("graphArea3", "infoText3");
+                
+                //making question popups
+                makePopupQuestion("graphArea1", "question1");
+                
+                
+                // for each graph, starting at one, alternate the side of the window the graph is on
+                // and make the info text float the opposite direction
+                var graphCount = document.getElementsByClassName("graphArea").length;                
+                for(var i = 1; i <= graphCount; i++) {
                     
                     // the number of the current graph, used to get the correct id #s
                     var graphnum = i.toString();
@@ -46,11 +67,11 @@
                     if(i % 2 == 0) {
                         document.getElementById("graphArea" + graphnum).style.float = "right";
                         document.getElementById("graphContainer" + graphnum).style.float = "right";
-                        document.getElementById("graphArea" + graphnum).style.margin = "15px 5% 5px 35%";
+                        document.getElementById("graphArea" + graphnum).style.margin = "5px 5% 5px 35%";
                     } else {
                         document.getElementById("graphArea" + graphnum).style.float = "left";
                         document.getElementById("graphContainer" + graphnum).style.float = "left";
-                        document.getElementById("graphArea" + graphnum).style.margin = "15px 35% 5px 5%";
+                        document.getElementById("graphArea" + graphnum).style.margin = "5px 35% 5px 5%";
                     } // if-else
 
                 } // for all graphs
@@ -69,12 +90,13 @@
         </nav>
         
         <div id="page2">
-            <a id="info" class="smooth"></a>
+            <p style="text-align: center; margin-top: 20px;">Hover over the graphs!</p>
 
             <!-- (some) Information from Slide 3 of PP module (uses window.onload function) -->
             <div id="graphArea1" class="graphArea">
                 <div id="graphContainer1" class="graphContainer"></div>
-                <p id="infoText1" class="popup">&emsp; In 2018, UGA sent 5,474 tons of waste to landfills and recycled only <i>~1,200 tons</i> of materials (... and we have recycling bins across the entire campus).</p>
+                <div id="question1" class="question">How much would you estimate is recyclable of the entire US waste stream?</div>
+                <p id="infoText1" class="popup">&emsp; Annually, the US recycles 34.3% of solid waste on average. In 2018, UGA sent 5,474 tons of waste to landfills and recycled only <i>~1,200 tons</i> of materials (... and we have recycling bins across the entire campus).</p>
             </div>
 
             <div id="graphArea2" class="graphArea">
@@ -84,7 +106,7 @@
 
             <div id="graphArea3" class="graphArea">
                 <div id="graphContainer3" class="graphContainer"></div>
-                <p id="infoText3" class="popup">&emsp; </p>
+                <p id="infoText3" class="popup">&emsp; In the Athens-Clarke County recycling plant, an average of 80 tons of materials are sent to be recycled daily. Of the 80 tons, around 17.5% becomes contaminated by food or non-recyclable waste and sent to a landfill. Contamination often comes from "wishful recycling", or tossing out waste into a recycling bin without knowing if it's the correct bin. It's important to know what kind of materials can be put into a bin because otherwise the entire bin could become contaminated!</p>
             </div>
 
             <div id="graphArea4" class="graphArea">
@@ -93,7 +115,7 @@
             </div>
         </div>
 
-        <button class="nextPageButton"><a href="gamePage.html">Next Page</a></button>
+        <a href="gamePage.html" class="nextPageButton">Next Page</a>
         
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
