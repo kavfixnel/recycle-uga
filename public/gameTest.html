@@ -18,6 +18,8 @@ canvas {
 <canvas id="canvas"></canvas>
 </div>
 
+<h2 id="feedback">Grab the items and place them in the correct bins</h2>
+
 <script>
 var hand;
 var clickX;
@@ -57,9 +59,14 @@ var myGameArea =
 			{
 				isClicked = false;
 				
-				if(waterBottle.collidesWith(recycleBin))
+				if(isCollided(waterBottle, recycleBin))
 				{
-					
+					feedback.innerHTML = "Good Job!\nWater Bottles are Recyclable";
+				}
+				
+				else if(isCollided(waterBottle, trashBin))
+				{
+					feedback.innerHTML = "Hey that can be recycled!";
 				}
 			}
 			
@@ -156,8 +163,18 @@ function component(width, height, color, x, y, type)
 		  clicked = false;
 		}
 		return clicked;
-	}
+	}		
 	
+}
+
+
+function isCollided(a, b) {
+    return !(
+        ((a.y + a.height) < (b.y)) ||
+        (a.y > (b.y + b.height)) ||
+        ((a.x + a.width) < b.x) ||
+        (a.x > (b.x + b.width))
+    );
 }
 
 
@@ -188,7 +205,6 @@ function updateGameArea()
 }
 
 </script>
-<h2 id="feedback"></h2>
 </body>
 </html>
 
