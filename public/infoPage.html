@@ -90,6 +90,24 @@
                 } // for all graphs
                 
             } // on window load
+            
+            // checks if all questions are answered to enable the next page
+            // button
+            function checkQuestionStatus() {
+                var answerChoices = document.getElementsByClassName("answerChoice");
+                var checkedCount = 0;
+                
+                // counts the amount of checked radio buttons (should be four to continue)
+                for(var i = 0; i < answerChoices.length; i++) {
+                    if(answerChoices[i].checked)
+                        checkedCount++;
+                } // for each answer section
+            
+                console.log(checkedCount.toString());
+                if(checkedCount >= 4)
+                    document.getElementsByClassName("nextPageButton").item(0).classList.remove("disabled");
+                    
+            } // checkQuestionStatus
         </script>
     </head>
     <body>
@@ -112,12 +130,12 @@
                     How much would you estimate is recyclable of the entire US waste stream?
                 
                     <div class="answers">
-                        <input type="radio" name="test" value="1"/>&ensp;Option 1<br>
-                        <input type="radio" name="test" value="2"/>&ensp;Option 2<br>
-                        <input type="radio" name="test" value="3"/>&ensp;Option 3<br>
+                        <input type="radio" name="test0" value="1" class="answerChoice"/>&ensp;Option 1<br>
+                        <input type="radio" name="test0" value="2" class="answerChoice"/>&ensp;Option 2<br>
+                        <input type="radio" name="test0" value="3" class="answerChoice"/>&ensp;Option 3<br>
                     </div>
                     
-                    <a href="javascript" class="submitButton">Submit</a>
+                    <a href="javascript:checkQuestionStatus()" class="submitButton">Submit</a>
                 </div>
                 <p id="infoText1" class="popup">&emsp; Annually, the US recycles 34.3% of solid waste on average. In 2018, UGA sent 5,474 tons of waste to landfills and recycled only <i>~1,200 tons</i> of materials (... and we have recycling bins across the entire campus).</p>
             </div>
@@ -128,12 +146,12 @@
                     Is this an example question?
                 
                     <div class="answers">
-                        <input type="radio" name="test" value="1"/>&ensp;Yes<br>
-                        <input type="radio" name="test" value="2"/>&ensp;No<br>
-                        <input type="radio" name="test" value="3"/>&ensp;Maybe<br>
+                        <input type="radio" name="test1" value="1" class="answerChoice"/>&ensp;Yes<br>
+                        <input type="radio" name="test1" value="2" class="answerChoice"/>&ensp;No<br>
+                        <input type="radio" name="test1" value="3" class="answerChoice"/>&ensp;Maybe<br>
                     </div>
                     
-                    <a href="javascript" class="submitButton">Submit</a>
+                    <a href="javascript:checkQuestionStatus()" class="submitButton">Submit</a>
                 </div>
                 <p id="infoText2" class="popup">&emsp; Not only does recycling waste save material that could end up in a landfill or in one of many bodies of water, it also saves copious amounts of energy compared to creating products from virgin materials (those that haven't been recycled).</p>
             </div>
@@ -144,12 +162,12 @@
                     Is this an example question?
                 
                     <div class="answers">
-                        <input type="radio" name="test" value="1"/>&ensp;Yes<br>
-                        <input type="radio" name="test" value="2"/>&ensp;No<br>
-                        <input type="radio" name="test" value="3"/>&ensp;Maybe<br>
+                        <input type="radio" name="test2" value="1" class="answerChoice"/>&ensp;Yes<br>
+                        <input type="radio" name="test2" value="2" class="answerChoice"/>&ensp;No<br>
+                        <input type="radio" name="test2" value="3" class="answerChoice"/>&ensp;Maybe<br>
                     </div>
                     
-                    <a href="javascript" class="submitButton">Submit</a>
+                    <a href="javascript:checkQuestionStatus()" class="submitButton">Submit</a>
                 </div>
                 <p id="infoText3" class="popup">&emsp; In the Athens-Clarke County recycling plant, an average of 80 tons of materials are sent to be recycled daily. Of the 80 tons, around 17.5% becomes contaminated by food or non-recyclable waste and sent to a landfill. Contamination often comes from "wishful recycling", or tossing out waste into a recycling bin without knowing if it's the correct bin. It's important to know what kind of materials can be put into a bin because otherwise the entire bin could become contaminated!</p>
             </div>
@@ -160,18 +178,18 @@
                     Is this an example question?
                 
                     <div class="answers">
-                        <input type="radio" name="test" value="1"/>&ensp;Yes<br>
-                        <input type="radio" name="test" value="2"/>&ensp;No<br>
-                        <input type="radio" name="test" value="3"/>&ensp;Maybe<br>
+                        <input type="radio" name="test3" value="1" class="answerChoice"/>&ensp;Yes<br>
+                        <input type="radio" name="test3" value="2" class="answerChoice"/>&ensp;No<br>
+                        <input type="radio" name="test3" value="3" class="answerChoice"/>&ensp;Maybe<br>
                     </div>
                     
-                    <a href="javascript" class="submitButton">Submit</a>
+                    <a href="javascript:checkQuestionStatus()" class="submitButton">Submit</a>
                 </div>
                 <p id="infoText4" class="popup">&emsp; This is example text. I call it this because I am using it as an example in the place of actual information. While not the same, it adds value through showcasing what future informational text might look like. I really wanted to fill up this space. I still want to. It's all I could ever really want.</p>
             </div>
         </div>
 
-        <a href="gamePage.html" class="nextPageButton">Next Page</a>
+        <a href="gamePage.html" class="nextPageButton disabled">Next Page</a>
         
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -54,6 +54,7 @@ body {
     text-align: center;
     /* the width of the div minus the popup and graph elements*/
     width: calc(90% - 650px);
+    min-width: 440;
     margin: 10px 5px;
     animation-name: slideIn;
     animation-duration: 2s;
@@ -130,6 +131,13 @@ body {
 .nextPageButton:active {
     position:relative;
 	top:1px;
+}
+
+.disabled, .disabled:hover {
+    background-color: lightgray;
+    cursor: not-allowed;
+    text-decoration: none;
+    pointer-events: none;
 }
 
 /* used to center the survey forms */
