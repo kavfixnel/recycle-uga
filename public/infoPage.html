@@ -15,63 +15,76 @@
         <!-- on page js, mainly window.onload -->
         <script>
             window.onload = function() {
-                 // making graph one
-                var id = "graphContainer1";
-                var title = "UGA Disposal Practices, 2018";
-                var type = "pie";            
-                var pieData = [{y: 21.9, indexLabel: "Recycled", label: "Recycled", exploded: true}, 
-                               {y: 78.1, indexLabel: "Landfilled", label: "Landfilled"}];
-
-                makeGraph(id, title, type, pieData);
-                // source: the powerpoint module
-
-                // making graph two
-                id = "graphContainer2";
-                title = "Energy Savings When Recycled, by Material";
-                type = "column";
-                pieData = [{y: 95, indexLabel: "Aluminum", label: "Aluminum"}, 
-                            {y: 90, indexLabel: "Plastic", label: "Plastic"},
-                            {y: 60, indexLabel: "Paper", label: "Paper"},
-                            {y: 33, indexLabel: "Glass", label: "Glass"}];
-
-                makeGraph(id, title, type, pieData);
-                // source: https://www.greenlivingtips.com/articles/recycling-energy-savings.html
                 
-                id="graphContainer3";
-                title = "Contaminated Materials Recycled by Percentage";
-                type = "pie";
-                pieData = [{y: 17.5, indexLabel: "Contaminated", label: "Contaminated", exploded: true},
-                            {y: 82.5, indexLabel: "Recycled", label: "Recycled"}];
+                // number of graphs on the page
+                var graphCount = 4;
                 
-                makeGraph(id, title, type, pieData);
-                // source: https://www.redandblack.com/athensnews/wishful-recycling-turns-wasteful-athens-clarke-county-warns-of-recycling/article_7c927d42-6f64-11e8-8ed1-ef48e8d384a2.html
-                
-                // making text popups
-                makePopupText("graphArea1", "infoText1");
-                makePopupText("graphArea2", "infoText2");
-                makePopupText("graphArea3", "infoText3");
-                
-                //making question popups
-                makePopupQuestion("graphArea1", "question1");
-                
+                // making graphs
+                var id, title, type, pieData;
+                for(var i = 1; i <= graphCount; i++) {
+                    id = "graphContainer" + i.toString();
+                    
+                    switch(i) {
+                        case 1: // info for graph 1
+                            title = "UGA Disposal Practices, 2018";
+                            type = "pie";            
+                            pieData = [{y: 21.9, indexLabel: "Recycled", label: "Recycled", exploded: true}, 
+                                           {y: 78.1, indexLabel: "Landfilled", label: "Landfilled"}];
+                            break; // source: the powerpoint module
+                            
+                        case 2: // info for graph 2
+                            title = "Energy Savings When Recycled, by Material";
+                            type = "column";
+                            pieData = [{y: 95, indexLabel: "Aluminum", label: "Aluminum"}, 
+                                        {y: 90, indexLabel: "Plastic", label: "Plastic"},
+                                        {y: 60, indexLabel: "Paper", label: "Paper"},
+                                        {y: 33, indexLabel: "Glass", label: "Glass"}];
+                            break; // source: https://www.greenlivingtips.com/articles/recycling-energy-savings.html
+                            
+                        case 3: // info for graph 3
+                            title = "Contaminated Materials Recycled by Percentage";
+                            type = "pie";
+                            pieData = [{y: 17.5, indexLabel: "Contaminated", label: "Contaminated", exploded: true},
+                                        {y: 82.5, indexLabel: "Recycled", label: "Recycled"}];
+                            break; // source: https://www.redandblack.com/athensnews/wishful-recycling-turns-wasteful-athens-clarke-county-warns-of-recycling/article_7c927d42-6f64-11e8-8ed1-ef48e8d384a2.html
+                            
+                        case 4:  // info for graph 4
+                            title = "UGA Disposal Practices, 2018";
+                            type = "pie";            
+                            pieData = [{y: 21.9, indexLabel: "Recycled", label: "Recycled", exploded: true}, 
+                                           {y: 78.1, indexLabel: "Landfilled", label: "Landfilled"}];
+                    } // creating each of the different graph info variables
+                    
+                    makeGraph(id, title, type, pieData);
+                } // for each of the four graphs, make graph                
                 
                 // for each graph, starting at one, alternate the side of the window the graph is on
-                // and make the info text float the opposite direction
-                var graphCount = document.getElementsByClassName("graphArea").length;                
+                // and make the info text float the opposite direction               
                 for(var i = 1; i <= graphCount; i++) {
                     
                     // the number of the current graph, used to get the correct id #s
                     var graphnum = i.toString();
 
+                    // makes text popups
+                    makePopupText("graphArea" + graphnum, "infoText" + graphnum, "question" + graphnum);
+                    
                     // if the graph id is even, float right & text left, else float left & text right
                     if(i % 2 == 0) {
+                        // floating the graph area and container to the right
                         document.getElementById("graphArea" + graphnum).style.float = "right";
                         document.getElementById("graphContainer" + graphnum).style.float = "right";
                         document.getElementById("graphArea" + graphnum).style.margin = "5px 5% 5px 35%";
+                        
+                        // moving the question over to account for space for popup text
+                        document.getElementById("question" + graphnum).style.margin = "10px 5px 10px 325px";
                     } else {
+                        // floating graph area and container to the left
                         document.getElementById("graphArea" + graphnum).style.float = "left";
                         document.getElementById("graphContainer" + graphnum).style.float = "left";
                         document.getElementById("graphArea" + graphnum).style.margin = "5px 35% 5px 5%";
+                        
+                        // leaving question in place because it is correctly placed already
+                        document.getElementById("question" + graphnum).style.margin = "10px 5px 10px 5px";
                     } // if-else
 
                 } // for all graphs
@@ -95,23 +108,66 @@
             <!-- (some) Information from Slide 3 of PP module (uses window.onload function) -->
             <div id="graphArea1" class="graphArea">
                 <div id="graphContainer1" class="graphContainer"></div>
-                <div id="question1" class="question">How much would you estimate is recyclable of the entire US waste stream?</div>
+                <div id="question1" class="question">
+                    How much would you estimate is recyclable of the entire US waste stream?
+                
+                    <div class="answers">
+                        <input type="radio" name="test" value="1"/>&ensp;Option 1<br>
+                        <input type="radio" name="test" value="2"/>&ensp;Option 2<br>
+                        <input type="radio" name="test" value="3"/>&ensp;Option 3<br>
+                    </div>
+                    
+                    <a href="javascript" class="submitButton">Submit</a>
+                </div>
                 <p id="infoText1" class="popup">&emsp; Annually, the US recycles 34.3% of solid waste on average. In 2018, UGA sent 5,474 tons of waste to landfills and recycled only <i>~1,200 tons</i> of materials (... and we have recycling bins across the entire campus).</p>
             </div>
 
             <div id="graphArea2" class="graphArea">
                 <div id="graphContainer2" class="graphContainer"></div>
+                <div id="question2" class="question">
+                    Is this an example question?
+                
+                    <div class="answers">
+                        <input type="radio" name="test" value="1"/>&ensp;Yes<br>
+                        <input type="radio" name="test" value="2"/>&ensp;No<br>
+                        <input type="radio" name="test" value="3"/>&ensp;Maybe<br>
+                    </div>
+                    
+                    <a href="javascript" class="submitButton">Submit</a>
+                </div>
                 <p id="infoText2" class="popup">&emsp; Not only does recycling waste save material that could end up in a landfill or in one of many bodies of water, it also saves copious amounts of energy compared to creating products from virgin materials (those that haven't been recycled).</p>
             </div>
 
             <div id="graphArea3" class="graphArea">
                 <div id="graphContainer3" class="graphContainer"></div>
+                <div id="question3" class="question">
+                    Is this an example question?
+                
+                    <div class="answers">
+                        <input type="radio" name="test" value="1"/>&ensp;Yes<br>
+                        <input type="radio" name="test" value="2"/>&ensp;No<br>
+                        <input type="radio" name="test" value="3"/>&ensp;Maybe<br>
+                    </div>
+                    
+                    <a href="javascript" class="submitButton">Submit</a>
+                </div>
                 <p id="infoText3" class="popup">&emsp; In the Athens-Clarke County recycling plant, an average of 80 tons of materials are sent to be recycled daily. Of the 80 tons, around 17.5% becomes contaminated by food or non-recyclable waste and sent to a landfill. Contamination often comes from "wishful recycling", or tossing out waste into a recycling bin without knowing if it's the correct bin. It's important to know what kind of materials can be put into a bin because otherwise the entire bin could become contaminated!</p>
             </div>
 
             <div id="graphArea4" class="graphArea">
                 <div id="graphContainer4" class="graphContainer"></div>
-                <p id="infoText4" class="popup">&emsp; </p>
+                <div id="question4" class="question">
+                    Is this an example question?
+                
+                    <div class="answers">
+                        <input type="radio" name="test" value="1"/>&ensp;Yes<br>
+                        <input type="radio" name="test" value="2"/>&ensp;No<br>
+                        <input type="radio" name="test" value="3"/>&ensp;Maybe<br>
+                    </div>
+                    
+                    <a href="javascript" class="submitButton">Submit</a>
+                </div>
+                <p id="infoText4" class="popup">&emsp; This is example text. I call it this because I am using it as an example in the place of actual information. While not the same, it adds value through showcasing what future informational text might look like. I really wanted to fill up this space. I still want to. It's all I could ever really want.</p>
             </div>
         </div>
 
