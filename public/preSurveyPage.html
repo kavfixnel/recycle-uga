@@ -31,14 +31,20 @@
         <div id="page1" class="surveyArea">
             <a id="pre" class="smooth"></a>
             <h1>Pre-Survey</h1>
-            <form action ="/users/progress">
+			
+            <form action="/users/progress" method="post">
+			
                 <label>Full Name:</label> <input type="text" name="name"><br>
                 <label>Gender:</label><br>
                     &emsp;<input type="radio" name="gender" value="male">&ensp;Male<br>
                     &emsp;<input type="radio" name="gender" value="female">&ensp;Female<br>
                     &emsp;<input type="radio" name="gender" value="other">&ensp;Other<br>
-                <label>811#:</label><input type="text" name="811"><br>			
+                <label>811#:</label><input type="text" name="811"><br>		
+                
+                <input class="nextPageButton" type="submit" value="Next Page">
+				
             </form>
+            
         </div> 	
 
         <a href="infoPage.html" class="nextPageButton">Next Page</a>
