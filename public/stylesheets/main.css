@@ -1,3 +1,7 @@
+body {
+    min-width: 1200px;
+}
+
 /* used to define the trash/recycing bins on the game page */
 .gameImage {
     width: 16%;
@@ -7,17 +11,17 @@
 }
 
 /* graphArea is the div containing the graph container
-    as well as the info text */
+    as well as the info text (but not necessarily the actual graph)*/
 .graphArea {
     width: 322px; 
     height: 322px;
     overflow: hidden;
     border: 1px solid #B7BF10; 
-    background-color: lightgray;
+    background-color: #f3efee;
     transition: width 1s;
 }
 
-.graphArea:hover {
+.graphArea:hover, .holdhover {
     width: 90%;
 }
 
@@ -27,34 +31,113 @@
     width: 320px;
 }
 
-/* used for popup info text */
-.popup {
-    display: none;
-    width: 300px;
-    margin: 10px;
-    animation-name: slideIn;
-    animation-duration: 1.2s;
-}
-
-/* used to fade in popup text */
+/* used to fade in popup and question text */
 @keyframes slideIn {
     from {opacity: 0}
     to {opacity: 1}
 }
 
-canvas {
-    /*border:1px solid #d3d3d3;
-    background-color: #f1f1f1; */
+/* represents the opposite div of the graph in the graphArea divs*/
+.popup {
+    display: none;
+    width: 300px;
+    margin: 10px;
+    animation-name: slideIn;
+    animation-duration: 2s;
+    font-family: 'Merriweather-Sans', 'sans-serif';
+}
+
+/* represents the center div of the graphArea divs */
+.question {
+    display: none;
+    position: absolute;
+    text-align: center;
+    /* the width of the div minus the popup and graph elements*/
+    width: calc(90% - 650px);
+    min-width: 440;
+    margin: 10px 5px;
+    animation-name: slideIn;
+    animation-duration: 2s;
+    font-family: 'Merriweather-Sans', 'sans-serif';
+    font-weight: bold;
+}
+
+/* represents the radio input section of the question div */
+.answers {
+    margin: 30px auto;
+    font-weight: normal;
+}
+
+/* button for answering questions */
+.submitButton {
+    margin-top: 10px;
+    width: 80px;
+    cursor: pointer;
+    font-family: 'Merriweather', 'serif';
+    color: #FFFFFF;
+    background-color: #BA0C2F;
+    border: 1px solid #997a81;
+    border-radius: 28px;
+    font-size: 14px;
+    font-weight: normal;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #1F1F1F;
+    display: inline-block;
+    text-align: center;
+    padding-top: 3px;
+    padding-left: 1px;
+}
+
+.submitButton:hover {
+    background-color:#c4163b;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.submitButton:active {
+    position:relative;
+	top:1px;
 }
 
 /* defined for all the buttons at the end of pages */
 .nextPageButton {
-    clear: both;
-    width: 8%;
-    margin-top: 25px;
+    height: 4%;
+    width: 100px;
+    margin-top: 20px;
     margin-bottom: 25px;
     margin-left: 46%;
     margin-right: 46%;
+    cursor: pointer;
+    font-family: 'Merriweather', 'serif';
+    color: #FFFFFF;
+    background-color: #BA0C2F;
+    border: 1px solid #997a81;
+    border-radius: 28px;
+    font-size: 14px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #1F1F1F;
+    display: inline-block;
+    text-align: center;
+    padding-top: 3px;
+    padding-left: 1px;
+}
+ 
+.nextPageButton:hover {
+    background-color:#c4163b;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.nextPageButton:active {
+    position:relative;
+	top:1px;
+}
+
+.disabled, .disabled:hover {
+    background-color: lightgray;
+    cursor: not-allowed;
+    text-decoration: none;
+    pointer-events: none;
 }
 
 /* used to center the survey forms */
@@ -69,4 +152,14 @@ canvas {
     text-align: center;
     margin-top: 40px;
     margin-bottom: 20px;
+}
+
+/* for text fields on survey pages */
+input[type=text] {
+    width: 100%;
+}
+
+/* labels for form text on survey pages */
+label {
+    margin-top: 10px;
 }

@@ -31,18 +31,23 @@
         <div id="page1" class="surveyArea">
             <a id="pre" class="smooth"></a>
             <h1>Pre-Survey</h1>
-            <form action ="#info">
-                Full Name: <input type="text" name="name"><br>
-                Gender: <br>
-                    <input type="radio" name="gender" value="male">Male<br>
-                    <input type="radio" name="gender" value="female">Female<br>
-                    <input type="radio" name="gender" value="other">Other<br>
-                811#: <input type="text" name="811"><br>
-                <input type="submit" value="Submit">				
+			
+            <form action="/users/progress" method="post">
+			
+                <label>Full Name:</label> <input type="text" name="name"><br>
+                <label>Gender:</label><br>
+                    &emsp;<input type="radio" name="gender" value="male">&ensp;Male<br>
+                    &emsp;<input type="radio" name="gender" value="female">&ensp;Female<br>
+                    &emsp;<input type="radio" name="gender" value="other">&ensp;Other<br>
+                <label>811#:</label><input type="text" name="811"><br>		
+                
+                <input class="nextPageButton" type="submit" value="Next Page">
+				
             </form>
+            
         </div> 	
 
-        <button class="nextPageButton"><a href="infoPage.html">Next Page</a></button>
+        <a href="infoPage.html" class="nextPageButton">Next Page</a>
         
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

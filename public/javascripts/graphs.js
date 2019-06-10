@@ -5,12 +5,14 @@ function makeGraph(id, name, type, dataPoints) {
         var graph = new CanvasJS.Chart(id, {
             theme: "light1",
             animationEnabled: true,
+            backgroundColor: "#f3efee",
             title: {
                 text: name
             },
             data: [{
                 type: type,
                 startAngle: 180,
+                indexLabelFontSize: 7,
                 yValueFormatString: "##0.00\"%\"",
                 dataPoints: dataPoints
             }] // data 
