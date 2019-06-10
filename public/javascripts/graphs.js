@@ -5,7 +5,7 @@ function makeGraph(id, name, type, dataPoints) {
         var graph = new CanvasJS.Chart(id, {
             theme: "light1",
             animationEnabled: true,
-            backgroundColor: "lightgray",
+            backgroundColor: "#f3efee",
             title: {
                 text: name
             },
