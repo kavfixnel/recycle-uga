@@ -53,8 +53,8 @@ var myGameArea =
 		//Clicking
 		window.addEventListener('mousedown', function (e) 
 		{
-			clickX = e.pageX;
-			clickY = e.pageY;
+			clickX = e.clientX - document.getElementById("canvas").offsetLeft;
+			clickY = e.clientY - document.getElementById("canvas").offsetTop;
 			
 			if(isClicked) 
 			{
