@@ -11,7 +11,7 @@ canvas {
 </head>
 <body onload = "startGame()">
 <div>
-<h1>Test Game</h1>
+<h1 id="testgame">Test Game</h1>
 </div>
 
 <div>
@@ -43,11 +43,12 @@ var myGameArea =
 		
 		//Event listeners 
 		//Moving the mouse
-		window.addEventListener('mousemove', function (e)
+		document.getElementById("canvas").addEventListener('mousemove', function (e)
 		{
-			myGameArea.x = e.pageX;
-			myGameArea.y = e.pageY;
-		})
+                myGameArea.x = e.clientX - document.getElementById("canvas").offsetLeft;
+                myGameArea.y = e.clientY - document.getElementById("canvas").offsetTop;
+            
+		});
 		
 		//Clicking
 		window.addEventListener('mousedown', function (e) 
@@ -105,6 +106,7 @@ var myGameArea =
 function startGame()
 {
 	//Creates a game hand
+    
 	hand = new component(30, 30, "images/hand.jpg", 10, 120, "image");
 	
 	//Creates cans
@@ -117,12 +119,11 @@ function startGame()
 	myGameArea.start();
 }
 
-/*
-function createTrash(name, width, height, imgSrc, x, y, bool recycleable)
+function createTrash(name, width, height, imgSrc, x, y, recyclable)
 {
-	name = new component(width, height, imgSrc, x, y, "image" )
+	name = new component(width, height, imgSrc, x, y, "image");
+    
 }
-*/
 
 //Function to create a component in the game;
 function component(width, height, color, x, y, type)
@@ -170,8 +171,7 @@ function component(width, height, color, x, y, type)
 		  clicked = false;
 		}
 		return clicked;
-	}		
-	
+	}	
 }
 
 
