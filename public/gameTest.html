@@ -11,7 +11,7 @@ canvas {
 </head>
 <body onload = "startGame()">
 <div>
-<h1>Test Game</h1>
+<h1 id="testgame">Test Game</h1>
 </div>
 
 <div>
@@ -22,6 +22,8 @@ canvas {
 
 <script>
 var hand;
+var currentTrash;
+var myTrash = [];
 var clickX;
 var clickY;
 var isClicked = false;
@@ -43,18 +45,47 @@ var myGameArea =
 		
 		//Event listeners 
 		//Moving the mouse
-		window.addEventListener('mousemove', function (e)
+		document.getElementById("canvas").addEventListener('mousemove', function (e)
 		{
-			myGameArea.x = e.pageX;
-			myGameArea.y = e.pageY;
-		})
+                myGameArea.x = e.clientX - document.getElementById("canvas").offsetLeft;
+                myGameArea.y = e.clientY - document.getElementById("canvas").offsetTop;
+            
+		});
 		
 		//Clicking
 		window.addEventListener('mousedown', function (e) 
 		{
-			clickX = e.pageX;
-			clickY = e.pageY;
+			clickX = e.clientX - document.getElementById("canvas").offsetLeft;
+			clickY = e.clientY - document.getElementById("canvas").offsetTop;
 			
+			//Check if item clicked is trash
+			for(i = 0; i < myTrash.length; i++)
+			{
+				if(isClicked && (currentTrash == myTrash[i]))
+				{
+					isClicked = false;
+					
+					if(isCollided(myTrash[i], recycleBin))
+					{
+						feedback.innerHTML = "trash collided with recycle bin";
+					}
+							
+					else if(isCollided(myTrash[i], trashBin))
+					{
+						feedback.innerHTML = "trash collided with trash bin";
+					}
+						
+				}
+				
+				else if(myTrash[i].clicked())
+				{
+					currentTrash = myTrash[i];
+					isClicked = true;					
+				}
+			}
+			
+			
+			/*
 			if(isClicked) 
 			{
 				isClicked = false;
@@ -72,7 +103,7 @@ var myGameArea =
 			
 			else if(waterBottle.clicked())
 				isClicked = true;
-				
+			*/
 		})		
 		
 		window.addEventListener('mouseup', function (e) {
@@ -112,17 +143,64 @@ function startGame()
 	trashBin = new component(150, 225, "images/trashcan.png", 550, 250, "image");
 	
 	//Creates garbage
-	waterBottle = new component(60, 60, "images/bottle.jpg", 30, 30, "image");
+	waterBottle = new trash(60, 60, "images/bottle.jpg", 30, 30, "image", true);
+	
+	newsPaper = new trash(60, 60, "images/newspaper.jpg", 200, 30, "image", true);
 	
 	myGameArea.start();
 }
 
-/*
-function createTrash(name, width, height, imgSrc, x, y, bool recycleable)
+//Function to create trash
+function trash(width, height, color, x, y, type, recycleable)
 {
-	name = new component(width, height, imgSrc, x, y, "image" )
+	this.type = type;
+	
+	if(type == "image")
+	{
+		this.image = new Image();
+		this.image.src = color;
+	}
+	
+	this.width = width;
+	this.height = height;
+	this.speedX = 0;
+	this.speedY = 0;
+	this.x = x;
+	this.y = y;
+	
+	this.update = function()
+	{
+		ctx = myGameArea.context;
+		if(type == "image")
+		{
+			ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+		}
+		else
+		{
+			ctx.fillStyle = color;
+			ctx.fillRect(this.x, this.y, this.width, this.height);
+		}
+	}
+	
+	this.clicked = function() 
+	{
+		var myleft = this.x;
+		var myright = this.x + (this.width);
+		var mytop = this.y;
+		var mybottom = this.y + (this.height);
+		
+		var clicked = true;
+		
+		if ((mybottom < clickY) || (mytop > clickY) || (myright < clickX) || (myleft > clickX)) 
+		{
+		  clicked = false;
+		}
+		return clicked;
+	}		
+	
+	myTrash.push(this);
 }
-*/
+
 
 //Function to create a component in the game;
 function component(width, height, color, x, y, type)
@@ -194,19 +272,21 @@ function updateGameArea()
 		hand.x = myGameArea.x;
 		hand.y = myGameArea.y;
 	}
-		
-	if(isClicked)
-	{
-			waterBottle.y = myGameArea.y - (waterBottle.height/4);
-			waterBottle.x = myGameArea.x - (waterBottle.width/4);
-	}
-
 	
-
 	recycleBin.update();
 	trashBin.update();
 	
-	waterBottle.update();
+	
+	for(i = 0; i < myTrash.length; i++)
+	{
+		if(isClicked)
+		{
+			currentTrash.y = myGameArea.y - (currentTrash.height/4);
+			currentTrash.x = myGameArea.x - (currentTrash.width/4);
+		}
+		
+		myTrash[i].update();
+	}
 	
 	hand.update();
 }

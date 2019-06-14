@@ -2,6 +2,7 @@ let mongoose = require('mongoose')
 require('dotenv').config()
 
 const URLSTRING = process.env.URLSTRING
+console.log(URLSTRING);
 
 /*
 const server = process.env.SERVER; // REPLACE WITH YOUR DB SERVER
