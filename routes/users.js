@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var request = require('request')
 
 var userModel = require('../schemas/user.js');
 
@@ -10,24 +9,6 @@ router.use((req, res, next) => {
 	console.log("Checked cookie");
 	next();
 });
-
-router.get('/login', (req, res) => {
-	res.redirect('https://cas2.stage.uga.edu/cas/login?service=https://recycle-uga.herokuapp.com/users/cb').send();
-});
-
-router.get('/cb', (req, res) => {
-	if(req.query.ticket == null) {
-		console.log("Empty sting")
-		res.redirect('/')
-	} else {
-		console.log(res.query.ticket)
-		request('https://cas2.stage.uga.edu/cas/validate?service=https://recycle-uga.herokuapp.com&ticket=' + res.query.ticket)
-		res.redirect('/')
-	}
-
-	console.log("Something went wrong")
-	res.redirect('/')
-})
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
