@@ -68,6 +68,12 @@ body {
     font-weight: normal;
 }
 
+/* represents the correct/incorrect popup on question answer */
+.correct {
+    margin: 25px;
+    font-family: 'Merriweather', 'serif';
+}
+
 /* button for answering questions */
 .submitButton {
     margin-top: 10px;
@@ -105,7 +111,7 @@ body {
     width: 100px;
     margin-top: 20px;
     margin-bottom: 25px;
-    margin-left: 33%;
+    margin-left: 46%;
     margin-right: 46%;
     cursor: pointer;
     font-family: 'Merriweather', 'serif';
@@ -119,7 +125,6 @@ body {
     display: inline-block;
     text-align: center;
     padding-top: 3px;
-    padding-left: 8px;
 }
  
 .nextPageButton:hover {

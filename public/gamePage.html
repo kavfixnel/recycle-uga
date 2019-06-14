@@ -12,28 +12,23 @@
         
         <!-- on page js, mainly window.onload -->
         <script>
+            // time the page was opened for timeOnPage
             var pageOpened;
             window.onload = function() {
                 startGame();
             
                 pageOpened = new Date();
-                
-                // making bottle draggable
-                makeDraggable(document.getElementById("bottle"));
             } // on window load
             
-            // posts 'things' data to the server 
+            // posts 'things' (data) to the server 
             function postThings() {
-                var radios = document.getElementsByName("gender");
-                var checkedRadio;
+                // time the page was closed for timeOnPage
+                var pageClosed = new Date();
                 
-                for(var i = 0; i < radios.length; i++) {
-                    if(radios[i].checked)
-                        checkedRadio = radios[i].value;
-                } // for each radio button, find checked option
-                
+                // data variable to be posted to the backend
                 var serverInfo = {thisPage: 3, metaData: {timeOnPage: pageClosed - pageOpened}, data: {}};
                 
+                // posts data to the backend
                 $.ajax({
                     type: "POST",
                     url: "/users/progress",
@@ -59,21 +54,10 @@
 		<div id="page3">
 			<a id="game1" class="smooth"></a>
             <canvas id="canvas1"></canvas>
-
-            
-            <div id="gameArea" style="width: 50%; margin: 0 25%; background-color:green;">
-                <img id="paperbin" class="gameImage" src="images/paperbin.jpg" alt="Paper Bin" height="120"/>
-                <img id="glassbin" class="gameImage" src="images/glassbin.jpg" alt="Glass Bin" height="120"/>
-                <img id="plasticbin" class="gameImage" src="images/plasticbin.jpg" alt="Plastic Bin" height="120"/>
-                <img id="metalbin" class="gameImage" src="images/metalbin.jpg" alt="Metal Bin" height="120"/>
-                <img id="trashcan" class="gameImage" src="images/trashcan.png" alt="Trash Can" height="120"/>
-            </div>
-            
-            <img id="bottle" src="images/bottle.jpg" alt="bottle" height="50" width = "50" style="position: absolute;"/>
 		</div>
         
         
-        <a onclick="postThings()" id="npbutton" class="nextPageButton">Next Page</a>
+        <a onclick="postThings()" href="javascript:void(0)" id="npbutton" class="nextPageButton">Next Page</a>
         
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>
