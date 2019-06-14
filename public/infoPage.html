@@ -16,7 +16,7 @@
         <script>
             var pageOpened;
             window.onload = function() {
-                
+                // time the page was opened for timeOnPage
                 pageOpened = new Date();
                 
                 // number of graphs on the page
@@ -59,7 +59,7 @@
                     } // creating each of the different graph info variables
                     
                     makeGraph(id, title, type, pieData);
-                } // for each of the four graphs, make graph                
+                } // for each of the four graphs, assign graph info                
                 
                 // for each graph, starting at one, alternate the side of the window the graph is on
                 // and make the info text float the opposite direction               
@@ -68,6 +68,11 @@
                     // the number of the current graph, used to get the correct id #s
                     var graphnum = i.toString();
 
+                    // changes html forms named 'answer' + number to not clear text on submit
+                    document.getElementsByName("answer" + graphnum)[0].addEventListener("submit", function(e) {
+                        e.preventDefault(); 
+                    });
+                    
                     // makes text popups
                     makePopupText("graphArea" + graphnum, "infoText" + graphnum, "question" + graphnum);
                     
@@ -108,46 +113,55 @@
             
                 if(notEmptyCount >= 4)
                     document.getElementsByClassName("nextPageButton").item(0).classList.remove("disabled");
-                else 
-                    document.getElementsByClassName("nextPageButton").item(0).classList.add("disabled");
                 
             } // checkQuestionStatus
             
             //checks answer against known correct answer and displays
             //text based on its correctness
             function checkAnswer(questionNumber) {
+                // boolean for question correctness
                 var isCorrect;
                 
                 switch(questionNumber) {
+                    // each case represents its respective question
+                    // answer values have been hashed prior to deplyoment and 
+                    // are compared to their has values
                     case 1:
-                        if(document.getElementsByName("answer1").value = "yes") {isCorrect = true;}
+                        if(SHA256(document.getElementsByName("answer1").item(0).value) === "8a798890fe93817163b10b5f7bd2ca4d25d84c52739a645a889c173eee7d9d3d") {isCorrect = true;}
                         else {isCorrect = false;}
                         break;
                     case 2:
-                        if(document.getElementsByName("answer2").value = "yes") {isCorrect = true;}
+                        if(SHA256(document.getElementsByName("answer2").item(0).value) === "1a01e1d611344a450758b4d04f247affb57b884507229fa6e95051c072119752") {isCorrect = true;}
                         else {isCorrect = false;}
                         break;
                     case 3:
-                        if(document.getElementsByName("answer3").value = "yes") {isCorrect = true;}
+                        if(document.getElementsByName("answer3").item(0).value === "yes") {isCorrect = true;}
                         else {isCorrect = false;}
                         break;
                     case 4:
-                        if(document.getElementsByName("answer4").value = "yes") {isCorrect = true;}
+                        if(document.getElementsByName("answer4").item(0).value === "yes") {isCorrect = true;}
                         else {isCorrect = false;}
                 } // switch for each question depending on question number
                 
-                if(isCorrect) 
-                    document.getElementById("question" + questionNumber.toString()).innerHTML +=
-                        "<p style='color:green; font-size:14px;'>Correct! :)</p>";
-                else 
-                    document.getElementById("question" + questionNumber.toString()).innerHTML +=
-                        "<p style='color:red; font-size:14px;'>Incorrect! :(</p>";
-                
+                // if correct, show correct, else show incorrect
+                if(isCorrect) {
+                    document.getElementById("correct" + questionNumber.toString()).innerHTML = "Correct!";
+                    document.getElementById("correct" + questionNumber.toString()).style.color = "green";
+                    document.getElementById("submit" + questionNumber.toString()).classList.add("disabled");
+                    document.getElementsByName("answer" + questionNumber.toString())[0].readOnly = true;
+                } else {
+                    document.getElementById("correct" + questionNumber.toString()).innerHTML = "Incorrect!";
+                    document.getElementById("correct" + questionNumber.toString()).style.color = "red";
+                } // if correct, else
             } // checkAnswer
             
-            // posts 'things' data to the server 
+            // posts 'things' (data) to the server 
             function postThings() {
+                
+                // time the page was closed for timeOnPage
                 var pageClosed = new Date();
+                
+                // variable to be converted to JSON
                 var serverInfo = {thisPage: 2,
                 metaData: {timeOnPage: pageClosed - pageOpened},
                 data: { answer1: document.getElementsByName("answer1").value,
@@ -155,6 +169,7 @@
                         answer3: document.getElementsByName("answer3").value,
                         answer4: document.getElementsByName("answer4").value}};
                 
+                // posts data to the backend
                 $.ajax({
                     type: "POST",
                     url: "/users/progress",
@@ -165,6 +180,7 @@
                     failure: function(){alert("post failed");}
                 });
             } // postThings
+            
         </script>
     </head>
     <body>
@@ -187,10 +203,12 @@
                     <h3>How much would you estimate is recyclable of the entire US waste stream?</h3>
                 
                     <div class="answers">
-                        <input type="text" name="answer1" maxlength="10" class="answerText"/>
+                        <input type="text" name="answer1" maxlength="20" class="answerText"/>
                     </div>
                     
-                    <a href="javascript:checkAnswer(1);checkQuestionStatus()" class="submitButton">Check Answer</a>
+                    <a href="javascript:checkAnswer(1);checkQuestionStatus()" id="submit1" class="submitButton">Check Answer</a>
+                    
+                    <p id="correct1" class="correct"></p>
                 </div>
                 <p id="infoText1" class="popup">&emsp; Annually, the US recycles 34.3% of solid waste on average. In 2018, UGA sent 5,474 tons of waste to landfills and recycled only <i>~1,200 tons</i> of materials (... and we have recycling bins across the entire campus).</p>
             </div>
@@ -201,10 +219,12 @@
                     <h3>Is this an example question?</h3>
                 
                     <div class="answers">
-                        <input type="text" name="answer2" maxlength="10" class="answerText"/>
+                        <input type="text" name="answer2" maxlength="20" class="answerText"/>
                     </div>
+
+                    <a href="javascript:checkAnswer(2);checkQuestionStatus()" id="submit2" class="submitButton">Check Answer</a>
                     
-                    <a href="javascript:checkAnswer(2);checkQuestionStatus()" class="submitButton">Check Answer</a>
+                    <p id="correct2" class="correct"></p>
                 </div>
                 <p id="infoText2" class="popup">&emsp; Not only does recycling waste save material that could end up in a landfill or in one of many bodies of water, it also saves copious amounts of energy compared to creating products from virgin materials (those that haven't been recycled).</p>
             </div>
@@ -215,10 +235,12 @@
                     <h3>Is this an example question?</h3>
                 
                     <div class="answers">
-                        <input type="text" name="answer3" maxlength="10" class="answerText"/>
+                        <input type="text" name="answer3" maxlength="20" class="answerText"/>
                     </div>
                     
-                    <a href="javascript:checkAnswer(3);checkQuestionStatus()" class="submitButton">Check Answer</a>
+                    <a href="javascript:checkAnswer(3);checkQuestionStatus()" id="submit3" class="submitButton">Check Answer</a>
+                    
+                    <p id="correct3" class="correct"></p>
                 </div>
                 <p id="infoText3" class="popup">&emsp; In the Athens-Clarke County recycling plant, an average of 80 tons of materials are sent to be recycled daily. Of the 80 tons, around 17.5% becomes contaminated by food or non-recyclable waste and sent to a landfill. Contamination often comes from "wishful recycling", or tossing out waste into a recycling bin without knowing if it's the correct bin. It's important to know what kind of materials can be put into a bin because otherwise the entire bin could become contaminated!</p>
             </div>
@@ -229,16 +251,18 @@
                     <h3>Is this an example question?</h3>
                 
                     <div class="answers">
-                        <input type="text" name="answer4" maxlength="10" class="answerText"/>
+                        <input type="text" name="answer4" maxlength="20" class="answerText"/>
                     </div>
                     
-                    <a href="javascript:checkAnswer(4);checkQuestionStatus()" class="submitButton">Check Answer</a>
+                    <a href="javascript:checkAnswer(4);checkQuestionStatus()" id="submit4" class="submitButton">Check Answer</a>
+                        
+                    <p id="correct4" class="correct"></p>
                 </div>
                 <p id="infoText4" class="popup">&emsp; This is example text. I call it this because I am using it as an example in the place of actual information. While not the same, it adds value through showcasing what future informational text might look like. I really wanted to fill up this space. I still want to. It's all I could ever really want.</p>
             </div>
         </div>
 
-        <a onclick="postThings()" id="npbutton" class="nextPageButton disabled">Next Page</a>
+        <a onclick="postThings()" href="javascript:void(0)" class="nextPageButton disabled">Next Page</a>
         
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>
@@ -253,5 +277,6 @@
         <script src="javascripts/draggable.js"></script>
         <script src="javascripts/game1.js"></script>
         <script src="javascripts/popup.js"></script>
+        <script src="javascripts/hashing.js"></script>
     </body>
 </html>
