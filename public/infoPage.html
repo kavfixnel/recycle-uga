@@ -97,28 +97,63 @@
             // checks if all questions are answered to enable the next page
             // button
             function checkQuestionStatus() {
-                var answerChoices = document.getElementsByClassName("answerChoice");
-                var checkedCount = 0;
+                var answerBlanks = document.getElementsByClassName("answerText");
+                var notEmptyCount = 0;
                 
                 // counts the amount of checked radio buttons (should be four to continue)
-                for(var i = 0; i < answerChoices.length; i++) {
-                    if(answerChoices[i].checked)
-                        checkedCount++;
+                for(var i = 0; i < answerBlanks.length; i++) {
+                    if(answerBlanks[i].value.length > 0)
+                        notEmptyCount++;
                 } // for each answer section
             
-                console.log(checkedCount.toString());
-                if(checkedCount >= 4)
+                if(notEmptyCount >= 4)
                     document.getElementsByClassName("nextPageButton").item(0).classList.remove("disabled");
-                    
+                else 
+                    document.getElementsByClassName("nextPageButton").item(0).classList.add("disabled");
+                
             } // checkQuestionStatus
             
+            //checks answer against known correct answer and displays
+            //text based on its correctness
+            function checkAnswer(questionNumber) {
+                var isCorrect;
+                
+                switch(questionNumber) {
+                    case 1:
+                        if(document.getElementsByName("answer1").value = "yes") {isCorrect = true;}
+                        else {isCorrect = false;}
+                        break;
+                    case 2:
+                        if(document.getElementsByName("answer2").value = "yes") {isCorrect = true;}
+                        else {isCorrect = false;}
+                        break;
+                    case 3:
+                        if(document.getElementsByName("answer3").value = "yes") {isCorrect = true;}
+                        else {isCorrect = false;}
+                        break;
+                    case 4:
+                        if(document.getElementsByName("answer4").value = "yes") {isCorrect = true;}
+                        else {isCorrect = false;}
+                } // switch for each question depending on question number
+                
+                if(isCorrect) 
+                    document.getElementById("question" + questionNumber.toString()).innerHTML +=
+                        "<p style='color:green; font-size:14px;'>Correct! :)</p>";
+                else 
+                    document.getElementById("question" + questionNumber.toString()).innerHTML +=
+                        "<p style='color:red; font-size:14px;'>Incorrect! :(</p>";
+                
+            } // checkAnswer
             
             // posts 'things' data to the server 
             function postThings() {
                 var pageClosed = new Date();
                 var serverInfo = {thisPage: 2,
                 metaData: {timeOnPage: pageClosed - pageOpened},
-                data: {}};
+                data: { answer1: document.getElementsByName("answer1").value,
+                        answer2: document.getElementsByName("answer2").value, 
+                        answer3: document.getElementsByName("answer3").value,
+                        answer4: document.getElementsByName("answer4").value}};
                 
                 $.ajax({
                     type: "POST",
@@ -149,15 +184,13 @@
             <div id="graphArea1" class="graphArea">
                 <div id="graphContainer1" class="graphContainer"></div>
                 <div id="question1" class="question">
-                    How much would you estimate is recyclable of the entire US waste stream?
+                    <h3>How much would you estimate is recyclable of the entire US waste stream?</h3>
                 
                     <div class="answers">
-                        <input type="radio" name="test0" value="1" class="answerChoice"/>&ensp;Option 1<br>
-                        <input type="radio" name="test0" value="2" class="answerChoice"/>&ensp;Option 2<br>
-                        <input type="radio" name="test0" value="3" class="answerChoice"/>&ensp;Option 3<br>
+                        <input type="text" name="answer1" maxlength="10" class="answerText"/>
                     </div>
                     
-                    <a href="javascript:checkQuestionStatus()" class="submitButton">Submit</a>
+                    <a href="javascript:checkAnswer(1);checkQuestionStatus()" class="submitButton">Check Answer</a>
                 </div>
                 <p id="infoText1" class="popup">&emsp; Annually, the US recycles 34.3% of solid waste on average. In 2018, UGA sent 5,474 tons of waste to landfills and recycled only <i>~1,200 tons</i> of materials (... and we have recycling bins across the entire campus).</p>
             </div>
@@ -165,15 +198,13 @@
             <div id="graphArea2" class="graphArea">
                 <div id="graphContainer2" class="graphContainer"></div>
                 <div id="question2" class="question">
-                    Is this an example question?
+                    <h3>Is this an example question?</h3>
                 
                     <div class="answers">
-                        <input type="radio" name="test1" value="1" class="answerChoice"/>&ensp;Yes<br>
-                        <input type="radio" name="test1" value="2" class="answerChoice"/>&ensp;No<br>
-                        <input type="radio" name="test1" value="3" class="answerChoice"/>&ensp;Maybe<br>
+                        <input type="text" name="answer2" maxlength="10" class="answerText"/>
                     </div>
                     
-                    <a href="javascript:checkQuestionStatus()" class="submitButton">Submit</a>
+                    <a href="javascript:checkAnswer(2);checkQuestionStatus()" class="submitButton">Check Answer</a>
                 </div>
                 <p id="infoText2" class="popup">&emsp; Not only does recycling waste save material that could end up in a landfill or in one of many bodies of water, it also saves copious amounts of energy compared to creating products from virgin materials (those that haven't been recycled).</p>
             </div>
@@ -181,15 +212,13 @@
             <div id="graphArea3" class="graphArea">
                 <div id="graphContainer3" class="graphContainer"></div>
                 <div id="question3" class="question">
-                    Is this an example question?
+                    <h3>Is this an example question?</h3>
                 
                     <div class="answers">
-                        <input type="radio" name="test2" value="1" class="answerChoice"/>&ensp;Yes<br>
-                        <input type="radio" name="test2" value="2" class="answerChoice"/>&ensp;No<br>
-                        <input type="radio" name="test2" value="3" class="answerChoice"/>&ensp;Maybe<br>
+                        <input type="text" name="answer3" maxlength="10" class="answerText"/>
                     </div>
                     
-                    <a href="javascript:checkQuestionStatus()" class="submitButton">Submit</a>
+                    <a href="javascript:checkAnswer(3);checkQuestionStatus()" class="submitButton">Check Answer</a>
                 </div>
                 <p id="infoText3" class="popup">&emsp; In the Athens-Clarke County recycling plant, an average of 80 tons of materials are sent to be recycled daily. Of the 80 tons, around 17.5% becomes contaminated by food or non-recyclable waste and sent to a landfill. Contamination often comes from "wishful recycling", or tossing out waste into a recycling bin without knowing if it's the correct bin. It's important to know what kind of materials can be put into a bin because otherwise the entire bin could become contaminated!</p>
             </div>
@@ -197,15 +226,13 @@
             <div id="graphArea4" class="graphArea">
                 <div id="graphContainer4" class="graphContainer"></div>
                 <div id="question4" class="question">
-                    Is this an example question?
+                    <h3>Is this an example question?</h3>
                 
                     <div class="answers">
-                        <input type="radio" name="test3" value="1" class="answerChoice"/>&ensp;Yes<br>
-                        <input type="radio" name="test3" value="2" class="answerChoice"/>&ensp;No<br>
-                        <input type="radio" name="test3" value="3" class="answerChoice"/>&ensp;Maybe<br>
+                        <input type="text" name="answer4" maxlength="10" class="answerText"/>
                     </div>
                     
-                    <a href="javascript:checkQuestionStatus()" class="submitButton">Submit</a>
+                    <a href="javascript:checkAnswer(4);checkQuestionStatus()" class="submitButton">Check Answer</a>
                 </div>
                 <p id="infoText4" class="popup">&emsp; This is example text. I call it this because I am using it as an example in the place of actual information. While not the same, it adds value through showcasing what future informational text might look like. I really wanted to fill up this space. I still want to. It's all I could ever really want.</p>
             </div>

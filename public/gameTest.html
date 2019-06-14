@@ -83,27 +83,7 @@ var myGameArea =
 					isClicked = true;					
 				}
 			}
-			
-			
-			/*
-			if(isClicked) 
-			{
-				isClicked = false;
-				
-				if(isCollided(waterBottle, recycleBin))
-				{
-					feedback.innerHTML = "Good Job!\nWater Bottles are Recyclable";
-				}
-				
-				else if(isCollided(waterBottle, trashBin))
-				{
-					feedback.innerHTML = "Hey that can be recycled!";
-				}
-			}
-			
-			else if(waterBottle.clicked())
-				isClicked = true;
-			*/
+
 		})		
 		
 		window.addEventListener('mouseup', function (e) {
@@ -136,6 +116,7 @@ var myGameArea =
 function startGame()
 {
 	//Creates a game hand
+    
 	hand = new component(30, 30, "images/hand.jpg", 10, 120, "image");
 	
 	//Creates cans
@@ -149,6 +130,7 @@ function startGame()
 	
 	myGameArea.start();
 }
+
 
 //Function to create trash
 function trash(width, height, color, x, y, type, recycleable)
@@ -248,8 +230,7 @@ function component(width, height, color, x, y, type)
 		  clicked = false;
 		}
 		return clicked;
-	}		
-	
+	}	
 }
 
 
