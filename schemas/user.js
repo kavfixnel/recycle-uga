@@ -2,7 +2,7 @@ let mongoose = require('mongoose');
 
 let schema = mongoose.Schema;
 
-let userSchema = new Schema({
+let userSchema = new schema({
 	id: {
 		type: String,
 		required: true,
@@ -12,12 +12,14 @@ let userSchema = new Schema({
 		type: Boolean,
 		default: false
 	},
+	cookie:  String,
+	cookieExp: Date,
 	created: {
 		type: Date,
 		default: Date.now()
 	},
 	progress: {
-		type: int,
+		type: Number,
 		default: 0,
 	}
 });
