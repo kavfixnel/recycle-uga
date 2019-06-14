@@ -5,18 +5,18 @@ var logger = require('morgan');
 
 var db = require('./src/database')
 
-//var indexRouter = require('./routes/index.js');
 var usersRouter = require('./routes/users.js');
+var loginRouter = require('./routes/login.js')
 
 var app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
-//app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static('public'));
 
-//app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/login', loginRouter)
+
+app.use(express.static('public'));
 
 module.exports = app;
