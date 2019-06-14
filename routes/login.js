@@ -28,7 +28,7 @@ router.get('/cb', async (req, res) => {
 				if(user == null) {
 					// New user needs to be created
 					var newCookie = random(30)
-					new userModel({ id : ans[1], ugaStudent : true, cookie : newCookie, cookieExp: (Date.now() + 86400000) })
+					await userModel.create({ id : ans[1], ugaStudent : true, cookie : newCookie, cookieExp: (Date.now() + 86400000) })
 					res.cookie('sessionCookie', newCookie, {maxAge:86400000})
 					console.log('New user created')
 				} else {
