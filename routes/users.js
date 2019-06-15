@@ -11,8 +11,19 @@ router.use((req, res, next) => {
 });
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-	res.send('respond with a resource');
+router.get('/', async (req, res, next) => {
+	var obj = {}
+	var foundUser = await userModel.findOne({cookie: req.cookies.sessionCookie})
+	if(foundUser == null) {
+		obj.msg = "No user with that cookie found"
+		obj.found = false
+		res.send(obj)
+	} else {
+		obj.userName = foundUser.id
+		obj.found = true
+		res.send(obj)
+	}
+	res.status(500).send("Server Error")
 });
 
 /* Update user progress */
