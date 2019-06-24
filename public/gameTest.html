@@ -167,6 +167,7 @@ function startGame()
 //Function to create trash
 function trash(width, height, color, x, y, type, recycleable, charm, thrownAway)
 {
+	name = new component(width, height, imgSrc, x, y, "image");   
 	this.type = type;
 	this.recycleable = recycleable;
 	this.charm = charm;
