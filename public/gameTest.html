@@ -65,14 +65,41 @@ var myGameArea =
 				{
 					isClicked = false;
 					
-					if(isCollided(myTrash[i], recycleBin))
+					
+					
+					if(isCollided(currentTrash, recycleBin))
 					{
-						feedback.innerHTML = "trash collided with recycle bin";
+						
+						if(currentTrash.recycleable)
+							{
+								feedback.innerHTML = "Good Job this is Recyclable";
+								myTrash[i].thrownAway = true;
+							}
+							
+						else
+							feedback.innerHTML = "Hey you can't recycle this!";
 					}
 							
-					else if(isCollided(myTrash[i], trashBin))
+					else if(isCollided(currentTrash, trashBin))
 					{
-						feedback.innerHTML = "trash collided with trash bin";
+						if(currentTrash.recycleable)
+							feedback.innerHTML = "Hey this is Recyclable!";
+						else
+						{
+							feedback.innerHTML = "Good job this can't be recycled";
+							myTrash[i].thrownAway = true;
+						}
+					}
+					
+					else if(isCollided(currentTrash, charmBin))
+					{
+						if(currentTrash.charm)
+						{
+							feedback.innerHTML = "Nice Job this item requires CHaRM to be recycled";
+							myTrash[i].thrownAway = true;
+						}
+						else
+							feedback.innerHTML = "Nope this doesn't go here";	
 					}
 						
 				}
@@ -80,6 +107,7 @@ var myGameArea =
 				else if(myTrash[i].clicked())
 				{
 					currentTrash = myTrash[i];
+					
 					isClicked = true;					
 				}
 			}
@@ -122,20 +150,27 @@ function startGame()
 	//Creates cans
 	recycleBin = new component(150, 225, "images/recyclebin.jpg", 30, 250, "image");
 	trashBin = new component(150, 225, "images/trashcan.png", 550, 250, "image");
+	charmBin = new component(150, 225, "images/paperbin.jpg", 300, 250, "image");
+	charmLogo = new component(100, 60, "images/CHaRM.jpg", 325, 380, "image");
 	
 	//Creates garbage
-	waterBottle = new trash(60, 60, "images/bottle.jpg", 30, 30, "image", true);
+	waterBottle = new trash(60, 60, "images/bottle.jpg", 30, 30, "image", true, false, false);	
+	newsPaper = new trash(60, 60, "images/newspaper.jpg", 200, 30, "image", true, false, false);
+	plasticBag = new trash(60, 60, "images/plasticbag.jpg", 350, 30, "image", false, false, false);
+	battery = new trash(60, 60, "images/battery.png", 350, 60, "image", false, true, false);
 	
-	newsPaper = new trash(60, 60, "images/newspaper.jpg", 200, 30, "image", true);
 	
 	myGameArea.start();
 }
 
 
 //Function to create trash
-function trash(width, height, color, x, y, type, recycleable)
+function trash(width, height, color, x, y, type, recycleable, charm, thrownAway)
 {
 	this.type = type;
+	this.recycleable = recycleable;
+	this.charm = charm;
+	this.thrownAway = thrownAway;
 	
 	if(type == "image")
 	{
@@ -256,6 +291,8 @@ function updateGameArea()
 	
 	recycleBin.update();
 	trashBin.update();
+	charmBin.update();
+	charmLogo.update();
 	
 	
 	for(i = 0; i < myTrash.length; i++)
@@ -266,7 +303,8 @@ function updateGameArea()
 			currentTrash.x = myGameArea.x - (currentTrash.width/4);
 		}
 		
-		myTrash[i].update();
+		if(!myTrash[i].thrownAway)
+			myTrash[i].update();
 	}
 	
 	hand.update();
