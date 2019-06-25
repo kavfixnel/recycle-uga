@@ -36,7 +36,7 @@ router.get('/cb', async (req, res) => {
 
 					console.log(`New cookie (${newCookie}) issued for ${ans[1]}`)
 
-					res.cookie('sessionCookie', newCookie, {maxAge:86400000}).send()
+					res.cookie('sessionCookie', newCookie, {maxAge:86400000})
 				}
 			}
 		} catch (error) {
