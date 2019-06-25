@@ -23,6 +23,7 @@ canvas {
 <script>
 var hand;
 var currentTrash;
+var trashThrownAway = 1;
 var myTrash = [];
 var clickX;
 var clickY;
@@ -66,37 +67,55 @@ var myGameArea =
 					isClicked = false;
 					
 					
-					
+					//When Colliding with the Recycle Bin
 					if(isCollided(currentTrash, recycleBin))
 					{
 						
+						//Current Trash is Recyclable
 						if(currentTrash.recycleable)
 							{
 								feedback.innerHTML = "Good Job this is Recyclable";
 								myTrash[i].thrownAway = true;
+								myTrash[i].current = false;
+								trashThrownAway++;
 							}
-							
+						
+						//Current Trash needs CHaRM
+						else if(currentTrash.charm)
+							feedback.innerHTML = "This is Recyclable, But it requires a special Bin";	
+						
+						//Current Trash is not Recyclable
 						else
 							feedback.innerHTML = "Hey you can't recycle this!";
 					}
-							
+						
+					//When Colliding with the Trash Bin
 					else if(isCollided(currentTrash, trashBin))
 					{
-						if(currentTrash.recycleable)
+						//Current Trash is Recyclable or needs CHaRM
+						if(currentTrash.recycleable || currentTrash.charm)
 							feedback.innerHTML = "Hey this is Recyclable!";
+
+						//Current Trash is just Trash
 						else
 						{
 							feedback.innerHTML = "Good job this can't be recycled";
 							myTrash[i].thrownAway = true;
+							myTrash[i].current = false;
+							trashThrownAway++;
 						}
 					}
 					
+					//When Colliding with the Charm Bin
 					else if(isCollided(currentTrash, charmBin))
 					{
+						//Current Trash is CHaRM
 						if(currentTrash.charm)
 						{
 							feedback.innerHTML = "Nice Job this item requires CHaRM to be recycled";
 							myTrash[i].thrownAway = true;
+							myTrash[i].current = false;
+							trashThrownAway++;
 						}
 						else
 							feedback.innerHTML = "Nope this doesn't go here";	
@@ -104,7 +123,7 @@ var myGameArea =
 						
 				}
 				
-				else if(myTrash[i].clicked())
+				else if(myTrash[i].clicked() && myTrash[i].current)
 				{
 					currentTrash = myTrash[i];
 					
@@ -154,29 +173,60 @@ function startGame()
 	charmLogo = new component(100, 60, "images/CHaRM.jpg", 325, 380, "image");
 	
 	//Creates garbage
-	waterBottle = new trash(60, 60, "images/bottle.jpg", 30, 30, "image", true, false, false);	
-	newsPaper = new trash(60, 60, "images/newspaper.jpg", 200, 30, "image", true, false, false);
-	plasticBag = new trash(60, 60, "images/plasticbag.jpg", 350, 30, "image", false, false, false);
-	battery = new trash(60, 60, "images/battery.png", 350, 60, "image", false, true, false);
+	//For CHaRM Bin
+	battery = new trash(60, 60, "images/battery.png", 30, 90, "image", false, true);
+	bulb = new trash(60, 60, "images/bulb.jpg", 30, 90, "image", false, true);
+	styrofoam = new trash(60, 60, "images/styrofoam.jpg", 30, 90, "image", false, true);
+	bubbleWrap = new trash(60, 60, "images/bubblewrap.jpg", 30, 90, "image", false, true);
+	motorOil = new trash(60, 60, "images/oil.jpg", 30, 90, "image", false, true);
+	plasticBag = new trash(60, 60, "images/plasticbag.jpg", 10, 30, "image", false, true);
 	
 	
+	//For Trash Bin
+	dirtyAlumFoil = new trash(60, 60, "images/dirtyafoil.jpg", 30, 30, "image", false, false);
+	paperPlate = new trash(60, 60, "images/paperplate.jpg", 50, 30, "image", false, false);
+	plasticCutlery = new trash(60, 60, "images/plasticcut.jpg", 70, 30, "image", false, false);
+	straw = new trash(60, 60, "images/straw.jpg", 100, 30, "image", false, false);
+	napkin = new trash(60, 60, "images/napkin.jpg", 120, 30, "image", false, false);
+	usedCoffeeCup = new trash(60, 60, "images/usedCoffeeCup.jpg", 140, 30, "image", false, false);
+	greasyPizzaBox = new trash(60, 60, "images/greasyPBox.jpg", 160, 30, "image", false, false);
+	
+	
+	//For Recycle Bin
+	waterBottle = new trash(60, 60, "images/bottle.jpg", 30, 60, "image", true, false);	
+	alumCan = new trash(60, 60, "images/sodacan.png", 200, 60, "image", true, false);
+	cardBox = new trash(60, 60, "images/cardBox.jpg", 200, 60, "image", true, false);
+	steelCan = new trash(60, 60, "images/steelcan.jpg", 200, 60, "image", true, false);
+	cleanAFoil = new trash(60, 60, "images/cleanAFoil.jpg", 200, 60, "image", true, false);
+	aerosol = new trash(60, 60, "images/aerosol.jpg", 200, 60, "image", true, false);
+	jug = new trash(60, 60, "images/emptyJug.jpg", 200, 60, "image", true, false);
+	coffeeCov = new trash(60, 60, "images/coffeeCover.jpg", 200, 60, "image", true, false);
+	tupper = new trash(60, 60, "images/tup.jpg", 200, 60, "image", true, false);
+	emptyShampoo = new trash(60, 60, "images/emptyShampoo.jpg", 200, 60, "image", true, false);
+	
+	
+	//Shuffles the items in the trash array
+	shuffleArray(myTrash);
 	myGameArea.start();
 }
 
 
 //Function to create trash
-function trash(width, height, color, x, y, type, recycleable, charm, thrownAway)
+function trash(width, height, imgSrc, x, y, type, recycleable, charm)
 {
 	name = new component(width, height, imgSrc, x, y, "image");   
 	this.type = type;
 	this.recycleable = recycleable;
 	this.charm = charm;
-	this.thrownAway = thrownAway;
+	var thrownAway;
+	this.thrownAway = false;
+	var current;
+	this.current = false;
 	
 	if(type == "image")
 	{
 		this.image = new Image();
-		this.image.src = color;
+		this.image.src = imgSrc;
 	}
 	
 	this.width = width;
@@ -217,6 +267,17 @@ function trash(width, height, color, x, y, type, recycleable, charm, thrownAway)
 	}		
 	
 	myTrash.push(this);
+}
+
+
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) 
+	{
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
 }
 
 
@@ -296,18 +357,23 @@ function updateGameArea()
 	charmLogo.update();
 	
 	
-	for(i = 0; i < myTrash.length; i++)
+	for(i = 0; i < trashThrownAway; i++)
 	{
-		if(isClicked)
+		if(!myTrash[i].thrownAway)
+		{
+			myTrash[i].current = true;
+			myTrash[i].update();
+			
+		}			
+		
+	}
+	
+	if(isClicked)
 		{
 			currentTrash.y = myGameArea.y - (currentTrash.height/4);
 			currentTrash.x = myGameArea.x - (currentTrash.width/4);
 		}
 		
-		if(!myTrash[i].thrownAway)
-			myTrash[i].update();
-	}
-	
 	hand.update();
 }
 
