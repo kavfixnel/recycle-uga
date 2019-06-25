@@ -38,13 +38,12 @@ router.get('/cb', async (req, res) => {
 					var newCookie = random(30)
 
 					// Update the cookie of the user
-					userModule.findOneAndUpdate({id:ans[1]}, {$set: {cookie: newCookie}})
-					userModule.findOneAndUpdate({id:ans[1]}, {$set: {cookieExp: (Date.now() + 86400000)}})
+					userModel.findOneAndUpdate({id:ans[1]}, {$set: {cookie: newCookie}})
+					userModel.findOneAndUpdate({id:ans[1]}, {$set: {cookieExp: (Date.now() + 86400000)}})
 
 					console.log(`New cookie (${newCookie}) issued for ${ans[1]}`)
 
 					res.cookie('sessionCookie', newCookie, {maxAge:86400000})
-		
 				}
 			}
 		} catch (error) {
@@ -58,11 +57,6 @@ router.get('/cb', async (req, res) => {
 	// Something went wrong and redirect the user to the homepage
 	console.error("Something went wrong with /login/cb")
 	res.redirect('https://recycle-uga.herokuapp.com/')
-
-
-
-
-
 });
 
 /* GET users listing. */
