@@ -8,14 +8,13 @@ router.get('/', async (req, res) => {
 	var user = await userModule.findOne({cookie: req.cookies.sessionCookie})
 
 	// Check 
-	console.log(user)
 	if(user) {
-		console.log("Inside")
 		var daysSinceCookieIssue = ((new Date()).getTime()-(new Date(user.cookieExp)).getTime())/(24*60*60*1000)
 		if(daysSinceCookieIssue > 1.0) {
 			res.redirect('/login')
 		} else {
 			// Issue the new module page
+			res.send(`Issuing next module page for ${user.id}`)
 		}
 	} else {
 		res.redirect('/login')
