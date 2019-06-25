@@ -31,8 +31,8 @@ router.get('/cb', async (req, res) => {
 					var newCookie = random(30)
 
 					// Update the cookie of the user
-					userModel.findOneAndUpdate({id:ans[1]}, {$set: {cookie: newCookie}})
-					userModel.findOneAndUpdate({id:ans[1]}, {$set: {cookieExp: (Date.now() + 86400000)}})
+					await userModel.findOneAndUpdate({id:ans[1]}, {$set: {cookie: newCookie}})
+					await userModel.findOneAndUpdate({id:ans[1]}, {$set: {cookieExp: (Date.now() + 86400000)}})
 
 					console.log(`New cookie (${newCookie}) issued for ${ans[1]}`)
 
