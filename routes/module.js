@@ -23,7 +23,7 @@ router.use(async (req, res, next) => {
 		console.error(error)
 		res.status(500).send("Error [1] in module.js")
 	}
-	res.status(500).send("Error [2] in module.js")
+	res.status.send("Error [2] in module.js")
 });
 
 router.get('/', async (req, res) => {

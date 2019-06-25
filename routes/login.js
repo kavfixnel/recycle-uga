@@ -16,7 +16,7 @@ router.get('/cb', async (req, res) => {
 			const response = await axios.get(url)
     			var ans = response.data.split('\n')
 			if(ans[0] == 'yes') {
-				// Ticket was avlid and ans[1] has username
+				// Ticket was valid and ans[1] has username
 				var user = await userModel.findOne( { id : ans[1] } )
 				if(!user) {
 					// New user needs to be created
@@ -44,12 +44,12 @@ router.get('/cb', async (req, res) => {
 		}
 		
 		// Redirect the user to the homepage
-		res.redirect('/')
+		res.redirect('/').send()
 	}
 
 	// Something went wrong and redirect the user to the homepage
 	console.error("Something went wrong with /login/cb")
-	res.redirect('/')
+	res.redirect('/').send()
 });
 
 /* GET users listing. */
