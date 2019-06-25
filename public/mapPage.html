@@ -16,16 +16,12 @@
         <!-- JavaScript functions-->
         <script>
             var pageOpened;
+            var map;
+            var infoWindow;
             
             window.onload = function() {
                 pageOpened = new Date();
             } // window.onload
-            
-            function initMap() {
-                var map = new google.maps.Map(document.getElementById('map'), {
-                    center: {lat: 33.944895,lng: -83.376212}, 
-                    zoom: 14});
-            } // initMap
             
             function postThings() {
                 var pageClosed = new Date();
@@ -55,6 +51,8 @@
             </div>
         </nav>
 
+        <p style="text-align: center; margin-top: 15px">Browse the map to see recycling locations in Athens!</p>
+        
         <div id="map" style="height: 600px;"></div>
         
         <a onclick="postThings()" href="javascript:void(0)" class="nextPageButton">Next Page</a>
@@ -65,7 +63,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
         <!-- Google Maps API -->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-uwFxTWbqZA1X1oDiGDhMitcDmjohUU0&callback=initMap"
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-uwFxTWbqZA1X1oDiGDhMitcDmjohUU0&libraries=places&callback=initMap"
                 async defer></script>
         
         <!-- CanvasJS for creating charts & graphs with animation-->
@@ -76,5 +74,6 @@
         <script src="javascripts/draggable.js"></script>
         <script src="javascripts/game1.js"></script>
         <script src="javascripts/popup.js"></script>
+        <script src="javascripts/maps.js"></script>
     </body>
 </html>

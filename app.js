@@ -1,22 +1,24 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+var express = require('express')
+var path = require('path')
+var cookieParser = require('cookie-parser')
+var logger = require('morgan')
 
 var db = require('./src/database')
 
-var usersRouter = require('./routes/users.js');
+var usersRouter = require('./routes/users.js')
 var loginRouter = require('./routes/login.js')
+var moduleRouter = require('./routes/module.js')
 
-var app = express();
+var app = express()
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(cookieParser());
+app.use(logger('dev'))
+app.use(express.json())
+app.use(cookieParser())
 
-app.use('/users', usersRouter);
+app.use('/users', usersRouter)
 app.use('/login', loginRouter)
+app.use('/module', moduleRouter)
 
-app.use(express.static('public'));
+app.use(express.static('public'))
 
-module.exports = app;
+module.exports = app
