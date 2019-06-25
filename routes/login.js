@@ -5,17 +5,10 @@ var crypto = require('crypto')
 
 var userModel = require('../schemas/user.js')
 
-// Check if the user has to log in
-router.use((req, res, next) => {
-	//req.cookie()
-	console.log("Checked cookie")
-	next()
-});
-
 router.get('/cb', async (req, res) => {
 	if(req.query.ticket == null) {
 		// There is no ticket avaliable
-		res.redirect('https://recycle-uga.herokuapp.com/')
+		res.redirect('/')
 	} else {
 		// Get the ticket contents
 		try {
@@ -43,7 +36,7 @@ router.get('/cb', async (req, res) => {
 
 					console.log(`New cookie (${newCookie}) issued for ${ans[1]}`)
 
-					res.cookie('sessionCookie', newCookie, {maxAge:86400000})
+					res.cookie('sessionCookie', newCookie, {maxAge:86400000}).send()
 				}
 			}
 		} catch (error) {
@@ -51,12 +44,12 @@ router.get('/cb', async (req, res) => {
 		}
 		
 		// Redirect the user to the homepage
-		res.redirect('https://recycle-uga.herokuapp.com/')
+		res.redirect('/')
 	}
 
 	// Something went wrong and redirect the user to the homepage
 	console.error("Something went wrong with /login/cb")
-	res.redirect('https://recycle-uga.herokuapp.com/')
+	res.redirect('/')
 });
 
 /* GET users listing. */
