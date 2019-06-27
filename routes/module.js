@@ -26,7 +26,7 @@ router.use(async (req, res, next) => {
 		console.error(error)
 		res.status(500).send("Error [1] in module.js")
 	}
-	res.status.send("Error [2] in module.js")
+	res.status(500).send("Error [2] in module.js")
 });
 
 /* Send the next avaliable module page */
@@ -72,7 +72,7 @@ router.post('/progress', async (req, res) => {
 		if(req.body.page == user.progress) {
 			var name = ['preSurvey', 'pageOne', 'pageTwo', 'pageThree', 'postSurvey']
 			user.set('progress', user.progress + 1)
-			console.log(res.body)
+			console.log(req.body)
 			user.set(name[req.body.page], res.body.data)
 			user.save()
 			res.status(200).send()
