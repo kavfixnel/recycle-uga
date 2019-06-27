@@ -24,31 +24,29 @@
             
             // posts 'things' data to the server 
             function postThings() {
-                var radios = document.getElementsByName("gender");
-                var checkedRadio;
-                
-                for(var i = 0; i < radios.length; i++) {
-                    if(radios[i].checked)
-                        checkedRadio = radios[i].value;
-                } // for each radio button, find checked option
-                
+                // saves time next page button is clicked to calculate time on page
                 var pageClosed = new Date();
                 
+                // arrays to hold answers for 1-5 questions and t/f questions
                 var questionAnswers = [];
                 var tfAnswers = [];
                 
+                // for each question, skims answers to find checked radio button and
+                // pushes the value into the array
                 for(var qCount = 1; qCount <= numQuestions; qCount++) {
                     var currentAnswers = document.getElementsByName("question" + qCount);
                     
                     for(var i = 0; i < currentAnswers.length; i++) {
                         if(currentAnswers[i].checked) 
-                            if(qCount < 5)
+                            
+                            // question numbers greater than 5 are t/f questions
+                            if(qCount < 5) 
                                 questionAnswers.push(currentAnswers[i].value);
                             else
                                 tfAnswers.push(currentAnswers[i].value);
+                        
                     } // for each answer choice, find checked option
-                    
-                } // for each 1-5 question
+                } // for each question
             
                 var serverInfo = {thisPage: 1, 
                         metaData: {timeOnPage: pageClosed - pageOpened},
@@ -63,7 +61,7 @@
                     data: JSON.stringify(serverInfo),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: function(data){alert(data);},
+                    success: function(){alert("post successful");},
                     failure: function(){alert("post failed");}
                 });
             } // postThings
@@ -135,9 +133,6 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-        <!-- CanvasJS for creating charts & graphs with animation-->
-        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
         <!-- Importing js files from javascripts folder in public -->
         <script src="javascripts/graphs.js"></script>

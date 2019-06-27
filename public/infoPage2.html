@@ -35,14 +35,14 @@
                     
                     switch(i) {
                         case 1: // info for graph 1
-                            title = "UGA Disposal Practices, 2018";
+                            title = "We Have Graphs";
                             type = "pie";            
                             pieData = [{y: 21.9, indexLabel: "Recycled", label: "Recycled", exploded: true}, 
                                            {y: 78.1, indexLabel: "Landfilled", label: "Landfilled"}];
                             break; // source: the powerpoint module
                             
                         case 2: // info for graph 2
-                            title = "Energy Savings When Recycled, by Material";
+                            title = "A Second Graph";
                             type = "column";
                             pieData = [{y: 95, indexLabel: "Aluminum", label: "Aluminum"}, 
                                         {y: 90, indexLabel: "Plastic", label: "Plastic"},
@@ -51,14 +51,14 @@
                             break; // source: https://www.greenlivingtips.com/articles/recycling-energy-savings.html
                             
                         case 3: // info for graph 3
-                            title = "Contaminated Materials Recycled by Percentage";
+                            title = "This is a Graph";
                             type = "pie";
                             pieData = [{y: 17.5, indexLabel: "Contaminated", label: "Contaminated", exploded: true},
                                         {y: 82.5, indexLabel: "Recycled", label: "Recycled"}];
                             break; // source: https://www.redandblack.com/athensnews/wishful-recycling-turns-wasteful-athens-clarke-county-warns-of-recycling/article_7c927d42-6f64-11e8-8ed1-ef48e8d384a2.html
                             
                         case 4:  // info for graph 4
-                            title = "UGA Disposal Practices, 2018";
+                            title = "Another Graph";
                             type = "pie";            
                             pieData = [{y: 21.9, indexLabel: "Recycled", label: "Recycled", exploded: true}, 
                                            {y: 78.1, indexLabel: "Landfilled", label: "Landfilled"}];
@@ -83,7 +83,7 @@
                     makePopupText("graphArea" + graphnum, "infoText" + graphnum, "question" + graphnum);
                     
                     // if the graph id is even, float right & text left, else float left & text right
-                    if(i % 2 == 0) {
+                    if(i % 2 == 1) {
                         // floating the graph area and container to the right
                         document.getElementById("graphArea" + graphnum).style.float = "right";
                         document.getElementById("graphContainer" + graphnum).style.float = "right";
@@ -193,7 +193,7 @@
             <div id="graphArea1" class="graphArea">
                 <div id="graphContainer1" class="graphContainer"></div>
                 <div id="question1" class="question">
-                    <h3>How much would you estimate is recyclable of the entire US waste stream?</h3>
+                    <h3>Are there more example questions?</h3>
                 
                     <div class="answers">
                         <input type="text" name="answer1" maxlength="20" class="answerText"/>
@@ -203,13 +203,13 @@
                     
                     <p id="correct1" class="correct"></p>
                 </div>
-                <p id="infoText1" class="popup">&emsp; Annually, the US recycles 34.3% of solid waste on average. In 2018, UGA sent 5,474 tons of waste to landfills and recycled only <i>~1,200 tons</i> of materials (... and we have recycling bins across the entire campus).</p>
+                <p id="infoText1" class="popup">&emsp; This is example text. I call it this because I am using it as an example in the place of actual information. While not the same, it adds value through showcasing what future informational text might look like. I really wanted to fill up this space. I still want to. It's all I could ever really want.</p>
             </div>
 
             <div id="graphArea2" class="graphArea">
                 <div id="graphContainer2" class="graphContainer"></div>
                 <div id="question2" class="question">
-                    <h3>Is this an example question?</h3>
+                    <h3>Are there more example questions?</h3>
                 
                     <div class="answers">
                         <input type="text" name="answer2" maxlength="20" class="answerText"/>
@@ -219,13 +219,13 @@
                     
                     <p id="correct2" class="correct"></p>
                 </div>
-                <p id="infoText2" class="popup">&emsp; Not only does recycling waste save material that could end up in a landfill or in one of many bodies of water, it also saves copious amounts of energy compared to creating products from virgin materials (those that haven't been recycled).</p>
+                <p id="infoText2" class="popup">&emsp; This is example text. I call it this because I am using it as an example in the place of actual information. While not the same, it adds value through showcasing what future informational text might look like. I really wanted to fill up this space. I still want to. It's all I could ever really want.</p>
             </div>
 
             <div id="graphArea3" class="graphArea">
                 <div id="graphContainer3" class="graphContainer"></div>
                 <div id="question3" class="question">
-                    <h3>Is this an example question?</h3>
+                    <h3>Are there more example questions?</h3>
                 
                     <div class="answers">
                         <input type="text" name="answer3" maxlength="20" class="answerText"/>
@@ -235,13 +235,13 @@
                     
                     <p id="correct3" class="correct"></p>
                 </div>
-                <p id="infoText3" class="popup">&emsp; In the Athens-Clarke County recycling plant, an average of 80 tons of materials are sent to be recycled daily. Of the 80 tons, around 17.5% becomes contaminated by food or non-recyclable waste and sent to a landfill. Contamination often comes from "wishful recycling", or tossing out waste into a recycling bin without knowing if it's the correct bin. It's important to know what kind of materials can be put into a bin because otherwise the entire bin could become contaminated!</p>
+                <p id="infoText3" class="popup">&emsp; This is example text. I call it this because I am using it as an example in the place of actual information. While not the same, it adds value through showcasing what future informational text might look like. I really wanted to fill up this space. I still want to. It's all I could ever really want.</p>
             </div>
 
             <div id="graphArea4" class="graphArea">
                 <div id="graphContainer4" class="graphContainer"></div>
                 <div id="question4" class="question">
-                    <h3>Is this an example question?</h3>
+                    <h3>Are there more example questions?</h3>
                 
                     <div class="answers">
                         <input type="text" name="answer4" maxlength="20" class="answerText"/>
