@@ -13,20 +13,20 @@ router.use(async (req, res, next) => {
 		if(user) {
 			var daysSinceCookieIssue = ((new Date()).getTime()-(new Date(user.cookieExp)).getTime())/(24*60*60*1000)
 			if(daysSinceCookieIssue > 1.0) {
-				res.redirect('/login')
+				res.redirect('/login').send()
 			} else {
 				// Everyhting is fine
 				next()
 			}
 		} else {
-			// Co user with that cookie found
-			res.redirect('/login')
+			// No user with that cookie found
+			res.redirect('/login').send()
 		}
 	} catch(error) {
 		console.error(error)
 		res.status(500).send("Error [1] in module.js")
 	}
-	res.status.send("Error [2] in module.js")
+	res.status(500).send("Error [2] in module.js")
 });
 
 /* Send the next avaliable module page */
@@ -71,26 +71,10 @@ router.post('/progress', async (req, res) => {
 		var user = await userModule.findOne({cookie: req.cookies.sessionCookie})
 		if(req.body.page == user.progress) {
 			var name = ['preSurvey', 'pageOne', 'pageTwo', 'pageThree', 'postSurvey']
-			await userModule.findOneAndUpdate({cookie: req.cookies.sessionCookie}, {$inc: {progress: 1}})
-			switch(req.body.page) {
-				case 0:
-					await userModule.findOneAndUpdate({cookie: req.cookies.sessionCookie}, {$set: {preSurvey: req.body.page}})
-					break
-				case 1:
-					await userModule.findOneAndUpdate({cookie: req.cookies.sessionCookie}, {$set: {pageOne: req.body.page}})
-					break
-				case 2:
-					await userModule.findOneAndUpdate({cookie: req.cookies.sessionCookie}, {$set: {pageTwo: req.body.page}})
-					break
-				case 3:
-					await userModule.findOneAndUpdate({cookie: req.cookies.sessionCookie}, {$set: {pageThree: req.body.page}})
-					break
-				case 4:
-					await userModule.findOneAndUpdate({cookie: req.cookies.sessionCookie}, {$set: {postSurvey: req.body.page}})
-					break
-				default:
-					res.status(500).send("Error [5] in module.js")
-			}
+			user.set('progress', user.progress + 1)
+			console.log(req.body)
+			user.set(name[req.body.page], req.body.data)
+			user.save()
 			res.status(200).send()
 		} else {
 			res.status(400).send()
