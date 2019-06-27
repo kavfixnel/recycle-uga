@@ -74,19 +74,22 @@ router.post('/progress', async (req, res) => {
 			await userModule.findOneAndUpdate({cookie: req.cookies.sessionCookie}, {$inc: {progress: 1}})
 			switch(req.body.page) {
 				case 0:
-					await userModule.findOneAndUpdate({cookie: req.cookies.sessionCookie}, {$set: {preSurvey: req.body.page}})
+					console.log(">>>Pre Survey run<<<")
+					await userModule.findOneAndUpdate({cookie: req.cookies.sessionCookie}, {$set: {preSurvey: req.body.data}})
 					break
 				case 1:
-					await userModule.findOneAndUpdate({cookie: req.cookies.sessionCookie}, {$set: {pageOne: req.body.page}})
+					console.log(">>>Page One run<<<")
+					await userModule.findOneAndUpdate({cookie: req.cookies.sessionCookie}, {$set: {pageOne: req.body.data}})
 					break
 				case 2:
-					await userModule.findOneAndUpdate({cookie: req.cookies.sessionCookie}, {$set: {pageTwo: req.body.page}})
+						console.log(">>>Page Two run<<<")
+					await userModule.findOneAndUpdate({cookie: req.cookies.sessionCookie}, {$set: {pageTwo: req.body.data}})
 					break
 				case 3:
-					await userModule.findOneAndUpdate({cookie: req.cookies.sessionCookie}, {$set: {pageThree: req.body.page}})
+					await userModule.findOneAndUpdate({cookie: req.cookies.sessionCookie}, {$set: {pageThree: req.body.data}})
 					break
 				case 4:
-					await userModule.findOneAndUpdate({cookie: req.cookies.sessionCookie}, {$set: {postSurvey: req.body.page}})
+					await userModule.findOneAndUpdate({cookie: req.cookies.sessionCookie}, {$set: {postSurvey: req.body.data}})
 					break
 				default:
 					res.status(500).send("Error [5] in module.js")
