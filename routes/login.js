@@ -1,3 +1,4 @@
+// Import the required modules
 var express = require('express')
 var router = express.Router()
 var axios = require('axios')
@@ -22,8 +23,10 @@ router.get('/cb', async (req, res) => {
 					// New user needs to be created
 					var newCookie = random(30)
 					await userModel.create({ id : ans[1], ugaStudent : true, cookie : newCookie, cookieExp: (Date.now() + 86400000) })
-					console.log('New User created: ' + ans[1])
-					console.log('New cookie issued: ' + newCookie)
+					if(process.end.DEVMODE == 'TRUE') {
+						console.log('New User created: ' + ans[1])
+						console.log('New cookie issued: ' + newCookie)
+					}
 					res.cookie('sessionCookie', newCookie, {maxAge:86400000})
 				} else {
 					// User already exists
@@ -31,10 +34,11 @@ router.get('/cb', async (req, res) => {
 					var newCookie = random(30)
 
 					// Update the cookie of the user
-					await userModel.findOneAndUpdate({id:ans[1]}, {$set: {cookie: newCookie}})
-					await userModel.findOneAndUpdate({id:ans[1]}, {$set: {cookieExp: (Date.now() + 86400000)}})
+					await userModel.findOneAndUpdate({id:ans[1]}, {$set: {cookie: newCookie, cookieExp: (Date.now() + 86400000)}})
 
-					console.log(`New cookie (${newCookie}) issued for ${ans[1]}`)
+					if(process.env.DEVMODE == 'True') {
+						console.log(`New cookie (${newCookie}) issued for ${ans[1]}`)
+					}
 
 					res.cookie('sessionCookie', newCookie, {maxAge:86400000})
 				}

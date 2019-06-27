@@ -21,7 +21,12 @@ let userSchema = new schema({
 	progress: {
 		type: Number,
 		default: 0,
-	}
+	},
+	preSurvey: Object,
+	pageOne: Object,
+	pageTwo: Object,
+	pageThree: Object,
+	postSurvey: Object
 });
 
 const User = mongoose.model('User', userSchema);
