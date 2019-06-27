@@ -107,7 +107,7 @@ body {
 
 /* defined for all the buttons at the end of pages */
 .nextPageButton {
-    height: 4%;
+    height: 27px;
     width: 100px;
     margin-top: 20px;
     margin-bottom: 25px;
@@ -147,21 +147,26 @@ body {
 
 /* used to center the survey forms */
 .surveyArea {
-    width: 24%;
-    margin-left: 38%;
-    margin-right: 38%;
+    width: 30%;
+    margin-left: 35%;
+    margin-right: 35%;
 }
 
 /* centers the survey header */
 .surveyArea > h1 {
     text-align: center;
     margin-top: 40px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 /* for text fields on survey pages */
 .surveyArea > input[type=text] {
     width: 100%;
+}
+
+/* for text fields on survey pages */
+.surveyArea > label {
+    margin-top: 25px;
 }
 
 /* labels for form text on survey pages */

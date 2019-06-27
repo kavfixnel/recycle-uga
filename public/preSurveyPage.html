@@ -13,6 +13,11 @@
         <!-- on page js, mainly window.onload -->
         <script>
             var pageOpened;
+            
+            // number of questions/forms per page (different for pre/post)
+            var numQuestions = 7;
+            var numForms = 8;
+            
             window.onload = function() {
                  pageOpened = new Date();
             } // on window load
@@ -29,13 +34,29 @@
                 
                 var pageClosed = new Date();
                 
+                var questionAnswers = [];
+                var tfAnswers = [];
+                
+                for(var qCount = 1; qCount <= numQuestions; qCount++) {
+                    var currentAnswers = document.getElementsByName("question" + qCount);
+                    
+                    for(var i = 0; i < currentAnswers.length; i++) {
+                        if(currentAnswers[i].checked) 
+                            if(qCount < 5)
+                                questionAnswers.push(currentAnswers[i].value);
+                            else
+                                tfAnswers.push(currentAnswers[i].value);
+                    } // for each answer choice, find checked option
+                    
+                } // for each 1-5 question
+            
                 var serverInfo = {thisPage: 1, 
                         metaData: {timeOnPage: pageClosed - pageOpened},
                         data: {name: document.getElementById("name").value,
-                               gender: checkedRadio,
-                               811: document.getElementById("811").value
+                               questionAnswers: questionAnswers,
+                               tfAnswers: tfAnswers
                               }};
-                
+
                 $.ajax({
                     type: "POST",
                     url: "/users/progress",
@@ -62,17 +83,53 @@
         <div id="page1" class="surveyArea">
             <a id="pre" class="smooth"></a>
             <h1>Pre-Survey</h1>
+            
+            <label>Name:</label>
+                <input type="text" name="name" id="name" oninput="checkIfCompletePreSurvey()">
 
-            <label>Full Name:</label> <input id="name" maxlength="50" type="text" name="name"><br>
-            <label>Gender:</label><br>
-                &emsp;<input type="radio" name="gender" value="male">&ensp;Male<br>
-                &emsp;<input type="radio" name="gender" value="female">&ensp;Female<br>
-                &emsp;<input type="radio" name="gender" value="other">&ensp;Other<br>
-            <label>811#:</label><input id="811" type="text" maxlength="9" name="811"><br>		
+            <label>How likely are you to recycle on any given day?</label><br>
+                &emsp;<input type="radio" name="question1" value="1" oninput="checkIfCompletePreSurvey()">&ensp;Not at all likely<br>
+                &emsp;<input type="radio" name="question1" value="2" oninput="checkIfCompletePreSurvey()">&ensp;Somewhat unlikely<br>
+                &emsp;<input type="radio" name="question1" value="3" oninput="checkIfCompletePreSurvey()">&ensp;Neutral<br>
+                &emsp;<input type="radio" name="question1" value="4" oninput="checkIfCompletePreSurvey()">&ensp;Somewhat likely<br>
+                &emsp;<input type="radio" name="question1" value="5" oninput="checkIfCompletePreSurvey()">&ensp;Very likely<br>
+            	
+            <label>How knowledgable do you feel about common recycling practices?</label><br>
+                &emsp;<input type="radio" name="question2" value="1" oninput="checkIfCompletePreSurvey()">&ensp;Not at all knowledgable<br>
+                &emsp;<input type="radio" name="question2" value="2" oninput="checkIfCompletePreSurvey()">&ensp;Somewhat unknowledgable<br>
+                &emsp;<input type="radio" name="question2" value="3" oninput="checkIfCompletePreSurvey()">&ensp;Neutral<br>
+                &emsp;<input type="radio" name="question2" value="4" oninput="checkIfCompletePreSurvey()">&ensp;Somewhat knowledgable<br>
+                &emsp;<input type="radio" name="question2" value="5" oninput="checkIfCompletePreSurvey()">&ensp;Very knowledgable<br>
                 
+            <label>How knowledgable do you feel about recycling practices in Athens?</label><br>
+                &emsp;<input type="radio" name="question3" value="1" oninput="checkIfCompletePreSurvey()">&ensp;Not at all knowledgable<br>
+                &emsp;<input type="radio" name="question3" value="2" oninput="checkIfCompletePreSurvey()">&ensp;Somewhat unknowledgable<br>
+                &emsp;<input type="radio" name="question3" value="3" oninput="checkIfCompletePreSurvey()">&ensp;Neutral<br>
+                &emsp;<input type="radio" name="question3" value="4" oninput="checkIfCompletePreSurvey()">&ensp;Somewhat knowledgable<br>
+                &emsp;<input type="radio" name="question3" value="5" oninput="checkIfCompletePreSurvey()">&ensp;Very knowledgable<br>
+            
+            <label>With any given item, how confident are you that you will place it in the correct bin 
+                (with options being trash or recycling)?</label><br>
+                &emsp;<input type="radio" name="question4" value="1" oninput="checkIfCompletePreSurvey()">&ensp;Not at all confident<br>
+                &emsp;<input type="radio" name="question4" value="2" oninput="checkIfCompletePreSurvey()">&ensp;Somewhat unconfident<br>
+                &emsp;<input type="radio" name="question4" value="3" oninput="checkIfCompletePreSurvey()">&ensp;Neutral<br>
+                &emsp;<input type="radio" name="question4" value="4" oninput="checkIfCompletePreSurvey()">&ensp;Somewhat confident<br>
+                &emsp;<input type="radio" name="question4" value="5" oninput="checkIfCompletePreSurvey()">&ensp;Very confident<br>
+            
+            <label>TRUE or FALSE: Styrofoam can be recycled anywhere.</label><br>
+                &emsp;<input type="radio" name="question5" value="True" oninput="checkIfCompletePreSurvey()">&ensp;True<br>
+                &emsp;<input type="radio" name="question5" value="False" oninput="checkIfCompletePreSurvey()">&ensp;False<br>
+            
+            <label>TRUE or FALSE: You can toss a used plastic food container into the recycling bin without cleaning it out.</label><br>
+                &emsp;<input type="radio" name="question6" value="True" oninput="checkIfCompletePreSurvey()">&ensp;True<br>
+                &emsp;<input type="radio" name="question6" value="False" oninput="checkIfCompletePreSurvey()">&ensp;False<br>
+            
+            <label>TRUE or FALSE: Hard plastic and film plastic can be recycled in the same place.</label>
+                &emsp;<input type="radio" name="question7" value="True" oninput="checkIfCompletePreSurvey()">&ensp;True<br>
+                &emsp;<input type="radio" name="question7" value="False" oninput="checkIfCompletePreSurvey()">&ensp;False<br>
         </div> 	
         
-        <a onclick="postThings()" href="javascript:void(0)" class="nextPageButton">Next Page</a>
+        <a onclick="postThings()" href="javascript:void(0)" class="nextPageButton disabled">Next Page</a>
         
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>
@@ -87,5 +144,6 @@
         <script src="javascripts/draggable.js"></script>
         <script src="javascripts/game1.js"></script>
         <script src="javascripts/popup.js"></script>
+        <script src="javascripts/pageCompleteCheck.js"></script>
     </body>
 </html>

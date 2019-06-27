@@ -10,7 +10,7 @@ function initMap() {
 
     // request variable for searching for recycling plants
     var request = {
-        query: 'recycling plant',
+        query: 'recycling center',
         fields: ['name', 'geometry'],
         location: {lat: 33.944895,lng: -83.376212},
         radius: 1000
@@ -34,9 +34,11 @@ function initMap() {
 
 //creates a marker given a location
 function createMarker(place) {
+
+    // make marker object
     var marker = new google.maps.Marker({
         map: map,
-        position: place.geometry.location
+        position: place.geometry.location,
     });
 
     // shows infoWindow on hover

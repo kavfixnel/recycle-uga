@@ -14,7 +14,13 @@
         
         <!-- on page js, mainly window.onload -->
         <script>
+            // sets time page is opened
             var pageOpened;
+            
+            // tracks how many attempts are taken for each question
+            var timesChecked = [0, 0, 0, 0];
+            
+            // runs on page load
             window.onload = function() {
                 // time the page was opened for timeOnPage
                 pageOpened = new Date();
@@ -99,28 +105,14 @@
                 
             } // on window load
             
-            // checks if all questions are answered to enable the next page
-            // button
-            function checkQuestionStatus() {
-                var answerBlanks = document.getElementsByClassName("answerText");
-                var notEmptyCount = 0;
-                
-                // counts the amount of checked radio buttons (should be four to continue)
-                for(var i = 0; i < answerBlanks.length; i++) {
-                    if(answerBlanks[i].value.length > 0)
-                        notEmptyCount++;
-                } // for each answer section
-            
-                if(notEmptyCount >= 4)
-                    document.getElementsByClassName("nextPageButton").item(0).classList.remove("disabled");
-                
-            } // checkQuestionStatus
-            
             //checks answer against known correct answer and displays
             //text based on its correctness
             function checkAnswer(questionNumber) {
                 // boolean for question correctness
                 var isCorrect;
+                
+                //incrementing question attempts
+                timesChecked[questionNumber - 1]++;
                 
                 switch(questionNumber) {
                     // each case represents its respective question
@@ -152,6 +144,7 @@
                 } else {
                     document.getElementById("correct" + questionNumber.toString()).innerHTML = "Incorrect!";
                     document.getElementById("correct" + questionNumber.toString()).style.color = "red";
+                    document.getElementsByName("answer" + questionNumber.toString())[0].value = "";
                 } // if correct, else
             } // checkAnswer
             
@@ -164,10 +157,13 @@
                 // variable to be converted to JSON
                 var serverInfo = {thisPage: 2,
                 metaData: {timeOnPage: pageClosed - pageOpened},
-                data: { answer1: document.getElementsByName("answer1").value,
-                        answer2: document.getElementsByName("answer2").value, 
-                        answer3: document.getElementsByName("answer3").value,
-                        answer4: document.getElementsByName("answer4").value}};
+                data: { answer1: document.getElementsByName("answer1")[0].value,
+                        answer2: document.getElementsByName("answer2")[0].value, 
+                        answer3: document.getElementsByName("answer3")[0].value,
+                        answer4: document.getElementsByName("answer4")[0].value,
+                        attemptsPerQuestion: timesChecked}};
+                
+                console.log(serverInfo);
                 
                 // posts data to the backend
                 $.ajax({
@@ -180,7 +176,6 @@
                     failure: function(){alert("post failed");}
                 });
             } // postThings
-            
         </script>
     </head>
     <body>
@@ -206,7 +201,7 @@
                         <input type="text" name="answer1" maxlength="20" class="answerText"/>
                     </div>
                     
-                    <a href="javascript:checkAnswer(1);checkQuestionStatus()" id="submit1" class="submitButton">Check Answer</a>
+                    <a href="javascript:checkAnswer(1);checkIfCompleteInfo()" id="submit1" class="submitButton">Check Answer</a>
                     
                     <p id="correct1" class="correct"></p>
                 </div>
@@ -222,7 +217,7 @@
                         <input type="text" name="answer2" maxlength="20" class="answerText"/>
                     </div>
 
-                    <a href="javascript:checkAnswer(2);checkQuestionStatus()" id="submit2" class="submitButton">Check Answer</a>
+                    <a href="javascript:checkAnswer(2);checkIfCompleteInfo()" id="submit2" class="submitButton">Check Answer</a>
                     
                     <p id="correct2" class="correct"></p>
                 </div>
@@ -238,7 +233,7 @@
                         <input type="text" name="answer3" maxlength="20" class="answerText"/>
                     </div>
                     
-                    <a href="javascript:checkAnswer(3);checkQuestionStatus()" id="submit3" class="submitButton">Check Answer</a>
+                    <a href="javascript:checkAnswer(3);checkIfCompleteInfo()" id="submit3" class="submitButton">Check Answer</a>
                     
                     <p id="correct3" class="correct"></p>
                 </div>
@@ -254,7 +249,7 @@
                         <input type="text" name="answer4" maxlength="20" class="answerText"/>
                     </div>
                     
-                    <a href="javascript:checkAnswer(4);checkQuestionStatus()" id="submit4" class="submitButton">Check Answer</a>
+                    <a href="javascript:checkAnswer(4);checkIfCompleteInfo()" id="submit4" class="submitButton">Check Answer</a>
                         
                     <p id="correct4" class="correct"></p>
                 </div>
@@ -278,5 +273,6 @@
         <script src="javascripts/game1.js"></script>
         <script src="javascripts/popup.js"></script>
         <script src="javascripts/hashing.js"></script>
+        <script src="javascripts/pageCompleteCheck.js"></script>
     </body>
 </html>
