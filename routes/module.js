@@ -73,7 +73,7 @@ router.post('/progress', async (req, res) => {
 			var name = ['preSurvey', 'pageOne', 'pageTwo', 'pageThree', 'postSurvey']
 			user.set('progress', user.progress + 1)
 			console.log(req.body)
-			user.set(name[req.body.page], res.body.data)
+			user.set(name[req.body.page], req.body.data)
 			user.save()
 			res.status(200).send()
 		} else {
