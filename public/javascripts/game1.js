@@ -14,7 +14,7 @@ var myGameArea =
 	canvas : document.getElementById("canvas"),
 	start : function() 
 	{
-		this.canvas.width = 720;
+		this.canvas.width = 700;
 		this.canvas.height = 480;
 		//Hide Cursor
 		this.canvas.style.cursor = "none";
@@ -52,7 +52,7 @@ var myGameArea =
 						//Current Trash is Recyclable
 						if(currentTrash.recycleable)
 							{
-								feedback.innerHTML = "Good Job this is Recyclable";
+								feedback.innerHTML = "Good job! This is recyclable.";
 								myTrash[i].thrownAway = true;
 								myTrash[i].current = false;
 								trashThrownAway++;
@@ -60,11 +60,11 @@ var myGameArea =
 						
 						//Current Trash needs CHaRM
 						else if(currentTrash.charm)
-							feedback.innerHTML = "This is Recyclable, But it requires a special Bin";	
+							feedback.innerHTML = "This is recyclable, but it requires a special bin.";	
 						
 						//Current Trash is not Recyclable
 						else
-							feedback.innerHTML = "Hey you can't recycle this!";
+							feedback.innerHTML = "Hey! You can't recycle this!";
 					}
 						
 					//When Colliding with the Trash Bin
@@ -72,12 +72,12 @@ var myGameArea =
 					{
 						//Current Trash is Recyclable or needs CHaRM
 						if(currentTrash.recycleable || currentTrash.charm)
-							feedback.innerHTML = "Hey this is Recyclable!";
+							feedback.innerHTML = "Hey! This is recyclable.";
 
 						//Current Trash is just Trash
 						else
 						{
-							feedback.innerHTML = "Good job this can't be recycled";
+							feedback.innerHTML = "Good job! This can't be recycled.";
 							myTrash[i].thrownAway = true;
 							myTrash[i].current = false;
 							trashThrownAway++;
@@ -90,13 +90,13 @@ var myGameArea =
 						//Current Trash is CHaRM
 						if(currentTrash.charm)
 						{
-							feedback.innerHTML = "Nice Job this item requires CHaRM to be recycled";
+							feedback.innerHTML = "Nice job! This item requires CHaRM to be recycled.";
 							myTrash[i].thrownAway = true;
 							myTrash[i].current = false;
 							trashThrownAway++;
 						}
 						else
-							feedback.innerHTML = "Nope this doesn't go here";	
+							feedback.innerHTML = "Nope, this doesn't go here.";	
 					}
 						
 				}

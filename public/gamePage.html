@@ -14,32 +14,33 @@
 				
 		<style>
 			canvas {
-				border:1px solid #d3d3d3;
-				background-color: #f1f1f1;
+				border: 1px solid #B7BF10; 
+				background-color: #f3efee;
 				position: relative;
-				left: 5%;
+				margin-left: 5%;
+                display: block;
+                float: left;
 			}
 			
-			.c {
+			.instructions {
 				position: relative;
-				top: 0%;
-				left: 5%;
+                text-align: center;
 			}
 			
 			.key {
-				border:1px solid #d3d3d3;
-				background-color: #f1f1f1;
-				position: absolute;
-				top: 15%;
-				left: 60%;
-				right: 5%;
+				border:1px solid #B7BF10;
+				background-color: #f3efee;
+				float: right;
+                width: 30%;
+                display: block;
+                margin-right: 5%;
+                padding: 10px 30px;
 			}
 			
 			.centered {
 				text-align: center;
 			}
 
-			
 		</style>
 		
 		
@@ -79,7 +80,6 @@
 	
     <body onload = "startGame()">
 	
-	
         <!-- Fixed navigation bar using bootsrap classes, UGA Bulldog Red color, UGA font-->
         <nav class="navbar navbar-fixed-top" style="background-color: #BA0C2F;">
             <div class="container">
@@ -90,7 +90,7 @@
         </nav>
 		
 		<br>
-		<h2 class="c">Grab the items and place them in the correct bins</h2>
+		<p class="instructions">Grab the items and place them in the correct bins!</p>
         
 		
         <!-- Game 1 Page -->
@@ -98,13 +98,11 @@
             <canvas id="canvas"></canvas>
 		</div>
 		
-		<h2 id="feedback" class="c"></h2>
-		
 		<div class="key">
-			<h2 class="centered">KEY<h2>
+			<h2 class="centered">Hints:</h2>
 			<p>Not all items can be recycled. Many that can require a special bin called a CHaRM bin.</p>
-		</div>
-        
+            <p id="feedback"></p>
+        </div>
         
         <a onclick="postThings()" href="javascript:void(0)" id="npbutton" class="nextPageButton">Next Page</a>
         
