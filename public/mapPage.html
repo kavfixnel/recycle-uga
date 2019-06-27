@@ -19,6 +19,10 @@
             var map;
             var infoWindow;
             
+            // labels for markers
+            var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            var labelIndex = 0;
+            
             window.onload = function() {
                 pageOpened = new Date();
             } // window.onload
@@ -65,9 +69,6 @@
         <!-- Google Maps API -->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-uwFxTWbqZA1X1oDiGDhMitcDmjohUU0&libraries=places&callback=initMap"
                 async defer></script>
-        
-        <!-- CanvasJS for creating charts & graphs with animation-->
-        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
         <!-- Importing js files from javascripts folder in public -->
         <script src="javascripts/graphs.js"></script>

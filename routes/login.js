@@ -1,3 +1,4 @@
+// Import the required modules
 var express = require('express')
 var router = express.Router()
 var axios = require('axios')
@@ -5,17 +6,10 @@ var crypto = require('crypto')
 
 var userModel = require('../schemas/user.js')
 
-// Check if the user has to log in
-router.use((req, res, next) => {
-	//req.cookie()
-	console.log("Checked cookie")
-	next()
-});
-
 router.get('/cb', async (req, res) => {
 	if(req.query.ticket == null) {
 		// There is no ticket avaliable
-		res.redirect('https://recycle-uga.herokuapp.com/')
+		res.redirect('/')
 	} else {
 		// Get the ticket contents
 		try {
@@ -23,14 +17,16 @@ router.get('/cb', async (req, res) => {
 			const response = await axios.get(url)
     			var ans = response.data.split('\n')
 			if(ans[0] == 'yes') {
-				// Ticket was avlid and ans[1] has username
+				// Ticket was valid and ans[1] has username
 				var user = await userModel.findOne( { id : ans[1] } )
 				if(!user) {
 					// New user needs to be created
 					var newCookie = random(30)
 					await userModel.create({ id : ans[1], ugaStudent : true, cookie : newCookie, cookieExp: (Date.now() + 86400000) })
-					console.log('New User created: ' + ans[1])
-					console.log('New cookie issued: ' + newCookie)
+					if(process.end.DEVMODE == 'TRUE') {
+						console.log('New User created: ' + ans[1])
+						console.log('New cookie issued: ' + newCookie)
+					}
 					res.cookie('sessionCookie', newCookie, {maxAge:86400000})
 				} else {
 					// User already exists
@@ -38,13 +34,13 @@ router.get('/cb', async (req, res) => {
 					var newCookie = random(30)
 
 					// Update the cookie of the user
-					userModule.findOneAndUpdate({id:ans[1]}, {$set: {cookie: newCookie}})
-					userModule.findOneAndUpdate({id:ans[1]}, {$set: {cookieExp: (Date.now() + 86400000)}})
+					await userModel.findOneAndUpdate({id:ans[1]}, {$set: {cookie: newCookie, cookieExp: (Date.now() + 86400000)}})
 
-					console.log(`New cookie (${newCookie}) issued for ${ans[1]}`)
+					if(process.env.DEVMODE == 'True') {
+						console.log(`New cookie (${newCookie}) issued for ${ans[1]}`)
+					}
 
 					res.cookie('sessionCookie', newCookie, {maxAge:86400000})
-		
 				}
 			}
 		} catch (error) {
@@ -52,17 +48,12 @@ router.get('/cb', async (req, res) => {
 		}
 		
 		// Redirect the user to the homepage
-		res.redirect('https://recycle-uga.herokuapp.com/')
+		res.redirect('/').send()
 	}
 
 	// Something went wrong and redirect the user to the homepage
 	console.error("Something went wrong with /login/cb")
-	res.redirect('https://recycle-uga.herokuapp.com/')
-
-
-
-
-
+	res.redirect('/').send()
 });
 
 /* GET users listing. */
