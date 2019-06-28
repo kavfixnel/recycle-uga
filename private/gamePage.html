@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title>UGA Recycling</title>
@@ -9,37 +10,60 @@
         
         <!-- main stylesheet -->
         <link href="stylesheets/main.css" rel="stylesheet">
+		
+		
+				
+		<style>
+			canvas {
+				border:1px solid #d3d3d3;
+				background-color: #f1f1f1;
+				position: relative;
+				left: 5%;
+			}
+			
+			.c {
+				position: relative;
+				top: 0%;
+				left: 5%;
+			}
+			
+			.key {
+				border:1px solid #d3d3d3;
+				background-color: #f1f1f1;
+				position: absolute;
+				top: 15%;
+				left: 60%;
+				right: 5%;
+			}
+			
+			.centered {
+				text-align: center;
+			}
+
+			
+		</style>
+		
+		
         
         <!-- on page js, mainly window.onload -->
         <script>
             // time the page was opened for timeOnPage
             var pageOpened;
             window.onload = function() {
-                 pageOpened = new Date();
+                startGame();
+            
+                pageOpened = new Date();
             } // on window load
             
+            // posts 'things' (data) to the server 
             function postThings() {
-                // variable holding all radio buttons
-                var radios = document.getElementsByName("review");
-                
-                // will represent the value of the checked radio button
-                var checkedRadio;
-                
-                // for each radio button, find checked option
-                for(var i = 0; i < radios.length; i++) {
-                    if(radios[i].checked)
-                        checkedRadio = radios[i].value;
-                } // for each radio button, find checked option
-                
                 // time the page was closed for timeOnPage
                 var pageClosed = new Date();
                 
-                var serverInfo = {thisPage: 4, 
-                        metaData: {timeOnPage: pageClosed - pageOpened},
-                        data: {moduleHappiness: checkedRadio,
-                               comments: document.getElementById("comments").value
-                              }};
+                // data variable to be posted to the backend
+                var serverInfo = {thisPage: 3, metaData: {timeOnPage: pageClosed - pageOpened}, data: {}};
                 
+                // posts data to the backend
                 $.ajax({
                     type: "POST",
                     url: "/users/progress",
@@ -49,10 +73,14 @@
                     success: function(data){alert(data);},
                     failure: function(){alert("post failed");}
                 });
-            } // postThings
         </script>
+
     </head>
-    <body>
+	
+	
+    <body onload = "startGame()">
+	
+	
         <!-- Fixed navigation bar using bootsrap classes, UGA Bulldog Red color, UGA font-->
         <nav class="navbar navbar-fixed-top" style="background-color: #BA0C2F;">
             <div class="container">
@@ -61,24 +89,37 @@
                 </div>
             </div>
         </nav>
+		
+		<br>
+		<h2 class="c">Grab the items and place them in the correct bins</h2>
         
-        <!-- Post-Survey Page -->
-		<div id="page4" class="surveyArea">
-			<a id="post" class="smooth"></a>
-			<h1>Post-Survey</h1>
-				<label>Did you like the module?</label><br>
-					&emsp;<input type="radio" name="review" value="yes">&ensp;Yes<br>
-					&emsp;<input type="radio" name="review" value="no">&ensp;No<br>
-					&emsp;<input type="radio" name="review" value="other">&ensp;I hate the environment<br>
-				<label>Additional Comments:</label><input id="comments" maxlength="50" type="text" name="811"><br>			
+		
+        <!-- Game 1 Page -->
+		<div>
+            <canvas id="canvas"></canvas>
 		</div>
-
+		
+		<h2 id="feedback" class="c"></h2>
+		
+		<div class="key">
+			<h2 class="centered">KEY<h2>
+			<p>Not all items can be recycled. Many that can require a special bin called a CHaRM bin.</p>
+		</div>
+        
+        
         <a onclick="postThings()" href="javascript:void(0)" id="npbutton" class="nextPageButton">Next Page</a>
         
+		
+		
+		
+		
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+        <!-- CanvasJS for creating charts & graphs with animation-->
+        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
         <!-- Importing js files from javascripts folder in public -->
         <script src="javascripts/graphs.js"></script>

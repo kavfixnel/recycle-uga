@@ -38,19 +38,19 @@ router.get('/next', async (req, res) => {
 		// Decide what page needs to be loaded
 		switch(user.progress) {
 			case 0:
-				res.send("Pre Survey")
+				res.send(express.static('../private/preSurveyPage.html'))
 				break
 			case 1:
-				res.send("Page 1")
+				res.send(express.static('../private/infoPage.html'))
 				break
 			case 2:
-				res.send("Page 2")
+				res.send(express.static('../private/infoPage2.html'))
 				break
 			case 3:
-				res.send("Page 3")
+				res.send(express.static('../private/mapPage.html'))
 				break
 			case 4:
-				res.send("Post survey")
+				res.send(express.static('../private/postSurveyPage.html'))
 				break
 			case 5:
 				res.send("Done")
