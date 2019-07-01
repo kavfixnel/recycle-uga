@@ -45,16 +45,16 @@ router.get('/next', async (req, res) => {
 				res.sendFile(path.join(__dirname + '../private/infoPage.html'))
 				break
 			case 2:
-				res.sendFile(path.join(__dirname + '../private/gamePage.html'))
+				res.sendFile(path.join(__dirname + '/../private/gamePage.html'))
 				break
 			case 3:
-				res.sendFile(path.join(__dirname + '../private/infoPage1.html'))
+				res.sendFile(path.join(__dirname + '/../private/infoPage1.html'))
 				break
 			case 4:
-				res.sendFile(path.join(__dirname + '../private/mapPage.html'))
+				res.sendFile(path.join(__dirname + '/../private/mapPage.html'))
 				break
 			case 5:
-				res.sendFile(path.join(__dirname + '../private/postSurveyPage.html'))
+				res.sendFile(path.join(__dirname + '/../private/postSurveyPage.html'))
 				break
 			case 6:
 				res.send("Done")
