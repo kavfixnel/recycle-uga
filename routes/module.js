@@ -99,8 +99,4 @@ router.post('/progress', async (req, res) => {
 	res.status(400).send()
 });
 
-router.use((req,res, next) => {
-	next()
-})
-
 module.exports = router
