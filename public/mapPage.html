@@ -11,7 +11,11 @@
         <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
 
         <!-- main stylesheet -->
-        <link href="stylesheets/main.css" rel="stylesheet">
+        <link href="../publicstylesheets/main.css" rel="stylesheet">
+        
+        <!-- Imports for MapBox API -->
+        <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
+        <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.css' rel='stylesheet' />
 
         <!-- JavaScript functions-->
         <script>
@@ -19,6 +23,8 @@
 
             window.onload = function() {
                 pageOpened = new Date();
+                
+                createMap();
             } // window.onload
             
             function postThings() {
@@ -35,6 +41,56 @@
                     failure: function(){alert("post failed");}
                 });
             } // postThings
+            
+            function createMap() {
+                mapboxgl.accessToken = 'pk.eyJ1IjoibmJyYWNrZXR0IiwiYSI6ImNqeGtqbHR0cjF4cDUzdGxpMHJnaDBjbmYifQ.Y3bnWhyTQyGDRPM8OEd94g';
+            
+                var map = new mapboxgl.Map({
+                    container: 'map',
+                    style: 'mapbox://styles/mapbox/streets-v11',
+                    center: [-83.415, 33.948],
+                    zoom: 11.5
+                });
+                
+                map.on("load", function() {
+                    map.loadImage("https://i.imgur.com/MK4NUzI.png", function (error, image) {
+                        if(error) throw error;
+                        map.addImage("custom-marker", image);
+                        map.addLayer({
+                            id: "markers",
+                            type: "symbol",
+                            source: {
+                                type: "geojson",
+                                data: {
+                                    type: "FeatureCollection",
+                                    features: [ // SET OF MARKERS TO GO ON MAP !!!
+                                        { // marker 1
+                                            type: 'Feature',
+                                            properties: {},
+                                            geometry: { // geometry of this point
+                                                type: "Point",
+                                                coordinates: [-83.415, 33.948]
+                                            } 
+                                        }, 
+                                        { // marker 2
+                                            type: 'Feature',
+                                            properties: {},
+                                            geometry: { // geometry of this point
+                                                type: "Point",
+                                                coordinates: [-83.445, 33.958]
+                                            } 
+                                        }
+                                    ] // features (array for 1+)
+                                } // data
+                            }, // source information
+                            
+                            layout: {
+                                "icon-image": "custom-marker"
+                            } // layout information
+                        }); // map.addLayer
+                    }); // map.loadImage
+                }); // map.on (load)
+            } // createMap
         </script>
         
     </head>
@@ -53,8 +109,8 @@
         
         <div id="map" style="height: 600px;"></div>
         
-        <a onclick="postThings()" href="javascript:void(0)" class="nextPageButton">Next Page</a>
-
+        <a onclick="postThings()" href="/module/next" class="nextPageButton">Next Page</a>
+        
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
