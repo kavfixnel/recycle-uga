@@ -7,6 +7,7 @@ var clickX;
 var clickY;
 var isClicked = false;
 var feedback = document.getElementById("feedback");
+var gameIsOver = false;
 
 //Variable that defines an area for the game to be played on the webpage
 var myGameArea = 
@@ -16,6 +17,7 @@ var myGameArea =
 	{
 		this.canvas.width = 720;
 		this.canvas.height = 480;
+		
 		//Hide Cursor
 		this.canvas.style.cursor = "none";
 		this.context = this.canvas.getContext("2d");
@@ -129,10 +131,10 @@ var myGameArea =
 		
 	},
 		
-		clear : function()
-		{
+	clear : function()
+	{
 			this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-		}
+	}
 		
 }
 
@@ -140,9 +142,12 @@ var myGameArea =
 //Function to start the game
 function startGame()
 {
-	//Creates a game hand
-    
+	//Creates a game hand    
 	hand = new component(30, 30, "images/hand.jpg", 10, 120, "image");
+	
+	//Creates the text displayed at the end of the game
+	gameOverText = new component("60px", "Consolas", "black", 200, 150, "text");
+	gameOverText.text = "GAME OVER";
 	
 	//Creates cans
 	recycleBin = new component(150, 225, "images/recyclebin.jpg", 30, 250, "image");
@@ -284,6 +289,12 @@ function component(width, height, color, x, y, type)
 		{
 			ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
 		}
+		else if(type == "text")
+		{
+			ctx.font = width + " " + height;
+			ctx.fillStyle = color;
+			ctx.fillText(this.text, this.x, this.y);
+		}
 		else
 		{
 			ctx.fillStyle = color;
@@ -329,28 +340,36 @@ function updateGameArea()
 		hand.y = myGameArea.y;
 	}
 	
-	recycleBin.update();
-	trashBin.update();
-	charmBin.update();
-	charmLogo.update();
 	
+	if(myTrash.length == trashThrownAway-1)
+		gameIsOver = true;
 	
-	for(i = 0; i < trashThrownAway; i++)
+	if(!gameIsOver)
 	{
-		if(!myTrash[i].thrownAway)
-		{
-			myTrash[i].current = true;
-			myTrash[i].update();
-			
-		}			
-		
-	}
+		recycleBin.update();
+		trashBin.update();
+		charmBin.update();
+		charmLogo.update();
 	
+		for(i = 0; i < trashThrownAway; i++)
+		{
+			if(!myTrash[i].thrownAway)
+			{
+				myTrash[i].current = true;
+				myTrash[i].update();				
+			}					
+		}	
+		
 	if(isClicked)
 		{
 			currentTrash.y = myGameArea.y - (currentTrash.height/4);
 			currentTrash.x = myGameArea.x - (currentTrash.width/4);
 		}
+	}
+	else
+	{
+		gameOverText.update();
+	}
 		
 	hand.update();
 }
