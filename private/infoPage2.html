@@ -157,7 +157,7 @@
                 var pageClosed = new Date();
                 
                 // variable to be converted to JSON
-                var serverInfo = {thisPage: 4,
+                var serverInfo = {thisPage: 3,
                 metaData: {timeOnPage: pageClosed - pageOpened},
                 data: { answer1: document.getElementsByName("answer1")[0].value,
                         answer2: document.getElementsByName("answer2")[0].value, 
@@ -172,7 +172,7 @@
                     data: JSON.stringify(serverInfo),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: function(data){alert(data);},
+                    success: function(data){alert("post sucessful");},
                     failure: function(){alert("post failed");}
                 });
             } // postThings

@@ -23,7 +23,7 @@
             
             function postThings() {
                 var pageClosed = new Date();
-                var serverInfo = {thisPage: 5, metaData: {timeOnPage: pageClosed - pageOpened}, data: {}};
+                var serverInfo = {thisPage: 4, metaData: {timeOnPage: pageClosed - pageOpened}, data: {}};
                 
                 $.ajax({
                     type: "POST",
@@ -31,7 +31,7 @@
                     data: JSON.stringify(serverInfo),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: function(data){alert(data);},
+                    success: function(data){alert("post sucessful");},
                     failure: function(){alert("post failed");}
                 });
             } // postThings

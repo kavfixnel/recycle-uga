@@ -36,7 +36,7 @@
                 // time the page was closed for timeOnPage
                 var pageClosed = new Date();
                 
-                var serverInfo = {thisPage: 6, 
+                var serverInfo = {thisPage: 5, 
                         metaData: {timeOnPage: pageClosed - pageOpened},
                         data: {moduleHappiness: checkedRadio,
                                comments: document.getElementById("comments").value
@@ -48,7 +48,7 @@
                     data: JSON.stringify(serverInfo),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: function(data){alert(data);},
+                    success: function(data){alert("post sucessful");},
                     failure: function(){alert("post failed");}
                 });
             } // postThings
