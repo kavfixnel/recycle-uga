@@ -74,7 +74,7 @@ router.get('/next', async (req, res) => {
 		console.error(error)
 		res.status(500).send("Error [3] in module.js")
 	}
-	res.status(500).send("Error [4] in module.js")
+	//res.status(500).send("Error [4] in module.js")
 });
 
 /* Let the user post their progress to this endpoint */
