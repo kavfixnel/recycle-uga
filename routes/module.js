@@ -40,7 +40,7 @@ router.get('/next', async (req, res) => {
 		switch(user.progress) {
 			case 0:
 				console.log("p0")
-				res.sendFile(path.join(__dirname + '/../private/preSurveyPage.html'))
+				res.sendFile(path.join(__dirname + '/../private/preSurveyPage.html')).send()
 				break
 			case 1:
 				console.log("p1")
