@@ -129,11 +129,11 @@
                         else {isCorrect = false;}
                         break;
                     case 3:
-                        if(document.getElementsByName("answer3").item(0).value === "yes") {isCorrect = true;}
+                        if(document.getElementsByName("answer3").item(0).value === "nah") {isCorrect = true;}
                         else {isCorrect = false;}
                         break;
                     case 4:
-                        if(document.getElementsByName("answer4").item(0).value === "yes") {isCorrect = true;}
+                        if(document.getElementsByName("answer4").item(0).value === "nah") {isCorrect = true;}
                         else {isCorrect = false;}
                 } // switch for each question depending on question number
                 
@@ -157,7 +157,7 @@
                 var pageClosed = new Date();
                 
                 // variable to be converted to JSON
-                var serverInfo = {thisPage: 2,
+                var serverInfo = {thisPage: 4,
                 metaData: {timeOnPage: pageClosed - pageOpened},
                 data: { answer1: document.getElementsByName("answer1")[0].value,
                         answer2: document.getElementsByName("answer2")[0].value, 

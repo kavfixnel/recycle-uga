@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!-- 5th page -->
+<html>
+    <head>
+        <title>UGA Recycling</title>
+        <!-- Bootstrap stylesheet -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <!-- UGA fonts from UGA style guide-->
+        <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
+        
+        <!-- main stylesheet -->
+        <link href="stylesheets/main.css" rel="stylesheet">
+        
+        <!-- on page js, mainly window.onload -->
+        <script>
+            // time the page was opened for timeOnPage
+            var pageOpened;
+            window.onload = function() {
+                 pageOpened = new Date();
+            } // on window load
+            
+            function postThings() {
+                // variable holding all radio buttons
+                var radios = document.getElementsByName("review");
+                
+                // will represent the value of the checked radio button
+                var checkedRadio;
+                
+                // for each radio button, find checked option
+                for(var i = 0; i < radios.length; i++) {
+                    if(radios[i].checked)
+                        checkedRadio = radios[i].value;
+                } // for each radio button, find checked option
+                
+                // time the page was closed for timeOnPage
+                var pageClosed = new Date();
+                
+                var serverInfo = {thisPage: 6, 
+                        metaData: {timeOnPage: pageClosed - pageOpened},
+                        data: {moduleHappiness: checkedRadio,
+                               comments: document.getElementById("comments").value
+                              }};
+                
+                $.ajax({
+                    type: "POST",
+                    url: "/users/progress",
+                    data: JSON.stringify(serverInfo),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(data){alert(data);},
+                    failure: function(){alert("post failed");}
+                });
+            } // postThings
+        </script>
+    </head>
+    <body>
+        <!-- Fixed navigation bar using bootsrap classes, UGA Bulldog Red color, UGA font-->
+        <nav class="navbar navbar-fixed-top" style="background-color: #BA0C2F;">
+            <div class="container">
+                <div class="navbar-header" style="font-size: 24pt; color:white; font-family: 'Merriweather', rserif; text-align: center">
+                    Roosevelt@UGA Sustainability Project
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Post-Survey Page -->
+		<div id="page4" class="surveyArea">
+			<a id="post" class="smooth"></a>
+			<h1>Post-Survey</h1>
+				<label>Did you like the module?</label><br>
+					&emsp;<input type="radio" name="review" value="yes">&ensp;Yes<br>
+					&emsp;<input type="radio" name="review" value="no">&ensp;No<br>
+					&emsp;<input type="radio" name="review" value="other">&ensp;I hate the environment<br>
+				<label>Additional Comments:</label><input id="comments" maxlength="50" type="text" name="811"><br>			
+		</div>
+
+        <a onclick="postThings()" href="javascript:void(0)" id="npbutton" class="nextPageButton">Next Page</a>
+        
+        <!-- Load all the Bootstrap requirements at the end of the document -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+        <!-- Importing js files from javascripts folder in public -->
+        <script src="javascripts/graphs.js"></script>
+        <script src="javascripts/draggable.js"></script>
+        <script src="javascripts/game1.js"></script>
+        <script src="javascripts/popup.js"></script>
+    </body>
+</html>
