@@ -1,6 +1,7 @@
 // Import the required modules
-var express = require('express');
-var router = express.Router();
+var express = require('express')
+var router = express.Router()
+var path = require('path')
 
 var userModule = require('../schemas/user.js')
 
@@ -38,31 +39,42 @@ router.get('/next', async (req, res) => {
 		// Decide what page needs to be loaded
 		switch(user.progress) {
 			case 0:
-				res.send(express.static('../private/preSurveyPage.html'))
+				console.log("p0")
+				console.log(path.join(__dirname + '/../private/preSurveyPage.html'))
+				res.sendFile(path.join(__dirname + '/../private/preSurveyPage.html'))
 				break
 			case 1:
-				res.send(express.static('../private/infoPage.html'))
+				console.log("p1")
+				res.sendFile(path.join(__dirname + '/../private/infoPage.html'))
 				break
 			case 2:
-				res.send(express.static('../private/infoPage2.html'))
+				console.log("p2")
+				res.sendFile(path.join(__dirname + '/../private/gamePage.html'))
 				break
 			case 3:
-				res.send(express.static('../private/mapPage.html'))
+				console.log("p3")
+				res.sendFile(path.join(__dirname + '/../private/infoPage1.html'))
 				break
 			case 4:
-				res.send(express.static('../private/postSurveyPage.html'))
+				console.log("p4")
+				res.sendFile(path.join(__dirname + '/../private/mapPage.html'))
 				break
 			case 5:
+				console.log("p5")
+				res.sendFile(path.join(__dirname + '/../private/postSurveyPage.html'))
+				break
+			case 6:
 				res.send("Done")
 				break
 			default:
 				res.status(500).send("Error [5] in module.js")
 		}
+		console.log("End of switch")
 	} catch(error) {
 		console.error(error)
 		res.status(500).send("Error [3] in module.js")
 	}
-	res.status(500).send("Error [4] in module.js")
+	//res.status(500).send("Error [4] in module.js")
 });
 
 /* Let the user post their progress to this endpoint */
