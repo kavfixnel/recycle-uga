@@ -39,22 +39,22 @@ router.get('/next', async (req, res) => {
 		// Decide what page needs to be loaded
 		switch(user.progress) {
 			case 0:
-				res.sendFile(path.join(__dirname + '../private/preSurveyPage.html'))
+				res.sendFile(path.join(__dirname + '../private/preSurveyPage.html')).send()
 				break
 			case 1:
-				res.sendFile(path.join(__dirname + '../private/infoPage.html'))
+				res.sendFile(path.join(__dirname + '../private/infoPage.html')).send()
 				break
 			case 2:
-				res.sendFile(path.join(__dirname + '/../private/gamePage.html'))
+				res.sendFile(path.join(__dirname + '/../private/gamePage.html')).send()
 				break
 			case 3:
-				res.sendFile(path.join(__dirname + '/../private/infoPage1.html'))
+				res.sendFile(path.join(__dirname + '/../private/infoPage1.html')).send()
 				break
 			case 4:
-				res.sendFile(path.join(__dirname + '/../private/mapPage.html'))
+				res.sendFile(path.join(__dirname + '/../private/mapPage.html')).send()
 				break
 			case 5:
-				res.sendFile(path.join(__dirname + '/../private/postSurveyPage.html'))
+				res.sendFile(path.join(__dirname + '/../private/postSurveyPage.html')).send()
 				break
 			case 6:
 				res.send("Done")
