@@ -7,64 +7,21 @@
 
         <!-- UGA fonts from UGA style guide-->
         <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
-        
+
         <!-- main stylesheet -->
         <link href="stylesheets/main.css" rel="stylesheet">
-		
-		
-				
-		<style>
-			canvas {
-				border: 1px solid #B7BF10; 
-				background-color: #f3efee;
-				position: relative;
-				margin-left: 5%;
-                display: block;
-                float: left;
-			}
-			
-			.instructions {
-				position: relative;
-                text-align: center;
-			}
-			
-			.key {
-				border:1px solid #B7BF10;
-				background-color: #f3efee;
-				float: right;
-                width: 30%;
-                display: block;
-                margin-right: 5%;
-                padding: 10px 30px;
-			}
-			
-			.centered {
-				text-align: center;
-			}
 
-		</style>
-		
-		
-        
-        <!-- on page js, mainly window.onload -->
+        <!-- JavaScript functions-->
         <script>
-            // time the page was opened for timeOnPage
             var pageOpened;
             window.onload = function() {
-                startGame();
-            
                 pageOpened = new Date();
-            } // on window load
+            }
             
-            // posts 'things' (data) to the server 
             function postThings() {
-                // time the page was closed for timeOnPage
                 var pageClosed = new Date();
+                var serverInfo = {thisPage: 6, metaData: {timeOnPage: pageClosed - pageOpened}, data: {}};
                 
-                // data variable to be posted to the backend
-                var serverInfo = {thisPage: 2, metaData: {timeOnPage: pageClosed - pageOpened}, data: {}};
-                
-                // posts data to the backend
                 $.ajax({
                     type: "POST",
                     url: "/users/progress",
@@ -78,40 +35,40 @@
         </script>
 
     </head>
-	
-	
-    <body onload = "startGame()">
-	
+
+    <body>
         <!-- Fixed navigation bar using bootsrap classes, UGA Bulldog Red color, UGA font-->
         <nav class="navbar navbar-fixed-top" style="background-color: #BA0C2F;">
             <div class="container">
                 <div class="navbar-header" style="font-size: 24pt; color:white; font-family: 'Merriweather', rserif; text-align: center">
                     Roosevelt@UGA Sustainability Project
                 </div>
+                <div><button type="button" onclick="location.href='/login';" class="btn btn-light">Login</button></div>
             </div>
         </nav>
-		
-		<br>
-		<p class="instructions">Grab the items and place them in the correct bins!</p>
-        
-		
-        <!-- Game 1 Page -->
-		<div>
-            <canvas id="canvas"></canvas>
-		</div>
-		
-		<div class="key">
-			<h2 class="centered">Hints:</h2>
-			<p>Not all items can be recycled. Many that can require a special bin called a CHaRM bin.</p>
-            <p id="feedback"></p>
+
+        <!-- Navigation refs previously used for one-page module
+        <div id="pageNav">
+         <ul>
+             <li><a href="#pre">Pre-Survey</a></li>
+             <li><a href="#info">Information</a></li>
+             <li><a href="#game1">Game</a></li>
+             <li><a href="#post">Post-Survey</a></li>
+             <li><a href="#contact">Contact Us</a></li>
+         </ul>
         </div>
-        
-        <a onclick="postThings()" href="javascript:void(0)" class="nextPageButton">Next Page</a>
-        
-		
-		
-		
-		
+        -->
+
+        <!-- Contact Page, saving for later (not sure where to link from)
+        <div id="page5" class="pages">
+            <a id="about" class="smooth"></a>
+            <h1>Contact Us</h1>
+            <p>Contact Us at 770-770-770</p>
+        </div>
+        -->
+
+        <a href="infoPage.html" class="nextPageButton">Next Page</a>
+
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -126,4 +83,5 @@
         <script src="javascripts/game1.js"></script>
         <script src="javascripts/popup.js"></script>
     </body>
+	
 </html>
