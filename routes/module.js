@@ -17,6 +17,7 @@ router.use(async (req, res, next) => {
 			} else {
 				// Everyhting is fine
 				next()
+				return
 			}
 		} else {
 			// No user with that cookie found
@@ -37,19 +38,19 @@ router.get('/next', async (req, res) => {
 		// Decide what page needs to be loaded
 		switch(user.progress) {
 			case 0:
-				res.send("Pre Survey")
+				res.send(express.static('../private/preSurveyPage.html'))
 				break
 			case 1:
-				res.send("Page 1")
+				res.send(express.static('../private/infoPage.html'))
 				break
 			case 2:
-				res.send("Page 2")
+				res.send(express.static('../private/infoPage2.html'))
 				break
 			case 3:
-				res.send("Page 3")
+				res.send(express.static('../private/mapPage.html'))
 				break
 			case 4:
-				res.send("Post survey")
+				res.send(express.static('../private/postSurveyPage.html'))
 				break
 			case 5:
 				res.send("Done")
@@ -69,12 +70,12 @@ router.post('/progress', async (req, res) => {
 	try {
 		// Find user
 		var user = await userModule.findOne({cookie: req.cookies.sessionCookie})
-		if(req.body.page == user.progress) {
+		if(req.body.page == user.progress && user.progress < 5) {
 			var name = ['preSurvey', 'pageOne', 'pageTwo', 'pageThree', 'postSurvey']
 			user.set('progress', user.progress + 1)
 			console.log(req.body)
 			user.set(name[req.body.page], req.body.data)
-			user.save()
+			await user.save()
 			res.status(200).send()
 		} else {
 			res.status(400).send()
