@@ -44,15 +44,18 @@ router.get('/next', async (req, res) => {
 				res.send(express.static('../private/infoPage.html'))
 				break
 			case 2:
-				res.send(express.static('../private/infoPage2.html'))
+				res.send(express.static('../private/gamePage.html'))
 				break
 			case 3:
-				res.send(express.static('../private/mapPage.html'))
+				res.send(express.static('../private/infoPage1.html'))
 				break
 			case 4:
-				res.send(express.static('../private/postSurveyPage.html'))
+				res.send(express.static('../private/mapPage.html'))
 				break
 			case 5:
+				res.send(express.static('../private/postSurveyPage.html'))
+				break
+			case 6:
 				res.send("Done")
 				break
 			default:
