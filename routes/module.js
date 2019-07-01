@@ -39,21 +39,27 @@ router.get('/next', async (req, res) => {
 		// Decide what page needs to be loaded
 		switch(user.progress) {
 			case 0:
+				console.log("p0")
 				res.sendFile(path.join(__dirname + '/../private/preSurveyPage.html'))
 				break
 			case 1:
+				console.log("p1")
 				res.sendFile(path.join(__dirname + '/../private/infoPage.html'))
 				break
 			case 2:
+				console.log("p2")
 				res.sendFile(path.join(__dirname + '/../private/gamePage.html'))
 				break
 			case 3:
+				console.log("p3")
 				res.sendFile(path.join(__dirname + '/../private/infoPage1.html'))
 				break
 			case 4:
+				console.log("p4")
 				res.sendFile(path.join(__dirname + '/../private/mapPage.html'))
 				break
 			case 5:
+				console.log("p5")
 				res.sendFile(path.join(__dirname + '/../private/postSurveyPage.html'))
 				break
 			case 6:
@@ -62,6 +68,7 @@ router.get('/next', async (req, res) => {
 			default:
 				res.status(500).send("Error [5] in module.js")
 		}
+		console.log("End of switch")
 	} catch(error) {
 		console.error(error)
 		res.status(500).send("Error [3] in module.js")
