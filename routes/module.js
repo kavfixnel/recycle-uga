@@ -39,10 +39,10 @@ router.get('/next', async (req, res) => {
 		// Decide what page needs to be loaded
 		switch(user.progress) {
 			case 0:
-				res.sendFile(path.join(__dirname + '../private/preSurveyPage.html')).send()
+				res.sendFile(path.join(__dirname + '/../private/preSurveyPage.html')).send()
 				break
 			case 1:
-				res.sendFile(path.join(__dirname + '../private/infoPage.html')).send()
+				res.sendFile(path.join(__dirname + '/../private/infoPage.html')).send()
 				break
 			case 2:
 				res.sendFile(path.join(__dirname + '/../private/gamePage.html')).send()
