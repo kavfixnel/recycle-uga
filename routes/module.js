@@ -1,6 +1,7 @@
 // Import the required modules
-var express = require('express');
-var router = express.Router();
+var express = require('express')
+var router = express.Router()
+var path = require('path')
 
 var userModule = require('../schemas/user.js')
 
@@ -38,22 +39,22 @@ router.get('/next', async (req, res) => {
 		// Decide what page needs to be loaded
 		switch(user.progress) {
 			case 0:
-				res.sendFile('../private/preSurveyPage.html')
+				res.sendFile(path.join(__dirname + '../private/preSurveyPage.html'))
 				break
 			case 1:
-				res.sendFile('../private/infoPage.html')
+				res.sendFile(path.join(__dirname + '../private/infoPage.html'))
 				break
 			case 2:
-				res.sendFile('../private/gamePage.html')
+				res.sendFile(path.join(__dirname + '../private/gamePage.html'))
 				break
 			case 3:
-				res.sendFile('../private/infoPage1.html')
+				res.sendFile(path.join(__dirname + '../private/infoPage1.html'))
 				break
 			case 4:
-				res.sendFile('../private/mapPage.html')
+				res.sendFile(path.join(__dirname + '../private/mapPage.html'))
 				break
 			case 5:
-				res.sendFile('../private/postSurveyPage.html')
+				res.sendFile(path.join(__dirname + '../private/postSurveyPage.html'))
 				break
 			case 6:
 				res.send("Done")
