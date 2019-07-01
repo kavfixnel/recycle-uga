@@ -7,6 +7,7 @@ var clickX;
 var clickY;
 var isClicked = false;
 var feedback = document.getElementById("feedback");
+var progress = document.getElementById("progress");
 var gameIsOver = false;
 
 //Variable that defines an area for the game to be played on the webpage
@@ -365,6 +366,9 @@ function updateGameArea()
 			currentTrash.y = myGameArea.y - (currentTrash.height/4);
 			currentTrash.x = myGameArea.x - (currentTrash.width/4);
 		}
+		
+	//Updating progress
+	progress.innerHTML = "Item " + trashThrownAway + " of " + myTrash.length; //+ ": " + currentTrash.name;
 	}
 	else
 	{
