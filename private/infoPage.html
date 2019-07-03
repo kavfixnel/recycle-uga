@@ -125,15 +125,15 @@
                         else {isCorrect = false;}
                         break;
                     case 2:
-                        if(SHA256(document.getElementsByName("answer2").item(0).value) === "1a01e1d611344a450758b4d04f247affb57b884507229fa6e95051c072119752") {isCorrect = true;}
+                        if(SHA256(document.getElementsByName("answer2").item(0).value) === "8a798890fe93817163b10b5f7bd2ca4d25d84c52739a645a889c173eee7d9d3d") {isCorrect = true;}
                         else {isCorrect = false;}
                         break;
                     case 3:
-                        if(document.getElementsByName("answer3").item(0).value === "yes") {isCorrect = true;}
+                        if(SHA256(document.getElementsByName("answer3").item(0).value) === "8a798890fe93817163b10b5f7bd2ca4d25d84c52739a645a889c173eee7d9d3d") {isCorrect = true;}
                         else {isCorrect = false;}
                         break;
                     case 4:
-                        if(document.getElementsByName("answer4").item(0).value === "yes") {isCorrect = true;}
+                        if(SHA256(document.getElementsByName("answer4").item(0).value) === "8a798890fe93817163b10b5f7bd2ca4d25d84c52739a645a889c173eee7d9d3d") {isCorrect = true;}
                         else {isCorrect = false;}
                 } // switch for each question depending on question number
                 
