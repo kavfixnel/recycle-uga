@@ -2,9 +2,7 @@ let mongoose = require('mongoose')
 require('dotenv').config()
 
 const URLSTRING = process.env.URLSTRING
-if(process.env.DEVMODE == 'TRUE') {
-  console.log(URLSTRING);
-}
+console.log(URLSTRING);
 
 class Database {
   constructor() {
@@ -18,8 +16,8 @@ class Database {
          }
        })
        .catch(err => {
-	 console.log(err)
-         console.error('Database connection error')
+   console.log(err)
+        console.error('Database connection error: ' + err)
        })
   }
 }
