@@ -9,7 +9,7 @@
         <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
 
         <!-- main stylesheet -->
-        <link href="../publicstylesheets/main.css" rel="stylesheet">
+        <link href="stylesheets/main.css" rel="stylesheet">
 
         <!-- JavaScript functions-->
         <script>
@@ -20,11 +20,11 @@
             
             function postThings() {
                 var pageClosed = new Date();
-                var serverInfo = {thisPage: 6, metaData: {timeOnPage: pageClosed - pageOpened}, data: {}};
+                var serverInfo = {thisPage: null, metaData: {timeOnPage: pageClosed - pageOpened}, data: {}};
                 
                 $.ajax({
                     type: "POST",
-                    url: "/users/progress",
+                    url: "/module/progress",
                     data: JSON.stringify(serverInfo),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -43,45 +43,15 @@
                 <div class="navbar-header" style="font-size: 24pt; color:white; font-family: 'Merriweather', rserif; text-align: center">
                     Roosevelt@UGA Sustainability Project
                 </div>
-                <div><button type="button" onclick="location.href='/login';" class="btn btn-light">Login</button></div>
             </div>
         </nav>
-
-        <!-- Navigation refs previously used for one-page module
-        <div id="pageNav">
-         <ul>
-             <li><a href="#pre">Pre-Survey</a></li>
-             <li><a href="#info">Information</a></li>
-             <li><a href="#game1">Game</a></li>
-             <li><a href="#post">Post-Survey</a></li>
-             <li><a href="#contact">Contact Us</a></li>
-         </ul>
-        </div>
-        -->
-
-        <!-- Contact Page, saving for later (not sure where to link from)
-        <div id="page5" class="pages">
-            <a id="about" class="smooth"></a>
-            <h1>Contact Us</h1>
-            <p>Contact Us at 770-770-770</p>
-        </div>
-        -->
-
-        <a href="infoPage.html" class="nextPageButton">Next Page</a>
+        
+        <p style="text-align: center; margin-top: 100px;">404 Error: The requested page was not found. <br> :(</p>
 
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-        <!-- CanvasJS for creating charts & graphs with animation-->
-        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-
-        <!-- Importing js files from javascripts folder in public -->
-        <script src="javascripts/graphs.js"></script>
-        <script src="javascripts/draggable.js"></script>
-        <script src="javascripts/game1.js"></script>
-        <script src="javascripts/popup.js"></script>
     </body>
 	
 </html>
