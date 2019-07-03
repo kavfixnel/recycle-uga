@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- 4th Page -->
 <html>
     <head>
         <title>UGA Recycling</title>
@@ -33,7 +34,7 @@
                 
                 $.ajax({
                     type: "POST",
-                    url: "/users/progress",
+                    url: "/module/progress",
                     data: JSON.stringify(serverInfo),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -43,7 +44,7 @@
             } // postThings
             
             function createMap() {
-                mapboxgl.accessToken = 'pk.eyJ1IjoibmJyYWNrZXR0IiwiYSI6ImNqeGtqbHR0cjF4cDUzdGxpMHJnaDBjbmYifQ.Y3bnWhyTQyGDRPM8OEd94g';
+                mapboxgl.accessToken = 'pk.eyJ1IjoicmVjeWNsZXVnYSIsImEiOiJjanhuZDRrengwZGhzM2NxZGYyczN0cmtxIn0.90gL17oBS0iAABYgzydKtQ';
             
                 var map = new mapboxgl.Map({
                     container: 'map',
