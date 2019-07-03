@@ -89,8 +89,7 @@ router.post('/progress', async (req, res) => {
 		console.error(error)
 		res.status(500).send('Error [6] in module.js /progress')
 	}
-	console.log("Error [7] in module.js")
-	res.status(400).send()
+	//res.status(400).send()
 });
 
 module.exports = router
