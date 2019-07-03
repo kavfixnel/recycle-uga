@@ -20,7 +20,12 @@
             
             function postThings() {
                 var pageClosed = new Date();
-                var serverInfo = {thisPage: 6, metaData: {timeOnPage: pageClosed - pageOpened}, data: {}};
+                var serverInfo = {
+                        page: 6, 
+                        data: {
+                            metaData: {timeOnPage: pageClosed - pageOpened}
+                        }
+                };
                 
                 $.ajax({
                     type: "POST",

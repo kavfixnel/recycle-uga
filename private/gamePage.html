@@ -63,7 +63,11 @@
                 var pageClosed = new Date();
                 
                 // data variable to be posted to the backend
-                var serverInfo = {thisPage: 2, metaData: {timeOnPage: pageClosed - pageOpened}, data: {}};
+                var serverInfo = {page: 2,
+                        data: {
+                            metaData: {timeOnPage: pageClosed - pageOpened}
+                        }
+                };
                 
                 // posts data to the backend
                 $.ajax({

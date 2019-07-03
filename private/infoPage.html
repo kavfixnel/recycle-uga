@@ -157,13 +157,16 @@
                 var pageClosed = new Date();
                 
                 // variable to be converted to JSON
-                var serverInfo = {thisPage: 1,
-                metaData: {timeOnPage: pageClosed - pageOpened},
-                data: { answer1: document.getElementsByName("answer1")[0].value,
-                        answer2: document.getElementsByName("answer2")[0].value, 
-                        answer3: document.getElementsByName("answer3")[0].value,
-                        answer4: document.getElementsByName("answer4")[0].value,
-                        attemptsPerQuestion: timesChecked}};
+                var serverInfo = {page: 1,
+                        
+                        data: { answer1: document.getElementsByName("answer1")[0].value,
+                                answer2: document.getElementsByName("answer2")[0].value, 
+                                answer3: document.getElementsByName("answer3")[0].value,
+                                answer4: document.getElementsByName("answer4")[0].value,
+                                attemptsPerQuestion: timesChecked,
+                                metaData: {timeOnPage: pageClosed - pageOpened}
+                              }
+                };
                 
                 // posts data to the backend
                 $.ajax({

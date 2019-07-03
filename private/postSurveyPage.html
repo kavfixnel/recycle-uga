@@ -36,11 +36,12 @@
                 // time the page was closed for timeOnPage
                 var pageClosed = new Date();
                 
-                var serverInfo = {thisPage: 5, 
-                        metaData: {timeOnPage: pageClosed - pageOpened},
+                var serverInfo = {page: 5,
                         data: {moduleHappiness: checkedRadio,
-                               comments: document.getElementById("comments").value
-                              }};
+                               comments: document.getElementById("comments").value,
+                               metaData: {timeOnPage: pageClosed - pageOpened}
+                              }
+                };
                 
                 $.ajax({
                     type: "POST",
