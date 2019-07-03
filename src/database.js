@@ -11,12 +11,9 @@ class Database {
   _connect() {
      mongoose.connect(URLSTRING, { useNewUrlParser: true } )
        .then(() => {
-         if(process.env.DEVMODE == 'TRUE') {
-          console.log('Atlas database connection successful')
-         }
+        console.log('Atlas database connection successful')
        })
        .catch(err => {
-   console.log(err)
         console.error('Database connection error: ' + err)
        })
   }
