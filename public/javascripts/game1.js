@@ -1,6 +1,7 @@
 
 var hand;
 var currentTrash;
+var currentTrashName;
 var trashThrownAway = 1;
 var myTrash = [];
 var clickX;
@@ -9,6 +10,8 @@ var isClicked = false;
 var feedback = document.getElementById("feedback");
 var progress = document.getElementById("progress");
 var gameIsOver = false;
+var score;
+var scoreCalculated = true;
 
 //Variable that defines an area for the game to be played on the webpage
 var myGameArea = 
@@ -24,6 +27,7 @@ var myGameArea =
 		this.context = this.canvas.getContext("2d");
 		
 		this.interval = setInterval(updateGameArea, 20);
+		currentTrashName = myTrash[0].name;
 		
 		//Event listeners 
 		//Moving the mouse
@@ -63,11 +67,17 @@ var myGameArea =
 						
 						//Current Trash needs CHaRM
 						else if(currentTrash.charm)
-							feedback.innerHTML = "This is Recyclable, But it requires a special Bin";	
+						{
+							feedback.innerHTML = "This is Recyclable, But it requires a special Bin";
+							myTrash[i].correct = false;
+						}
 						
 						//Current Trash is not Recyclable
 						else
+						{
 							feedback.innerHTML = "Hey you can't recycle this!";
+							myTrash[i].correct = false;
+						}
 					}
 						
 					//When Colliding with the Trash Bin
@@ -75,7 +85,10 @@ var myGameArea =
 					{
 						//Current Trash is Recyclable or needs CHaRM
 						if(currentTrash.recycleable || currentTrash.charm)
+						{
 							feedback.innerHTML = "Hey this is Recyclable!";
+							myTrash[i].correct = false;
+						}
 
 						//Current Trash is just Trash
 						else
@@ -99,7 +112,10 @@ var myGameArea =
 							trashThrownAway++;
 						}
 						else
+						{
 							feedback.innerHTML = "Nope this doesn't go here";	
+							myTrash[i].correct = false;
+						}
 					}
 						
 				}
@@ -147,8 +163,11 @@ function startGame()
 	hand = new component(30, 30, "images/hand.jpg", 10, 120, "image");
 	
 	//Creates the text displayed at the end of the game
-	gameOverText = new component("60px", "Consolas", "black", 200, 150, "text");
+	gameOverText = new component("80px", "Consolas", "black", 180, 150, "text");
 	gameOverText.text = "GAME OVER";
+	
+	scoreText = new component("60px", "Consolas", "black", 200, 300, "text");
+	scoreText.text = 100 + "%";
 	
 	//Creates cans
 	recycleBin = new component(150, 225, "images/recyclebin.jpg", 30, 250, "image");
@@ -158,47 +177,49 @@ function startGame()
 	
 	//Creates garbage
 	//For CHaRM Bin
-	battery = new trash(60, 60, "images/battery.png", 30, 90, "image", false, true);
-	bulb = new trash(60, 60, "images/bulb.jpg", 30, 90, "image", false, true);
-	styrofoam = new trash(60, 60, "images/styrofoam.jpg", 30, 90, "image", false, true);
-	bubbleWrap = new trash(60, 60, "images/bubblewrap.jpg", 30, 90, "image", false, true);
-	motorOil = new trash(60, 60, "images/oil.jpg", 30, 90, "image", false, true);
-	plasticBag = new trash(60, 60, "images/plasticbag.jpg", 10, 30, "image", false, true);
+	battery = new trash("Battery", 60, 60, "images/battery.png", 30, 90, "image", false, true);
+	bulb = new trash("Light Bulb", 60, 60, "images/bulb.jpg", 30, 90, "image", false, true);
+	styrofoam = new trash("Styrofoam", 60, 60, "images/styrofoam.jpg", 30, 90, "image", false, true);
+	bubbleWrap = new trash("Bubble Wrap", 60, 60, "images/bubblewrap.jpg", 30, 90, "image", false, true);
+	motorOil = new trash("Motor Oil", 60, 60, "images/oil.jpg", 30, 90, "image", false, true);
+	plasticBag = new trash("Plastic Bag", 60, 60, "images/plasticbag.jpg", 10, 30, "image", false, true);
 	
 	
 	//For Trash Bin
-	dirtyAlumFoil = new trash(60, 60, "images/dirtyafoil.jpg", 30, 30, "image", false, false);
-	paperPlate = new trash(60, 60, "images/paperplate.jpg", 50, 30, "image", false, false);
-	plasticCutlery = new trash(60, 60, "images/plasticcut.jpg", 70, 30, "image", false, false);
-	straw = new trash(60, 60, "images/straw.jpg", 100, 30, "image", false, false);
-	napkin = new trash(60, 60, "images/napkin.jpg", 120, 30, "image", false, false);
-	usedCoffeeCup = new trash(60, 60, "images/usedCoffeeCup.jpg", 140, 30, "image", false, false);
-	greasyPizzaBox = new trash(60, 60, "images/greasyPBox.jpg", 160, 30, "image", false, false);
+	dirtyAlumFoil = new trash("Aluminum Foil (dirty)", 60, 60, "images/dirtyafoil.jpg", 30, 30, "image", false, false);
+	paperPlate = new trash("Paper Plate", 60, 60, "images/paperplate.jpg", 50, 30, "image", false, false);
+	plasticCutlery = new trash("Plastic Cutlery", 60, 60, "images/plasticcut.jpg", 70, 30, "image", false, false);
+	straw = new trash("Straw", 60, 60, "images/straw.jpg", 100, 30, "image", false, false);
+	napkin = new trash("Napkin", 60, 60, "images/napkin.jpg", 120, 30, "image", false, false);
+	usedCoffeeCup = new trash("Used Coffee Cup", 60, 60, "images/usedCoffeeCup.jpg", 140, 30, "image", false, false);
+	greasyPizzaBox = new trash("Greasy Pizza Box", 60, 60, "images/greasyPBox.jpg", 160, 30, "image", false, false);
 	
 	
 	//For Recycle Bin
-	waterBottle = new trash(60, 60, "images/bottle.jpg", 30, 60, "image", true, false);	
-	alumCan = new trash(60, 60, "images/sodacan.png", 200, 60, "image", true, false);
-	cardBox = new trash(60, 60, "images/cardBox.jpg", 200, 60, "image", true, false);
-	steelCan = new trash(60, 60, "images/steelcan.jpg", 200, 60, "image", true, false);
-	cleanAFoil = new trash(60, 60, "images/cleanAFoil.jpg", 200, 60, "image", true, false);
-	aerosol = new trash(60, 60, "images/aerosol.jpg", 200, 60, "image", true, false);
-	jug = new trash(60, 60, "images/emptyJug.jpg", 200, 60, "image", true, false);
-	coffeeCov = new trash(60, 60, "images/coffeeCover.jpg", 200, 60, "image", true, false);
-	tupper = new trash(60, 60, "images/tup.jpg", 200, 60, "image", true, false);
-	emptyShampoo = new trash(60, 60, "images/emptyShampoo.jpg", 200, 60, "image", true, false);
+	waterBottle = new trash("Water Bottle", 60, 60, "images/bottle.jpg", 30, 60, "image", true, false);	
+	alumCan = new trash("Soda Can", 60, 60, "images/sodacan.png", 200, 60, "image", true, false);
+	cardBox = new trash("Cardboard Box", 60, 60, "images/cardBox.jpg", 200, 60, "image", true, false);
+	steelCan = new trash("Steel Can", 60, 60, "images/steelcan.jpg", 200, 60, "image", true, false);
+	cleanAFoil = new trash("Aluminum Foil (clean)", 60, 60, "images/cleanAFoil.jpg", 200, 60, "image", true, false);
+	aerosol = new trash("Aerosol Can", 60, 60, "images/aerosol.jpg", 200, 60, "image", true, false);
+	jug = new trash("Plastic Jug", 60, 60, "images/emptyJug.jpg", 200, 60, "image", true, false);
+	coffeeCov = new trash("Coffee Cover", 60, 60, "images/coffeeCover.jpg", 200, 60, "image", true, false);
+	tupper = new trash("Tupperware", 60, 60, "images/tup.jpg", 200, 60, "image", true, false);
+	emptyShampoo = new trash("Empty Shampoo Bottle", 60, 60, "images/emptyShampoo.jpg", 200, 60, "image", true, false);
 	
 	
 	//Shuffles the items in the trash array
 	shuffleArray(myTrash);
+	score = myTrash.length;
 	myGameArea.start();
 }
 
 
 //Function to create trash
-function trash(width, height, imgSrc, x, y, type, recycleable, charm)
+function trash(name, width, height, imgSrc, x, y, type, recycleable, charm)
 {
-	name = new component(width, height, imgSrc, x, y, "image");   
+	comp = new component(width, height, imgSrc, x, y, "image");  
+	this.name = name;
 	this.type = type;
 	this.recycleable = recycleable;
 	this.charm = charm;
@@ -206,6 +227,7 @@ function trash(width, height, imgSrc, x, y, type, recycleable, charm)
 	this.thrownAway = false;
 	var current;
 	this.current = false;
+	this.correct = true;
 	
 	if(type == "image")
 	{
@@ -357,7 +379,8 @@ function updateGameArea()
 			if(!myTrash[i].thrownAway)
 			{
 				myTrash[i].current = true;
-				myTrash[i].update();				
+				myTrash[i].update();	
+				currentTrashName = myTrash[i].name;
 			}					
 		}	
 		
@@ -368,11 +391,22 @@ function updateGameArea()
 		}
 		
 	//Updating progress
-	progress.innerHTML = "Item " + trashThrownAway + " of " + myTrash.length; //+ ": " + currentTrash.name;
+	progress.innerHTML = "Item " + trashThrownAway + " of " + myTrash.length + ": " + currentTrashName;
 	}
+	
 	else
 	{
 		gameOverText.update();
+		
+		for(i = 0; i < myTrash.length; i++)
+		{
+			if(!myTrash[i].correct && scoreCalculated)
+				score--;		
+		}
+		scoreCalculated = false;
+		
+		scoreText.text = "Score: " + parseInt((score/myTrash.length)*100) + "%";
+		scoreText.update();
 	}
 		
 	hand.update();
