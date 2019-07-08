@@ -199,7 +199,7 @@ function startGame()
 	alumCan = new trash("Soda Can", 60, 60, "/../images/sodacan.png", 200, 60, "image", true, false);
 	cardBox = new trash("Cardboard Box", 60, 60, "/../images/cardBox.jpg", 200, 60, "image", true, false);
 	steelCan = new trash("Steel Can", 60, 60, "/../images/steelcan.jpg", 200, 60, "image", true, false);
-	cleanAFoil = new trash("Aluminum Foil (clean)", 60, 60, "../../public/images/cleanAFoil.jpg", 200, 60, "image", true, false);
+	cleanAFoil = new trash("Aluminum Foil (clean)", 60, 60, "/../images/cleanAFoil.jpg", 200, 60, "image", true, false);
 	aerosol = new trash("Aerosol Can", 60, 60, "/../images/aerosol.jpg", 200, 60, "image", true, false);
 	jug = new trash("Plastic Jug", 60, 60, "/../images/emptyJug.jpg", 200, 60, "image", true, false);
 	coffeeCov = new trash("Coffee Cover", 60, 60, "/../images/coffeeCover.jpg", 200, 60, "image", true, false);
