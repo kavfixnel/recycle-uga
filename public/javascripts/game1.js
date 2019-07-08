@@ -159,7 +159,7 @@ var myGameArea =
 function startGame()
 {
 	//Creates a game hand    
-	hand = new component(30, 30, "./images/hand.jpg", 10, 120, "image");
+	hand = new component(30, 30, "../../public/images/hand.jpg", 10, 120, "image");
 	
 	//Creates the text displayed at the end of the game
 	gameOverText = new component("80px", "Consolas", "black", 180, 150, "text");
@@ -169,42 +169,42 @@ function startGame()
 	scoreText.text = 100 + "%";
 	
 	//Creates cans
-	recycleBin = new component(150, 225, "../images/recyclebin.jpg", 30, 250, "image");
-	trashBin = new component(150, 225, "../images/trashcan.png", 550, 250, "image");
-	charmBin = new component(150, 225, "../images/paperbin.jpg", 300, 250, "image");
-	charmLogo = new component(100, 60, "../images/CHaRM.jpg", 325, 380, "image");
+	recycleBin = new component(150, 225, "../../public/images/recyclebin.jpg", 30, 250, "image");
+	trashBin = new component(150, 225, "../../public/images/trashcan.png", 550, 250, "image");
+	charmBin = new component(150, 225, "../../public/images/paperbin.jpg", 300, 250, "image");
+	charmLogo = new component(100, 60, "../../public/images/CHaRM.jpg", 325, 380, "image");
 	
 	//Creates garbage
 	//For CHaRM Bin
-	battery = new trash("Battery", 60, 60, "../images/battery.png", 30, 90, "image", false, true);
-	bulb = new trash("Light Bulb", 60, 60, "../images/bulb.jpg", 30, 90, "image", false, true);
-	styrofoam = new trash("Styrofoam", 60, 60, "../images/styrofoam.jpg", 30, 90, "image", false, true);
-	bubbleWrap = new trash("Bubble Wrap", 60, 60, "../images/bubblewrap.jpg", 30, 90, "image", false, true);
-	motorOil = new trash("Motor Oil", 60, 60, "../images/oil.jpg", 30, 90, "image", false, true);
-	plasticBag = new trash("Plastic Bag", 60, 60, "../images/plasticbag.jpg", 10, 30, "image", false, true);
+	battery = new trash("Battery", 60, 60, "../../public/images/battery.png", 30, 90, "image", false, true);
+	bulb = new trash("Light Bulb", 60, 60, "../../public/images/bulb.jpg", 30, 90, "image", false, true);
+	styrofoam = new trash("Styrofoam", 60, 60, "../../public/images/styrofoam.jpg", 30, 90, "image", false, true);
+	bubbleWrap = new trash("Bubble Wrap", 60, 60, "../../public/images/bubblewrap.jpg", 30, 90, "image", false, true);
+	motorOil = new trash("Motor Oil", 60, 60, "../../public/images/oil.jpg", 30, 90, "image", false, true);
+	plasticBag = new trash("Plastic Bag", 60, 60, "../../public/images/plasticbag.jpg", 10, 30, "image", false, true);
 	
 	
 	//For Trash Bin
-	dirtyAlumFoil = new trash("Aluminum Foil (dirty)", 60, 60, "../images/dirtyafoil.jpg", 30, 30, "image", false, false);
-	paperPlate = new trash("Paper Plate", 60, 60, "../images/paperplate.jpg", 50, 30, "image", false, false);
-	plasticCutlery = new trash("Plastic Cutlery", 60, 60, "../images/plasticcut.jpg", 70, 30, "image", false, false);
-	straw = new trash("Straw", 60, 60, "images/straw.jpg", 100, 30, "../image", false, false);
-	napkin = new trash("Napkin", 60, 60, "images/napkin.jpg", 120, 30, "../image", false, false);
-	usedCoffeeCup = new trash("Used Coffee Cup", 60, 60, "../images/usedCoffeeCup.jpg", 140, 30, "image", false, false);
-	greasyPizzaBox = new trash("Greasy Pizza Box", 60, 60, "../images/greasyPBox.jpg", 160, 30, "image", false, false);
+	dirtyAlumFoil = new trash("Aluminum Foil (dirty)", 60, 60, "../../public/images/dirtyafoil.jpg", 30, 30, "image", false, false);
+	paperPlate = new trash("Paper Plate", 60, 60, "../../public/images/paperplate.jpg", 50, 30, "image", false, false);
+	plasticCutlery = new trash("Plastic Cutlery", 60, 60, "../../public/images/plasticcut.jpg", 70, 30, "image", false, false);
+	straw = new trash("Straw", 60, 60, "../../public/images/straw.jpg", 100, 30, "image", false, false);
+	napkin = new trash("Napkin", 60, 60, "../../public/images/napkin.jpg", 120, 30, "image", false, false);
+	usedCoffeeCup = new trash("Used Coffee Cup", 60, 60, "../../public/images/usedCoffeeCup.jpg", 140, 30, "image", false, false);
+	greasyPizzaBox = new trash("Greasy Pizza Box", 60, 60, "../../public/images/greasyPBox.jpg", 160, 30, "image", false, false);
 	
 	
 	//For Recycle Bin
-	waterBottle = new trash("Water Bottle", 60, 60, "../images/bottle.jpg", 30, 60, "image", true, false);	
-	alumCan = new trash("Soda Can", 60, 60, "../images/sodacan.png", 200, 60, "image", true, false);
-	cardBox = new trash("Cardboard Box", 60, 60, "../images/cardBox.jpg", 200, 60, "image", true, false);
-	steelCan = new trash("Steel Can", 60, 60, "../images/steelcan.jpg", 200, 60, "image", true, false);
-	cleanAFoil = new trash("Aluminum Foil (clean)", 60, 60, "../images/cleanAFoil.jpg", 200, 60, "image", true, false);
-	aerosol = new trash("Aerosol Can", 60, 60, "../images/aerosol.jpg", 200, 60, "image", true, false);
-	jug = new trash("Plastic Jug", 60, 60, "../images/emptyJug.jpg", 200, 60, "image", true, false);
-	coffeeCov = new trash("Coffee Cover", 60, 60, "../images/coffeeCover.jpg", 200, 60, "image", true, false);
-	tupper = new trash("Tupperware", 60, 60, "../images/tup.jpg", 200, 60, "image", true, false);
-	emptyShampoo = new trash("Empty Shampoo Bottle", 60, 60, "../images/emptyShampoo.jpg", 200, 60, "image", true, false);
+	waterBottle = new trash("Water Bottle", 60, 60, "../../public/images/bottle.jpg", 30, 60, "image", true, false);	
+	alumCan = new trash("Soda Can", 60, 60, "../../public/images/sodacan.png", 200, 60, "image", true, false);
+	cardBox = new trash("Cardboard Box", 60, 60, "../../public/images/cardBox.jpg", 200, 60, "image", true, false);
+	steelCan = new trash("Steel Can", 60, 60, "../../public/images/steelcan.jpg", 200, 60, "image", true, false);
+	cleanAFoil = new trash("Aluminum Foil (clean)", 60, 60, "../../public/images/cleanAFoil.jpg", 200, 60, "image", true, false);
+	aerosol = new trash("Aerosol Can", 60, 60, "../../public/images/aerosol.jpg", 200, 60, "image", true, false);
+	jug = new trash("Plastic Jug", 60, 60, "../../public/images/emptyJug.jpg", 200, 60, "image", true, false);
+	coffeeCov = new trash("Coffee Cover", 60, 60, "../../public/images/coffeeCover.jpg", 200, 60, "image", true, false);
+	tupper = new trash("Tupperware", 60, 60, "../../public/images/tup.jpg", 200, 60, "image", true, false);
+	emptyShampoo = new trash("Empty Shampoo Bottle", 60, 60, "../../public/images/emptyShampoo.jpg", 200, 60, "image", true, false);
 	
 	
 	//Shuffles the items in the trash array
