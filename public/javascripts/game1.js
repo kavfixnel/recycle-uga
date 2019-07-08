@@ -159,7 +159,7 @@ var myGameArea =
 function startGame()
 {
 	//Creates a game hand    
-	hand = new component(30, 30, "../../public/images/hand.jpg", 10, 120, "image");
+	hand = new component(30, 30, "/images/hand.jpg", 10, 120, "image");
 	
 	//Creates the text displayed at the end of the game
 	gameOverText = new component("80px", "Consolas", "black", 180, 150, "text");
