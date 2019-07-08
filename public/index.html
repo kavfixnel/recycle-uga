@@ -14,8 +14,12 @@
         <!-- JavaScript functions-->
         <script>
             var pageOpened;
+            var slideIndex = 0;
+            var timeout;
+            
             window.onload = function() {
                 pageOpened = new Date();
+                showSlides();
             }
             
             function postThings() {
@@ -37,6 +41,32 @@
                     failure: function(){alert("post failed");}
                 });
             } // postThings
+            
+            function showSlides() {
+                var slides = document.getElementsByClassName("slides");
+                
+                for(var i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";
+                } // for each slide, make blank
+                
+                slides[slideIndex % 3].style.display = "block";
+                
+                timeout = setTimeout(function(){slideIndex++;showSlides();}, 5000);
+            } // showSlides
+            
+            function changeSlide(n) {
+                // resetting autoloop
+                clearTimeout(timeout);
+                
+                // add or subtract one from slideIndex
+                slideIndex += n;
+                
+                // if slideIndex is below 0 (invalid), fix
+                if(slideIndex < 0)
+                    slideIndex += 3;
+                    
+                showSlides();
+            } // changeSlide
         </script>
 
     </head>
@@ -52,7 +82,30 @@
             </div>
         </nav>
 
-        <p style="text-align: center; margin-top: 75px;">Log in to enter the module!</p>
+        <div id="slideshow-container">
+            
+            <div class="slides fade">
+                <div class="slideNumber">1 / 3</div>
+                <img src="/images/slide1.jpg" class="slideImage">
+                <div class="slideText">Miller Learning Center</div>
+            </div>
+            
+            <div class="slides fade">
+                <div class="slideNumber">2 / 3</div>
+                <img src="/images/slide2.jpg" class="slideImage">
+                <div class="slideText">Herty Field</div>
+            </div>
+            
+            <div class="slides fade">
+                <div class="slideNumber">3 / 3</div>
+                <img src="/images/slide3.png" class="slideImage">
+                <div class="slideText">MLC (again), but older</div>
+            </div>
+            
+            <a id="previousButton" onclick="changeSlide(-1)">&#10094;</a>
+            <a id="nextButton" onclick="changeSlide(1)">&#10095;</a>
+        
+        </div>
         
         <a href="/module/next" class="nextPageButton">Next Page</a>
 

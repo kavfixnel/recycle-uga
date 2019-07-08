@@ -31,15 +31,6 @@
                 
                 var pageClosed = new Date();
                 
-<<<<<<< HEAD:public/preSurveyPage.html
-                var serverInfo = {thisPage: 1, 
-                        metaData: {timeOnPage: pageClosed - pageOpened},
-                        data: {name: document.getElementById("name").value,
-                               gender: checkedRadio,
-                               811: document.getElementById("811").value
-                              }};
-                
-=======
                 // for each question, skims answers to find checked radio button and
                 // pushes the value into the array
                 for(var qCount = 1; qCount <= numQuestions; qCount++) {
@@ -65,7 +56,6 @@
                               }
                         };
 
->>>>>>> 96566fc4ceed0925776e964b7c72766e22f928a0:private/preSurveyPage.html
                 $.ajax({
                     type: "POST",
                     url: "/module/progress",
@@ -75,6 +65,7 @@
                     success: function(data){alert(data);},
                     failure: function(){alert("post failed");}
                 });
+                
             } // postThings
         </script>
     </head>
@@ -102,11 +93,7 @@
                 
         </div> 	
         
-<<<<<<< HEAD:public/preSurveyPage.html
-        <a onclick="postThings()" href="javascript:void(0)" class="nextPageButton">Next Page</a>
-=======
         <a onclick="postThings()" href="/module/next" class="nextPageButton disabled">Next Page</a>
->>>>>>> 96566fc4ceed0925776e964b7c72766e22f928a0:private/preSurveyPage.html
         
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>
@@ -117,13 +104,6 @@
         <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
         <!-- Importing js files from javascripts folder in public -->
-<<<<<<< HEAD:public/preSurveyPage.html
-        <script src="javascripts/graphs.js"></script>
-        <script src="javascripts/draggable.js"></script>
-        <script src="javascripts/game1.js"></script>
-        <script src="javascripts/popup.js"></script>
-=======
         <script src="../javascripts/pageCompleteCheck.js"></script>
->>>>>>> 96566fc4ceed0925776e964b7c72766e22f928a0:private/preSurveyPage.html
     </body>
 </html>
