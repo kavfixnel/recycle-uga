@@ -16,32 +16,31 @@
 				
 		<style>
 			canvas {
-				border: 1px solid #B7BF10; 
-				background-color: #f3efee;
+				border:1px solid #d3d3d3;
+				background-color: #f1f1f1;
 				position: relative;
-				margin-left: 5%;
-                display: block;
-                float: left;
+				left: 5%;
 			}
 			
-			.instructions {
+			.c {
 				position: relative;
-                text-align: center;
+				top: 0%;
+				left: 5%;
 			}
 			
 			.key {
-				border:1px solid #B7BF10;
-				background-color: #f3efee;
-				float: right;
-                width: 30%;
-                display: block;
-                margin-right: 5%;
-                padding: 10px 30px;
+				border:1px solid #d3d3d3;
+				background-color: #f1f1f1;
+				position: absolute;
+				top: 15%;
+				left: 60%;
+				right: 5%;
 			}
 			
 			.centered {
 				text-align: center;
 			}
+			
 
 		</style>
 		
@@ -87,6 +86,7 @@
 	
     <body onload = "startGame()">
 	
+	
         <!-- Fixed navigation bar using bootsrap classes, UGA Bulldog Red color, UGA font-->
         <nav class="navbar navbar-fixed-top" style="background-color: #BA0C2F;">
             <div class="container">
@@ -97,7 +97,7 @@
         </nav>
 		
 		<br>
-		<p class="instructions">Grab the items and place them in the correct bins!</p>
+		<h2 class="c">Grab the items and place them in the correct bins</h2>
         
 		
         <!-- Game 1 Page -->
@@ -105,19 +105,13 @@
             <canvas id="canvas"></canvas>
 		</div>
 		
-<<<<<<< HEAD:public/gamePage.html
 		<h2 id="progress" class="c"></h2>
 		<h2 id="feedback" class="c"></h2>
 		
 		<div class="key">
 			<h2 class="centered">Hints<h2>
-=======
-		<div class="key">
-			<h2 class="centered">Hints:</h2>
->>>>>>> 96566fc4ceed0925776e964b7c72766e22f928a0:private/gamePage.html
 			<p>Not all items can be recycled. Many that can require a special bin called a CHaRM bin.</p>
-            <p id="feedback"></p>
-        </div>
+		</div>
         
         <a onclick="postThings()" href="/module/next" class="nextPageButton">Next Page</a>
         
@@ -131,6 +125,6 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
         <!-- Importing js files from javascripts folder in public -->
-        <script src="../javascripts/game1.js"></script>
+        <script src="../public/javascripts/game1.js"></script>
     </body>
 </html>
