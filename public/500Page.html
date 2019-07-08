@@ -20,12 +20,7 @@
             
             function postThings() {
                 var pageClosed = new Date();
-                var serverInfo = {
-                        page: null, 
-                        data: {
-                            metaData: {timeOnPage: pageClosed - pageOpened}
-                        }
-                };
+                var serverInfo = {page: null, data: {metaData: {timeOnPage: pageClosed - pageOpened}}};
                 
                 $.ajax({
                     type: "POST",
@@ -48,13 +43,10 @@
                 <div class="navbar-header" style="font-size: 24pt; color:white; font-family: 'Merriweather', rserif; text-align: center">
                     Roosevelt@UGA Sustainability Project
                 </div>
-                <div><button type="button" onclick="location.href='/login';" class="btn btn-light">Login</button></div>
             </div>
         </nav>
 
-        <p style="text-align: center; margin-top: 75px;">Log in to enter the module!</p>
-        
-        <a href="/module/next" class="nextPageButton">Next Page</a>
+        <p style="text-align: center; margin-top: 100px;">500 Error: Our servers had a problem. Please try again.<br> :(</p>
 
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>

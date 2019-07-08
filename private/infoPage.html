@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<!-- 1st page -->
 <html>
     <head>
         <title>UGA Recycling</title>
@@ -10,7 +12,7 @@
         <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans&display=swap" rel="stylesheet">
         
         <!-- main stylesheet -->
-        <link href="stylesheets/main.css" rel="stylesheet">
+        <link href="../stylesheets/main.css" rel="stylesheet">
         
         <!-- on page js, mainly window.onload -->
         <script>
@@ -123,15 +125,15 @@
                         else {isCorrect = false;}
                         break;
                     case 2:
-                        if(SHA256(document.getElementsByName("answer2").item(0).value) === "1a01e1d611344a450758b4d04f247affb57b884507229fa6e95051c072119752") {isCorrect = true;}
+                        if(SHA256(document.getElementsByName("answer2").item(0).value) === "8a798890fe93817163b10b5f7bd2ca4d25d84c52739a645a889c173eee7d9d3d") {isCorrect = true;}
                         else {isCorrect = false;}
                         break;
                     case 3:
-                        if(document.getElementsByName("answer3").item(0).value === "yes") {isCorrect = true;}
+                        if(SHA256(document.getElementsByName("answer3").item(0).value) === "8a798890fe93817163b10b5f7bd2ca4d25d84c52739a645a889c173eee7d9d3d") {isCorrect = true;}
                         else {isCorrect = false;}
                         break;
                     case 4:
-                        if(document.getElementsByName("answer4").item(0).value === "yes") {isCorrect = true;}
+                        if(SHA256(document.getElementsByName("answer4").item(0).value) === "8a798890fe93817163b10b5f7bd2ca4d25d84c52739a645a889c173eee7d9d3d") {isCorrect = true;}
                         else {isCorrect = false;}
                 } // switch for each question depending on question number
                 
@@ -155,22 +157,25 @@
                 var pageClosed = new Date();
                 
                 // variable to be converted to JSON
-                var serverInfo = {thisPage: 2,
-                metaData: {timeOnPage: pageClosed - pageOpened},
-                data: { answer1: document.getElementsByName("answer1")[0].value,
-                        answer2: document.getElementsByName("answer2")[0].value, 
-                        answer3: document.getElementsByName("answer3")[0].value,
-                        answer4: document.getElementsByName("answer4")[0].value,
-                        attemptsPerQuestion: timesChecked}};
+                var serverInfo = {page: 1,
+                        
+                        data: { answer1: document.getElementsByName("answer1")[0].value,
+                                answer2: document.getElementsByName("answer2")[0].value, 
+                                answer3: document.getElementsByName("answer3")[0].value,
+                                answer4: document.getElementsByName("answer4")[0].value,
+                                attemptsPerQuestion: timesChecked,
+                                metaData: {timeOnPage: pageClosed - pageOpened}
+                              }
+                };
                 
                 // posts data to the backend
                 $.ajax({
                     type: "POST",
-                    url: "/users/progress",
+                    url: "/module/progress",
                     data: JSON.stringify(serverInfo),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: function(data){alert(data);},
+                    success: function(data){alert("post sucessful");},
                     failure: function(){alert("post failed");}
                 });
             } // postThings
@@ -255,7 +260,7 @@
             </div>
         </div>
 
-        <a onclick="postThings()" href="javascript:void(0)" class="nextPageButton disabled">Next Page</a>
+        <a onclick="postThings()" href="/module/next" class="nextPageButton disabled">Next Page</a>
         
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>
@@ -266,11 +271,9 @@
         <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
         <!-- Importing js files from javascripts folder in public -->
-        <script src="javascripts/graphs.js"></script>
-        <script src="javascripts/draggable.js"></script>
-        <script src="javascripts/game1.js"></script>
-        <script src="javascripts/popup.js"></script>
-        <script src="javascripts/hashing.js"></script>
-        <script src="javascripts/pageCompleteCheck.js"></script>
+        <script src="../javascripts/graphs.js"></script>
+        <script src="../javascripts/popup.js"></script>
+        <script src="../javascripts/hashing.js"></script>
+        <script src="../javascripts/pageCompleteCheck.js"></script>
     </body>
 </html>

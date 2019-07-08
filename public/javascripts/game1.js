@@ -19,7 +19,6 @@ var myGameArea =
 	canvas : document.getElementById("canvas"),
 	start : function() 
 	{
-		this.canvas.width = 720;
 		this.canvas.height = 480;
 		
 		//Hide Cursor
@@ -67,6 +66,7 @@ var myGameArea =
 						
 						//Current Trash needs CHaRM
 						else if(currentTrash.charm)
+<<<<<<< HEAD
 						{
 							feedback.innerHTML = "This is Recyclable, But it requires a special Bin";
 							myTrash[i].correct = false;
@@ -78,6 +78,13 @@ var myGameArea =
 							feedback.innerHTML = "Hey you can't recycle this!";
 							myTrash[i].correct = false;
 						}
+=======
+							feedback.innerHTML = "This is recyclable, but it requires a special bin.";	
+						
+						//Current Trash is not Recyclable
+						else
+							feedback.innerHTML = "Hey! You can't recycle this!";
+>>>>>>> 96566fc4ceed0925776e964b7c72766e22f928a0
 					}
 						
 					//When Colliding with the Trash Bin
@@ -85,15 +92,19 @@ var myGameArea =
 					{
 						//Current Trash is Recyclable or needs CHaRM
 						if(currentTrash.recycleable || currentTrash.charm)
+<<<<<<< HEAD
 						{
 							feedback.innerHTML = "Hey this is Recyclable!";
 							myTrash[i].correct = false;
 						}
+=======
+							feedback.innerHTML = "Hey! This is recyclable.";
+>>>>>>> 96566fc4ceed0925776e964b7c72766e22f928a0
 
 						//Current Trash is just Trash
 						else
 						{
-							feedback.innerHTML = "Good job this can't be recycled";
+							feedback.innerHTML = "Good job! This can't be recycled.";
 							myTrash[i].thrownAway = true;
 							myTrash[i].current = false;
 							trashThrownAway++;

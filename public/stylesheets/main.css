@@ -185,3 +185,9 @@ label {
     font-family: 'Merriweather', 'serif';
     margin-top: 30px;
 }
+
+/* for info windows on map page */
+.mapboxgl-popup {
+    max-width: 400px;
+    font: 12px 'Merriweather-Sans', sans-serif;
+}

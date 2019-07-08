@@ -2,9 +2,7 @@ let mongoose = require('mongoose')
 require('dotenv').config()
 
 const URLSTRING = process.env.URLSTRING
-if(process.env.DEVMODE == 'TRUE') {
-  console.log(URLSTRING);
-}
+console.log(URLSTRING);
 
 class Database {
   constructor() {
@@ -13,13 +11,10 @@ class Database {
   _connect() {
      mongoose.connect(URLSTRING, { useNewUrlParser: true } )
        .then(() => {
-         if(process.env.DEVMODE == 'TRUE') {
-          console.log('Atlas database connection successful')
-         }
+        console.log('Atlas database connection successful')
        })
        .catch(err => {
-	 console.log(err)
-         console.error('Database connection error')
+        console.error('Database connection error: ' + err)
        })
   }
 }

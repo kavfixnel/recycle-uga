@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title>UGA Recycling</title>
@@ -6,80 +7,36 @@
 
         <!-- UGA fonts from UGA style guide-->
         <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
-        
+
         <!-- main stylesheet -->
         <link href="stylesheets/main.css" rel="stylesheet">
-		
-		
-				
-		<style>
-			canvas {
-				border:1px solid #d3d3d3;
-				background-color: #f1f1f1;
-				position: relative;
-				left: 5%;
-			}
-			
-			.c {
-				position: relative;
-				top: 0%;
-				left: 5%;
-			}
-			
-			.key {
-				border:1px solid #d3d3d3;
-				background-color: #f1f1f1;
-				position: absolute;
-				top: 15%;
-				left: 60%;
-				right: 5%;
-			}
-			
-			.centered {
-				text-align: center;
-			}
 
-			
-		</style>
-		
-		
-        
-        <!-- on page js, mainly window.onload -->
+        <!-- JavaScript functions-->
         <script>
-            // time the page was opened for timeOnPage
             var pageOpened;
             window.onload = function() {
-                startGame();
-            
                 pageOpened = new Date();
-            } // on window load
+            }
             
-            // posts 'things' (data) to the server 
             function postThings() {
-                // time the page was closed for timeOnPage
                 var pageClosed = new Date();
+                var serverInfo = {page: null, data: {metaData: {timeOnPage: pageClosed - pageOpened}}};
                 
-                // data variable to be posted to the backend
-                var serverInfo = {thisPage: 3, metaData: {timeOnPage: pageClosed - pageOpened}, data: {}};
-                
-                // posts data to the backend
                 $.ajax({
                     type: "POST",
-                    url: "/users/progress",
+                    url: "/module/progress",
                     data: JSON.stringify(serverInfo),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: function(data){alert(data);},
+                    success: function(data){alert("post sucessful");},
                     failure: function(){alert("post failed");}
                 });
+            } // postThings
         </script>
 
     </head>
-	
-	
-    <body onload = "startGame()">
-	
-	
+
+    <body>
         <!-- Fixed navigation bar using bootsrap classes, UGA Bulldog Red color, UGA font-->
         <nav class="navbar navbar-fixed-top" style="background-color: #BA0C2F;">
             <div class="container">
@@ -88,43 +45,13 @@
                 </div>
             </div>
         </nav>
-		
-		<br>
-		<h2 class="c">Grab the items and place them in the correct bins</h2>
         
-		
-        <!-- Game 1 Page -->
-		<div>
-            <canvas id="canvas"></canvas>
-		</div>
-		
-		<h2 id="progress" class="c"></h2>
-		<h2 id="feedback" class="c"></h2>
-		
-		<div class="key">
-			<h2 class="centered">Hints<h2>
-			<p>Not all items can be recycled. Many that can require a special bin called a CHaRM bin.</p>
-		</div>
-        
-        
-        <a onclick="postThings()" href="javascript:void(0)" id="npbutton" class="nextPageButton">Next Page</a>
-        
-		
-		
-		
-		
+        <p style="text-align: center; margin-top: 100px;">404 Error: The requested page was not found. <br> :(</p>
+
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-        <!-- CanvasJS for creating charts & graphs with animation-->
-        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-
-        <!-- Importing js files from javascripts folder in public -->
-        <script src="javascripts/graphs.js"></script>
-        <script src="javascripts/draggable.js"></script>
-        <script src="javascripts/game1.js"></script>
-        <script src="javascripts/popup.js"></script>
     </body>
+	
 </html>

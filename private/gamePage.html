@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<!-- 2nd page -->
 <html>
     <head>
         <title>UGA Recycling</title>
@@ -8,47 +10,83 @@
         <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
         
         <!-- main stylesheet -->
-        <link href="stylesheets/main.css" rel="stylesheet">
+        <link href="../stylesheets/main.css" rel="stylesheet">
+		
+		
+				
+		<style>
+			canvas {
+				border: 1px solid #B7BF10; 
+				background-color: #f3efee;
+				position: relative;
+				margin-left: 5%;
+                display: block;
+                float: left;
+			}
+			
+			.instructions {
+				position: relative;
+                text-align: center;
+			}
+			
+			.key {
+				border:1px solid #B7BF10;
+				background-color: #f3efee;
+				float: right;
+                width: 30%;
+                display: block;
+                margin-right: 5%;
+                padding: 10px 30px;
+			}
+			
+			.centered {
+				text-align: center;
+			}
+
+		</style>
+		
+		
         
         <!-- on page js, mainly window.onload -->
         <script>
+            // time the page was opened for timeOnPage
             var pageOpened;
             window.onload = function() {
-                 pageOpened = new Date();
+                startGame();
+            
+                pageOpened = new Date();
             } // on window load
             
-            // posts 'things' data to the server 
+            // posts 'things' (data) to the server 
             function postThings() {
-                var radios = document.getElementsByName("gender");
-                var checkedRadio;
-                
-                for(var i = 0; i < radios.length; i++) {
-                    if(radios[i].checked)
-                        checkedRadio = radios[i].value;
-                } // for each radio button, find checked option
-                
+                // time the page was closed for timeOnPage
                 var pageClosed = new Date();
                 
-                var serverInfo = {thisPage: 1, 
-                        metaData: {timeOnPage: pageClosed - pageOpened},
-                        data: {name: document.getElementById("name").value,
-                               gender: checkedRadio,
-                               811: document.getElementById("811").value
-                              }};
+                // data variable to be posted to the backend
+                var serverInfo = {page: 2,
+                        data: {
+                            metaData: {timeOnPage: pageClosed - pageOpened}
+                        }
+                };
                 
+                // posts data to the backend
                 $.ajax({
                     type: "POST",
-                    url: "/users/progress",
+                    url: "/module/progress",
                     data: JSON.stringify(serverInfo),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: function(data){alert(data);},
+                    success: function(data){alert("post sucessful");},
                     failure: function(){alert("post failed");}
                 });
             } // postThings
         </script>
+
     </head>
-    <body>
+	
+	
+    <body onload = "startGame()">
+	
         <!-- Fixed navigation bar using bootsrap classes, UGA Bulldog Red color, UGA font-->
         <nav class="navbar navbar-fixed-top" style="background-color: #BA0C2F;">
             <div class="container">
@@ -57,35 +95,42 @@
                 </div>
             </div>
         </nav>
+		
+		<br>
+		<p class="instructions">Grab the items and place them in the correct bins!</p>
         
-        <!-- Pre-Survey Page -->
-        <div id="page1" class="surveyArea">
-            <a id="pre" class="smooth"></a>
-            <h1>Pre-Survey</h1>
-
-            <label>Full Name:</label> <input id="name" maxlength="50" type="text" name="name"><br>
-            <label>Gender:</label><br>
-                &emsp;<input type="radio" name="gender" value="male">&ensp;Male<br>
-                &emsp;<input type="radio" name="gender" value="female">&ensp;Female<br>
-                &emsp;<input type="radio" name="gender" value="other">&ensp;Other<br>
-            <label>811#:</label><input id="811" type="text" maxlength="9" name="811"><br>		
-                
-        </div> 	
+		
+        <!-- Game 1 Page -->
+		<div>
+            <canvas id="canvas"></canvas>
+		</div>
+		
+<<<<<<< HEAD:public/gamePage.html
+		<h2 id="progress" class="c"></h2>
+		<h2 id="feedback" class="c"></h2>
+		
+		<div class="key">
+			<h2 class="centered">Hints<h2>
+=======
+		<div class="key">
+			<h2 class="centered">Hints:</h2>
+>>>>>>> 96566fc4ceed0925776e964b7c72766e22f928a0:private/gamePage.html
+			<p>Not all items can be recycled. Many that can require a special bin called a CHaRM bin.</p>
+            <p id="feedback"></p>
+        </div>
         
-        <a onclick="postThings()" href="javascript:void(0)" class="nextPageButton">Next Page</a>
+        <a onclick="postThings()" href="/module/next" class="nextPageButton">Next Page</a>
         
+		
+		
+		
+		
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-        <!-- CanvasJS for creating charts & graphs with animation-->
-        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-
         <!-- Importing js files from javascripts folder in public -->
-        <script src="javascripts/graphs.js"></script>
-        <script src="javascripts/draggable.js"></script>
-        <script src="javascripts/game1.js"></script>
-        <script src="javascripts/popup.js"></script>
+        <script src="../javascripts/game1.js"></script>
     </body>
 </html>

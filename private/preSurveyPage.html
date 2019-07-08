@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<!-- 0th page -->
+<html>
+    <head>
+        <title>UGA Recycling</title>
+        <!-- Bootstrap stylesheet -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <!-- UGA fonts from UGA style guide-->
+        <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
+        
+        <!-- main stylesheet -->
+        <link href="../stylesheets/main.css" rel="stylesheet">
+        
+        <!-- on page js, mainly window.onload -->
+        <script>
+            var pageOpened;
+            window.onload = function() {
+                 pageOpened = new Date();
+            } // on window load
+            
+            // posts 'things' data to the server 
+            function postThings() {
+                var radios = document.getElementsByName("gender");
+                var checkedRadio;
+                
+                for(var i = 0; i < radios.length; i++) {
+                    if(radios[i].checked)
+                        checkedRadio = radios[i].value;
+                } // for each radio button, find checked option
+                
+                var pageClosed = new Date();
+                
+<<<<<<< HEAD:public/preSurveyPage.html
+                var serverInfo = {thisPage: 1, 
+                        metaData: {timeOnPage: pageClosed - pageOpened},
+                        data: {name: document.getElementById("name").value,
+                               gender: checkedRadio,
+                               811: document.getElementById("811").value
+                              }};
+                
+=======
+                // for each question, skims answers to find checked radio button and
+                // pushes the value into the array
+                for(var qCount = 1; qCount <= numQuestions; qCount++) {
+                    var currentAnswers = document.getElementsByName("question" + qCount);
+                    
+                    for(var i = 0; i < currentAnswers.length; i++) {
+                        if(currentAnswers[i].checked) 
+                            
+                            // question numbers greater than 5 are t/f questions
+                            if(qCount < 5) 
+                                questionAnswers.push(currentAnswers[i].value);
+                            else
+                                tfAnswers.push(currentAnswers[i].value);
+                        
+                    } // for each answer choice, find checked option
+                } // for each question
+            
+                var serverInfo = {page: 0,
+                        data: {name: document.getElementById("name").value,
+                               questionAnswers: questionAnswers,
+                               tfAnswers: tfAnswers,
+                               metaData: {timeOnPage: pageClosed - pageOpened}
+                              }
+                        };
+
+>>>>>>> 96566fc4ceed0925776e964b7c72766e22f928a0:private/preSurveyPage.html
+                $.ajax({
+                    type: "POST",
+                    url: "/module/progress",
+                    data: JSON.stringify(serverInfo),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(data){alert(data);},
+                    failure: function(){alert("post failed");}
+                });
+            } // postThings
+        </script>
+    </head>
+    <body>
+        <!-- Fixed navigation bar using bootsrap classes, UGA Bulldog Red color, UGA font-->
+        <nav class="navbar navbar-fixed-top" style="background-color: #BA0C2F;">
+            <div class="container">
+                <div class="navbar-header" style="font-size: 24pt; color:white; font-family: 'Merriweather', rserif; text-align: center">
+                    Roosevelt@UGA Sustainability Project
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Pre-Survey Page -->
+        <div id="page1" class="surveyArea">
+            <a id="pre" class="smooth"></a>
+            <h1>Pre-Survey</h1>
+
+            <label>Full Name:</label> <input id="name" maxlength="50" type="text" name="name"><br>
+            <label>Gender:</label><br>
+                &emsp;<input type="radio" name="gender" value="male">&ensp;Male<br>
+                &emsp;<input type="radio" name="gender" value="female">&ensp;Female<br>
+                &emsp;<input type="radio" name="gender" value="other">&ensp;Other<br>
+            <label>811#:</label><input id="811" type="text" maxlength="9" name="811"><br>		
+                
+        </div> 	
+        
+<<<<<<< HEAD:public/preSurveyPage.html
+        <a onclick="postThings()" href="javascript:void(0)" class="nextPageButton">Next Page</a>
+=======
+        <a onclick="postThings()" href="/module/next" class="nextPageButton disabled">Next Page</a>
+>>>>>>> 96566fc4ceed0925776e964b7c72766e22f928a0:private/preSurveyPage.html
+        
+        <!-- Load all the Bootstrap requirements at the end of the document -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+        <!-- CanvasJS for creating charts & graphs with animation-->
+        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+        <!-- Importing js files from javascripts folder in public -->
+<<<<<<< HEAD:public/preSurveyPage.html
+        <script src="javascripts/graphs.js"></script>
+        <script src="javascripts/draggable.js"></script>
+        <script src="javascripts/game1.js"></script>
+        <script src="javascripts/popup.js"></script>
+=======
+        <script src="../javascripts/pageCompleteCheck.js"></script>
+>>>>>>> 96566fc4ceed0925776e964b7c72766e22f928a0:private/preSurveyPage.html
+    </body>
+</html>

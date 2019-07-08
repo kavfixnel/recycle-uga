@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<!-- 5th page -->
 <html>
     <head>
         <title>UGA Recycling</title>
@@ -8,7 +10,7 @@
         <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
         
         <!-- main stylesheet -->
-        <link href="stylesheets/main.css" rel="stylesheet">
+        <link href="../stylesheets/main.css" rel="stylesheet">
         
         <!-- on page js, mainly window.onload -->
         <script>
@@ -34,19 +36,20 @@
                 // time the page was closed for timeOnPage
                 var pageClosed = new Date();
                 
-                var serverInfo = {thisPage: 4, 
-                        metaData: {timeOnPage: pageClosed - pageOpened},
+                var serverInfo = {page: 5,
                         data: {moduleHappiness: checkedRadio,
-                               comments: document.getElementById("comments").value
-                              }};
+                               comments: document.getElementById("comments").value,
+                               metaData: {timeOnPage: pageClosed - pageOpened}
+                              }
+                };
                 
                 $.ajax({
                     type: "POST",
-                    url: "/users/progress",
+                    url: "/module/progress",
                     data: JSON.stringify(serverInfo),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: function(data){alert(data);},
+                    success: function(data){alert("post sucessful");},
                     failure: function(){alert("post failed");}
                 });
             } // postThings
@@ -73,17 +76,14 @@
 				<label>Additional Comments:</label><input id="comments" maxlength="50" type="text" name="811"><br>			
 		</div>
 
-        <a onclick="postThings()" href="javascript:void(0)" id="npbutton" class="nextPageButton">Next Page</a>
+        <a onclick="postThings()" href="/module/next" id="npbutton" class="nextPageButton">Next Page</a>
         
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+        
         <!-- Importing js files from javascripts folder in public -->
-        <script src="javascripts/graphs.js"></script>
-        <script src="javascripts/draggable.js"></script>
-        <script src="javascripts/game1.js"></script>
-        <script src="javascripts/popup.js"></script>
+        <script src="../javascripts/pageCompleteCheck.js"></script>
     </body>
 </html>
