@@ -23,13 +23,8 @@
             
             // posts 'things' data to the server 
             function postThings() {
-                var radios = document.getElementsByName("gender");
-                var checkedRadio;
-                
-                for(var i = 0; i < radios.length; i++) {
-                    if(radios[i].checked)
-                        checkedRadio = radios[i].value;
-                } // for each radio button, find checked option
+                var questionAnswers = [];
+                var tfAnswers = [];
                 
                 var pageClosed = new Date();
                 
