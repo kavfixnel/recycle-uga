@@ -1,10 +1,18 @@
 // Import the required modules
-var express = require('express')
-var router = express.Router()
-var axios = require('axios')
-var crypto = require('crypto')
+let express = require('express')
+let router = express.Router()
+let axios = require('axios')
+let crypto = require('crypto')
+let {google} = require('googleapis');
 
-var userModel = require('../schemas/user.js')
+console.log(google)
+
+let userModel = require('../schemas/user.js')
+
+// Redirect users to the cas login page
+router.get('/cas', (req, res, next) => {
+	res.redirect('https://cas2.stage.uga.edu/cas/login?service=https://recycle-uga.herokuapp.com/login/cb')
+});
 
 router.get('/cb', async (req, res) => {
 	if(req.query.ticket == null) {
@@ -23,7 +31,7 @@ router.get('/cb', async (req, res) => {
 					// New user needs to be created
 					var newCookie = random(30)
 					await userModel.create({ id : ans[1], ugaStudent : true, cookie : newCookie, cookieExp: (Date.now() + 86400000) })
-					if(process.end.DEVMODE == 'TRUE') {
+					if(process.env.DEVMODE == 'TRUE') {
 						console.log('New User created: ' + ans[1])
 						console.log('New cookie issued: ' + newCookie)
 					}
@@ -56,10 +64,35 @@ router.get('/cb', async (req, res) => {
 	res.redirect('/').send()
 });
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-	res.redirect('https://cas2.stage.uga.edu/cas/login?service=https://recycle-uga.herokuapp.com/login/cb')
-});
+// Create an OAuth2 Google client
+const oauth2Client = new google.auth.OAuth2(
+  process.env.CLIENTID,
+  process.env.CLIENTSECRET,
+  'https://recycle-uga.herokuapp.com/login/googlecb'
+);
+
+// Redirect the users to the Google OAuth page
+router.get('/google', (req, res) => {
+	// Generate a new redirection URL to Googles OAuth network
+	let redirectURL =oauth2Client.generateAuthUrl({
+        	access_type: 'offline',
+        	scope: 'https://www.googleapis.com/auth/userinfo.email'
+	});
+
+	// Redirect the user to that URL
+	res.redirect(redirectURL)
+})
+
+// The callback URL for Google OAuth
+router.get('/googlecb', async (req, res) => {
+	const {tokens} = await oauth2Client.getToken(req.query.code)
+
+	console.log(tokens)
+
+	let axiosResponse = await axois('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token='+tokens)
+
+	console.log(axiosResponse.data)
+})
 
 function random (howMany, chars) {
       chars = chars
