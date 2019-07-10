@@ -31,4 +31,8 @@ if(process.env.DEVMODE == 'TRUE') {
     console.log('Server started!')
 }
 
+app.use((req, res, next) => {
+    res.status(404).sendFile(path.join(__dirname, '/private/404Page.html'))
+})
+
 module.exports = app
