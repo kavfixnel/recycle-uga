@@ -5,8 +5,6 @@ let axios = require('axios')
 let crypto = require('crypto')
 let {google} = require('googleapis');
 
-console.log(google)
-
 let userModel = require('../schemas/user.js')
 
 // Redirect users to the cas login page
