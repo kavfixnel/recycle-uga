@@ -54,7 +54,7 @@ body {
     text-align: center;
     /* the width of the div minus the popup and graph elements*/
     width: calc(90% - 650px);
-    min-width: 440;
+    min-width: 440px;
     margin: 10px 5px;
     animation-name: slideIn;
     animation-duration: 2s;
@@ -109,7 +109,7 @@ body {
 .nextPageButton {
     height: 27px;
     width: 100px;
-    margin-top: 20px;
+    margin-top: 10px;
     margin-bottom: 25px;
     margin-left: 46%;
     margin-right: 46%;
@@ -195,21 +195,22 @@ label {
 /* for slides in slideshow on index page*/
 .slides {
     display: none;
-    margin-top: 20px;
+    margin-top: 10px;
+    position: relative;
 }
 
 .slideText {
     color: floralwhite;
     position: absolute;
-    bottom: 60px;
     width: 100%;
+    bottom: 20px;
     text-align: center;
 }
 
 .slideNumber {
     color: floralwhite;
     position: absolute;
-    top: 85px;
+    top: 5px;
     left: 10px;
     width: 100%;
 }

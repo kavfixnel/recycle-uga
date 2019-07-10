@@ -31,7 +31,7 @@
                 var graphCount = 4;
                 
                 // making graphs
-                var id, title, type, pieData;
+                var id, title, type, pieData, axisY;
                 for(var i = 1; i <= graphCount; i++) {
                     id = "graphContainer" + i.toString();
                     
@@ -60,10 +60,11 @@
                             break; // source: https://www.redandblack.com/athensnews/wishful-recycling-turns-wasteful-athens-clarke-county-warns-of-recycling/article_7c927d42-6f64-11e8-8ed1-ef48e8d384a2.html
                             
                         case 4:  // info for graph 4
-                            title = "UGA Disposal Practices, 2018";
-                            type = "pie";            
-                            pieData = [{y: 21.9, indexLabel: "Recycled", label: "Recycled", exploded: true}, 
-                                           {y: 78.1, indexLabel: "Landfilled", label: "Landfilled"}];
+                            title = "Weight of Waste in Oceans, Annually";
+                            type = "column";            
+                            pieData = [{y: 18, indexLabel: "Waste in Ocean", label: "Waste", exploded: true}, 
+                                        {y: 12, indexLabel: "Great Pyramid of Khufu", label: "Great Pyramid"},
+                                        {y: 10, indexLabel: "Dinkleburg", label:"Dinkleburg"}];
                     } // creating each of the different graph info variables
                     
                     makeGraph(id, title, type, pieData);
@@ -199,7 +200,7 @@
             <div id="graphArea1" class="graphArea">
                 <div id="graphContainer1" class="graphContainer"></div>
                 <div id="question1" class="question">
-                    <h3>How much would you estimate is recyclable of the entire US waste stream?</h3>
+                    <h3>How much is recycled of the Athens waste stream?</h3>
                 
                     <div class="answers">
                         <input type="text" name="answer1" maxlength="20" class="answerText"/>
@@ -209,13 +210,13 @@
                     
                     <p id="correct1" class="correct"></p>
                 </div>
-                <p id="infoText1" class="popup">&emsp; Annually, the US recycles 34.3% of solid waste on average. In 2018, UGA sent 5,474 tons of waste to landfills and recycled only <i>~1,200 tons</i> of materials (... and we have recycling bins across the entire campus).</p>
+                <p id="infoText1" class="popup">&emsp; Annually, the US recycles 34.3% of solid waste on average, yet the EPA estimates that over 75% of US waste is recyclable. In 2018, UGA sent 5,474 tons of waste to landfills and recycled only <i>~1,200 tons</i> of materials (... and we have recycling bins across the entire campus). This amounts to less than 22% of our waste being recycled - a number that is far too low.</p>
             </div>
 
             <div id="graphArea2" class="graphArea">
                 <div id="graphContainer2" class="graphContainer"></div>
                 <div id="question2" class="question">
-                    <h3>Is this an example question?</h3>
+                    <h3>How much energy is saved when products are made with recycled plastics (as opposed to virgin plastics)?</h3>
                 
                     <div class="answers">
                         <input type="text" name="answer2" maxlength="20" class="answerText"/>
@@ -225,13 +226,13 @@
                     
                     <p id="correct2" class="correct"></p>
                 </div>
-                <p id="infoText2" class="popup">&emsp; Not only does recycling waste save material that could end up in a landfill or in one of many bodies of water, it also saves copious amounts of energy compared to creating products from virgin materials (those that haven't been recycled).</p>
+                <p id="infoText2" class="popup">&emsp; Not only does recycling waste save material that could end up in a landfill or in one of many bodies of water, it also saves copious amounts of energy compared to creating products from virgin materials (those that haven't been recycled). Not only does recycling help the earth, it makes the creation of new products more efficient!</p>
             </div>
 
             <div id="graphArea3" class="graphArea">
                 <div id="graphContainer3" class="graphContainer"></div>
                 <div id="question3" class="question">
-                    <h3>Is this an example question?</h3>
+                    <h3>What kind of recycling results in most cases of contamination?</h3>
                 
                     <div class="answers">
                         <input type="text" name="answer3" maxlength="20" class="answerText"/>
@@ -241,7 +242,7 @@
                     
                     <p id="correct3" class="correct"></p>
                 </div>
-                <p id="infoText3" class="popup">&emsp; In the Athens-Clarke County recycling plant, an average of 80 tons of materials are sent to be recycled daily. Of the 80 tons, around 17.5% becomes contaminated by food or non-recyclable waste and sent to a landfill. Contamination often comes from "wishful recycling", or tossing out waste into a recycling bin without knowing if it's the correct bin. It's important to know what kind of materials can be put into a bin because otherwise the entire bin could become contaminated!</p>
+                <p id="infoText3" class="popup">&emsp; In the Athens-Clarke County recycling plant, an average of 80 tons of materials are sent to be recycled daily. Of the 80 tons, around 17.5% becomes contaminated by food or non-recyclable waste and sent to a landfill. Contamination usually comes from "wishful recycling", or tossing out waste into a recycling bin without knowing if it's the correct bin. It's important to know what kind of materials can be put into a bin because otherwise the entire bin could become contaminated!</p>
             </div>
 
             <div id="graphArea4" class="graphArea">
