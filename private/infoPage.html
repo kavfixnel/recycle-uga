@@ -60,14 +60,18 @@
                             break; // source: https://www.redandblack.com/athensnews/wishful-recycling-turns-wasteful-athens-clarke-county-warns-of-recycling/article_7c927d42-6f64-11e8-8ed1-ef48e8d384a2.html
                             
                         case 4:  // info for graph 4
-                            title = "Weight of Waste in Oceans, Annually";
+                            title = "Value of Landfilled Materials and Amount Paid to Landfill";
                             type = "column";            
-                            pieData = [{y: 18, indexLabel: "Waste in Ocean", label: "Waste", exploded: true}, 
-                                        {y: 12, indexLabel: "Great Pyramid of Khufu", label: "Great Pyramid"},
-                                        {y: 10, indexLabel: "Dinkleburg", label:"Dinkleburg"}];
+                            pieData = [{y: 300, indexLabel: "Value of Waste", label: "Value of Waste", exploded: true}, 
+                                        {y: 100, indexLabel: "Amount Paid", label: "Amount Paid"},];
                     } // creating each of the different graph info variables
                     
-                    makeGraph(id, title, type, pieData);
+                    // for first three graphs, use percentage for y axis
+                    // for fourth, use millions of units
+                    if(i < 4)
+                        makeGraph(id, title, type, pieData, "##0.00\"%\"");
+                    else 
+                        makeGraph(id, title, type, pieData, "$## million");
                 } // for each of the four graphs, assign graph info                
                 
                 // for each graph, starting at one, alternate the side of the window the graph is on
@@ -112,7 +116,7 @@
             //text based on its correctness
             function checkAnswer(questionNumber) {
                 // boolean for question correctness
-                var isCorrect;
+                var isCorrect = false;
                 
                 //incrementing question attempts
                 timesChecked[questionNumber - 1]++;
@@ -122,20 +126,34 @@
                     // answer values have been hashed prior to deplyoment and 
                     // are compared to their has values
                     case 1:
-                        if(SHA256(document.getElementsByName("answer1").item(0).value) === "8a798890fe93817163b10b5f7bd2ca4d25d84c52739a645a889c173eee7d9d3d") {isCorrect = true;}
+                        if(SHA256(document.getElementsByName("answer1").item(0).value) === "785f3ec7eb32f30b90cd0fcf3657d388b5ff4297f2f9716ff66e9b69c05ddd09") {isCorrect = true;}
                         else {isCorrect = false;}
                         break;
+                        
+                        // real answer: 22 (% not included)
+                        // 785f3ec7eb32f30b90cd0fcf3657d388b5ff4297f2f9716ff66e9b69c05ddd09
                     case 2:
-                        if(SHA256(document.getElementsByName("answer2").item(0).value) === "8a798890fe93817163b10b5f7bd2ca4d25d84c52739a645a889c173eee7d9d3d") {isCorrect = true;}
-                        else {isCorrect = false;}
+                        if(SHA256(document.getElementsByName("answer2").item(0).value) === "69f59c273b6e669ac32a6dd5e1b2cb63333d8b004f9696447aee2d422ce63763") {isCorrect = true;}
                         break;
+                        
+                        // real answer: 90 (% not included)
+                        // 69f59c273b6e669ac32a6dd5e1b2cb63333d8b004f9696447aee2d422ce63763
                     case 3:
-                        if(SHA256(document.getElementsByName("answer3").item(0).value) === "8a798890fe93817163b10b5f7bd2ca4d25d84c52739a645a889c173eee7d9d3d") {isCorrect = true;}
-                        else {isCorrect = false;}
+                        if(SHA256(document.getElementsByName("answer3").item(0).value.toUpperCase()) === "867ad3c680945db98117600daa606713ee7b5a911f786c19cf9ce36eed58192c") {isCorrect = true;}
                         break;
+                        
+                        // real answer: 'wishful' (case insensitive)
+                        // 867ad3c680945db98117600daa606713ee7b5a911f786c19cf9ce36eed58192c
                     case 4:
-                        if(SHA256(document.getElementsByName("answer4").item(0).value) === "8a798890fe93817163b10b5f7bd2ca4d25d84c52739a645a889c173eee7d9d3d") {isCorrect = true;}
-                        else {isCorrect = false;}
+                        if(SHA256(document.getElementsByName("answer4").item(0).value) === "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35" || 
+                          SHA256(document.getElementsByName("answer4").item(0).value) === "c21365c7ea5b3c9d9326726c52d1ba5f14961d6767619fb1aa14255d4c42e759") {isCorrect = true;}
+                        
+                        // real answer: 2 or 2nd
+                        // d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35 (2)
+                        // c21365c7ea5b3c9d9326726c52d1ba5f14961d6767619fb1aa14255d4c42e759 (2nd)
+                        
+                        // source for graph:
+                        // https://cdn.ymaws.com/www.productstewardship.us/resource/resmgr/imported/SERDC%20Econ%20Cards.pdf
                 } // switch for each question depending on question number
                 
                 // if correct, show correct, else show incorrect
@@ -194,16 +212,18 @@
         </nav>
         
         <div id="page2">
-            <p style="text-align: center; margin-top: 20px;">Hover over the graphs and answer all questions to continue!</p>
+            <p style="text-align: center; margin-top: 20px;">Hover over the graphs and answer all questions to continue!<br>
+                <b>answers in order: '22', '90', 'wishful' (case insensitive), '2' or '2nd'</b>
+            </p>
 
             <!-- (some) Information from Slide 3 of PP module (uses window.onload function) -->
             <div id="graphArea1" class="graphArea">
                 <div id="graphContainer1" class="graphContainer"></div>
                 <div id="question1" class="question">
-                    <h3>How much is recycled of the Athens waste stream?</h3>
+                    <h3>What percentage of the Athens waste stream is recycled?</h3>
                 
                     <div class="answers">
-                        <input type="text" name="answer1" maxlength="20" class="answerText"/>
+                        <input type="text" name="answer1" maxlength="2" class="answerText"/>
                     </div>
                     
                     <a href="javascript:checkAnswer(1);checkIfCompleteInfo()" id="submit1" class="submitButton">Check Answer</a>
@@ -216,10 +236,10 @@
             <div id="graphArea2" class="graphArea">
                 <div id="graphContainer2" class="graphContainer"></div>
                 <div id="question2" class="question">
-                    <h3>How much energy is saved when products are made with recycled plastics (as opposed to virgin plastics)?</h3>
+                    <h3>How much energy (percentage) is saved when products are made with recycled plastics compared to virgin plastics?</h3>
                 
                     <div class="answers">
-                        <input type="text" name="answer2" maxlength="20" class="answerText"/>
+                        <input type="text" name="answer2" maxlength="2" class="answerText"/>
                     </div>
 
                     <a href="javascript:checkAnswer(2);checkIfCompleteInfo()" id="submit2" class="submitButton">Check Answer</a>
@@ -235,7 +255,7 @@
                     <h3>What kind of recycling results in most cases of contamination?</h3>
                 
                     <div class="answers">
-                        <input type="text" name="answer3" maxlength="20" class="answerText"/>
+                        <input type="text" name="answer3" maxlength="10" class="answerText"/>
                     </div>
                     
                     <a href="javascript:checkAnswer(3);checkIfCompleteInfo()" id="submit3" class="submitButton">Check Answer</a>
@@ -248,17 +268,17 @@
             <div id="graphArea4" class="graphArea">
                 <div id="graphContainer4" class="graphContainer"></div>
                 <div id="question4" class="question">
-                    <h3>Is this an example question?</h3>
+                    <h3>Where does Georgia rank by state in terms of market for recycled materials?</h3>
                 
                     <div class="answers">
-                        <input type="text" name="answer4" maxlength="20" class="answerText"/>
+                        <input type="text" name="answer4" maxlength="3" class="answerText"/>
                     </div>
                     
                     <a href="javascript:checkAnswer(4);checkIfCompleteInfo()" id="submit4" class="submitButton">Check Answer</a>
                         
                     <p id="correct4" class="correct"></p>
                 </div>
-                <p id="infoText4" class="popup">&emsp; This is example text. I call it this because I am using it as an example in the place of actual information. While not the same, it adds value through showcasing what future informational text might look like. I really wanted to fill up this space. I still want to. It's all I could ever really want.</p>
+                <p id="infoText4" class="popup">&emsp; Even though Athens struggles to recycle at the national average, Georgia is a fantastic place for the recycling industry - Georgia has the second largest market for recycled materials by state. In our state, over 120 business use recycled products and these companies employ over <i>23,000</i> people. Similarly, one third of all plastic beverage containers recycled in North America are recycled in Dalton, Georgia with most contributing to its world-class carpet manufacturing industry.</p>
             </div>
         </div>
 
