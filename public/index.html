@@ -86,10 +86,20 @@
                 <div class="navbar-header" style="font-size: 24pt; color:white; font-family: 'Merriweather', rserif; text-align: center">
                     Roosevelt@UGA Sustainability Project
                 </div>
-                <div><button type="button" onclick="location.href='/login/cas';" class="btn btn-light">Login</button></div>
+                <div class="nav-item dropdown">
+                    <button class="dropdown-toggle btn-light btn" id="dropdownMenu" href="#" data-toggle="dropdown">
+                        Login
+                    </button>
+                    
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                        <li class="dropdown-item" href="#" onclick="location.href='/login/cas';">UGA ID Login</li>
+                        <li class="dropdown-item" href="#" onclick="location.href='/login/google';">Google Login</li>
+                    </ul>
+                </div>
             </div>
         </nav>
 
+        <!--<button type="button" onclick="location.href='/login/cas';" class="btn btn-light">Login</button>-->
         <div id="slideshow-container">
             
             <div class="slides fade">
