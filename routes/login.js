@@ -94,7 +94,7 @@ router.get('/googlecb', async (req, res) => {
 	console.log('Response: ')
 	console.log(axiosResponse.data)
 
-	req.redirect('/').send()
+	res.redirect('/').send()
 })
 
 function random(howMany, chars) {
