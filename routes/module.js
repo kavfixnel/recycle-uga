@@ -15,7 +15,7 @@ router.use(async (req, res, next) => {
 		if(user) {
 			var daysSinceCookieIssue = ((new Date()).getTime()-(new Date(user.cookieExp)).getTime())/(24*60*60*1000)
 			if(daysSinceCookieIssue > 1.0) {
-				res.redirect('/login').send()
+				res.redirect('/').send()
 			} else {
 				// Everyhting is fine
 				next()
@@ -23,7 +23,7 @@ router.use(async (req, res, next) => {
 			}
 		} else {
 			// No user with that cookie found
-			res.redirect('/login').send()
+			res.redirect('/').send()
 		}
 	} catch(error) {
 		console.error(error)

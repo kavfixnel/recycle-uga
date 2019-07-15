@@ -90,6 +90,7 @@ router.get('/googlecb', async (req, res) => {
 		let axiosResponse = await axios.get(url)
 
 		// Make new user or grant new cookie
+		console.log(axiosResponse)
 		console.log(axiosResponse.email)
 		var user = await userModel.findOne({ id: axiosResponse.email })
 		if (!user) {
