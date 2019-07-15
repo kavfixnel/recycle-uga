@@ -90,6 +90,7 @@ router.get('/googlecb', async (req, res) => {
 		let axiosResponse = await axios.get(url)
 
 		// Make new user or grant new cookie
+		console.log(axiosResponse.email)
 		var user = await userModel.findOne({ id: axiosResponse.email })
 		if (!user) {
 			// New user needs to be created
@@ -108,7 +109,7 @@ router.get('/googlecb', async (req, res) => {
 			// Update the cookie of the user
 			await userModel.findOneAndUpdate({ id: axiosResponse.email }, { $set: { cookie: newCookie, cookieExp: (Date.now() + 86400000) } })
 
-			if (process.env.DEVMODE == 'True') {
+			if (process.env.DEVMODE == 'TRUE') {
 				console.log(`New cookie (${newCookie}) issued for ${axiosResponse.email}`)
 			}
 
@@ -118,6 +119,7 @@ router.get('/googlecb', async (req, res) => {
 		console.log('Error in login.js [1]: ' + error)
 	}
 
+	// Send the user back to the main page
 	res.redirect('/').send()
 })
 
