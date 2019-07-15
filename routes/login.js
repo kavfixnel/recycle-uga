@@ -88,7 +88,8 @@ router.get('/googlecb', async (req, res) => {
 	console.log('Token: ')
 	console.log(tokens)
 
-	let axiosResponse = await axios.get('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + tokens)
+	let url = 'https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + tokens.access_token
+	let axiosResponse = await axios.get(url)
 
 	console.log('Response: ')
 	console.log(axiosResponse.data)
