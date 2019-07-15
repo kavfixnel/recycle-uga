@@ -85,11 +85,13 @@ router.get('/google', (req, res) => {
 router.get('/googlecb', async (req, res) => {
 	const { tokens } = await oauth2Client.getToken(req.query.code)
 
-	console.log('Token: ' + tokens)
+	console.log('Token: ')
+	console.log(tokens)
 
-	let axiosResponse = await axois('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + tokens)
+	let axiosResponse = await axois.get('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + tokens)
 
-	console.log('Response: ' + axiosResponse.data)
+	console.log('Response: ')
+	console.log(axiosResponse.data)
 })
 
 function random(howMany, chars) {
