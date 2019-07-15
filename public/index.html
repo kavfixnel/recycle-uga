@@ -15,6 +15,7 @@
         <script>
             var pageOpened;
             var slideIndex = 0;
+            var slideCount = 4;
             var timeout;
             
             window.onload = function() {
@@ -49,7 +50,7 @@
                     slides[i].style.display = "none";
                 } // for each slide, make blank
                 
-                slides[slideIndex % 3].style.display = "block";
+                slides[slideIndex % slideCount].style.display = "block";
                 
                 timeout = setTimeout(function(){slideIndex++;showSlides();}, 5000);
             } // showSlides
@@ -63,7 +64,7 @@
                 
                 // if slideIndex is below 0 (invalid), fix
                 if(slideIndex < 0)
-                    slideIndex += 3;
+                    slideIndex += slideCount;
                     
                 showSlides();
             } // changeSlide
@@ -92,21 +93,27 @@
         <div id="slideshow-container">
             
             <div class="slides fade">
-                <div class="slideNumber">1 / 3</div>
-                <img src="/images/slide1.jpg" class="slideImage">
+                <div class="slideNumber">1 / 4</div>
+                <img src="images/slide1.jpg" alt="Miller Learning Center" class="slideImage">
                 <div class="slideText">Miller Learning Center</div>
             </div>
             
             <div class="slides fade">
-                <div class="slideNumber">2 / 3</div>
-                <img src="/images/slide2.jpg" class="slideImage">
+                <div class="slideNumber">2 / 4</div>
+                <img src="images/slide2.jpg" alt="Herty Field" class="slideImage">
                 <div class="slideText">Herty Field</div>
             </div>
             
             <div class="slides fade">
-                <div class="slideNumber">3 / 3</div>
-                <img src="/images/slide3.png" class="slideImage">
-                <div class="slideText">MLC (again), but older</div>
+                <div class="slideNumber">3 / 4</div>
+                <img src="images/slide3.jpg" alt="Sustainability" class="slideImage">
+                <div class="slideText">Big Recycling Guys</div>
+            </div>
+            
+            <div class="slides fade">
+                <div class="slideNumber">4 / 4</div>
+                <img src="images/slide4.jpg" alt="North Campus" class="slideImage">
+                <div class="slideText">North Campus</div>
             </div>
             
             <a id="previousButton" onclick="changeSlide(-1)">&#10094;</a>
