@@ -197,7 +197,7 @@ label {
     color: floralwhite;
     position: absolute;
     width: 100%;
-    bottom: 20px;
+    bottom: 100px;
     text-align: center;
 }
 
@@ -210,8 +210,8 @@ label {
 }
 
 .slideImage {
-    width: 100%; 
-    height: auto;
+    width: 100%;
+    object-fit: contain;
 }
 
 #previousButton, #nextButton {
@@ -229,6 +229,8 @@ label {
 
 #slideshow-container {
     text-align: left;
+    height: 600px;
+    overflow: hidden;
 }
 
 #nextButton {

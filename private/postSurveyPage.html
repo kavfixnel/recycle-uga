@@ -16,13 +16,17 @@
         <script>
             // time the page was opened for timeOnPage
             var pageOpened;
+            
+            // number of forms/questions for completion check
+            var numForms = 2;
+            var numQuestions = 1; 
             window.onload = function() {
                  pageOpened = new Date();
             } // on window load
             
             function postThings() {
                 // variable holding all radio buttons
-                var radios = document.getElementsByName("review");
+                var radios = document.getElementsByName("question1");
                 
                 // will represent the value of the checked radio button
                 var checkedRadio;
@@ -72,13 +76,13 @@
 			<a id="post" class="smooth"></a>
 			<h1>Post-Survey</h1>
 				<label>Did you like the module?</label><br>
-					&emsp;<input type="radio" name="review" value="yes">&ensp;Yes<br>
-					&emsp;<input type="radio" name="review" value="no">&ensp;No<br>
-					&emsp;<input type="radio" name="review" value="other">&ensp;I hate the environment<br>
-				<label>Additional Comments:</label><input id="comments" maxlength="50" type="text" name="811"><br>			
+					&emsp;<input type="radio" name="question1" value="yes" oninput="checkIfCompletePostSurvey()">&ensp;Yes<br>
+					&emsp;<input type="radio" name="question1" value="no" oninput="checkIfCompletePostSurvey()">&ensp;No<br>
+					&emsp;<input type="radio" name="question1" value="other" oninput="checkIfCompletePostSurvey()">&ensp;I hate the environment<br>
+				<label>Additional Comments:</label><input maxlength="50" type="text" name="comments" oninput="checkIfCompletePostSurvey()"><br>			
 		</div>
 
-        <div class="centered"><a onclick="postThings()" href="/module/next" id="npbutton" class="nextPageButton">Next Page</a></div>
+        <div class="centered"><a onclick="postThings()" href="/module/next" id="npbutton" class="nextPageButton disabled">Next Page</a></div>
         
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>

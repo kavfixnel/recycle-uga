@@ -136,28 +136,18 @@
                         if(SHA256(document.getElementsByName("answer1").item(0).value) === "785f3ec7eb32f30b90cd0fcf3657d388b5ff4297f2f9716ff66e9b69c05ddd09") {isCorrect = true;}
                         else {isCorrect = false;}
                         break;
-                        
-                        // real answer: 22 (% not included)
-                        // 785f3ec7eb32f30b90cd0fcf3657d388b5ff4297f2f9716ff66e9b69c05ddd09
+
                     case 2:
                         if(SHA256(document.getElementsByName("answer2").item(0).value) === "69f59c273b6e669ac32a6dd5e1b2cb63333d8b004f9696447aee2d422ce63763") {isCorrect = true;}
                         break;
-                        
-                        // real answer: 90 (% not included)
-                        // 69f59c273b6e669ac32a6dd5e1b2cb63333d8b004f9696447aee2d422ce63763
+
                     case 3:
                         if(SHA256(document.getElementsByName("answer3").item(0).value.toUpperCase()) === "867ad3c680945db98117600daa606713ee7b5a911f786c19cf9ce36eed58192c") {isCorrect = true;}
                         break;
-                        
-                        // real answer: 'wishful' (case insensitive)
-                        // 867ad3c680945db98117600daa606713ee7b5a911f786c19cf9ce36eed58192c
+
                     case 4:
                         if(SHA256(document.getElementsByName("answer4").item(0).value) === "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35" || 
                           SHA256(document.getElementsByName("answer4").item(0).value) === "c21365c7ea5b3c9d9326726c52d1ba5f14961d6767619fb1aa14255d4c42e759") {isCorrect = true;}
-                        
-                        // real answer: 2 or 2nd
-                        // d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35 (2)
-                        // c21365c7ea5b3c9d9326726c52d1ba5f14961d6767619fb1aa14255d4c42e759 (2nd)
                         
                         // source for graph:
                         // https://cdn.ymaws.com/www.productstewardship.us/resource/resmgr/imported/SERDC%20Econ%20Cards.pdf
