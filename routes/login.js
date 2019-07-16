@@ -122,6 +122,30 @@ router.get('/googlecb', async (req, res) => {
 	res.redirect('/').send()
 })
 
+router.get('/logout', (req, res) => {
+	try {
+		var user = await userModule.findOne({ cookie: req.cookies.sessionCookie })
+
+		// No user with that cookie found
+		if (!user) {
+			let obj = { success: false, error: 'User not found' }
+			res.send(obj)
+		}
+
+		// Delete user cookie
+		user.set('cookie', '')
+		await user.save()
+		let obj = { success: true }
+		res.send(obj)
+
+	} catch (error) {
+		console.log('Error [2] in login.js:')
+		console.log(error)
+		let obj = {success: false, error: 'Server error'}
+		res.status(500).send(obj)
+	}
+})
+
 function random(howMany, chars) {
 	chars = chars
 		|| 'abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789';
