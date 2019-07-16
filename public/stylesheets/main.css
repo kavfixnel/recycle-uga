@@ -1,13 +1,7 @@
-body {
-    /* min-width: 1200px; */
-}
-
-/* used to define the trash/recycing bins on the game page */
-.gameImage {
-    width: 16%;
-    margin-left: 2%;
-    margin-right: 2%;
-    float: left;
+.centered {
+    text-align: center;
+    display: block;
+    clear: both;
 }
 
 /* graphArea is the div containing the graph container
@@ -23,6 +17,7 @@ body {
 
 .graphArea:hover, .holdhover {
     width: 90%;
+    margin: 0;
 }
 
 /* the div inside of a graphArea that a graph is made in */
@@ -107,12 +102,10 @@ body {
 
 /* defined for all the buttons at the end of pages */
 .nextPageButton {
-    height: 27px;
-    width: 100px;
+    height: 3%;
+    width: 90px;
     margin-top: 10px;
     margin-bottom: 25px;
-    margin-left: 46%;
-    margin-right: 46%;
     cursor: pointer;
     font-family: 'Merriweather', 'serif';
     color: #FFFFFF;
@@ -123,8 +116,8 @@ body {
 	text-decoration: none;
 	text-shadow: 0px 1px 0px #1F1F1F;
     display: inline-block;
-    text-align: center;
     padding-top: 3px;
+    
 }
  
 .nextPageButton:hover {
@@ -147,9 +140,9 @@ body {
 
 /* used to center the survey forms */
 .surveyArea {
-    width: 30%;
-    margin-left: 35%;
-    margin-right: 35%;
+    width: 40%;
+    margin-left: 30%;
+    margin-right: 30%;
 }
 
 /* centers the survey header */
@@ -197,6 +190,7 @@ label {
     display: none;
     margin-top: 10px;
     position: relative;
+    width: 100%;
 }
 
 .slideText {
@@ -217,7 +211,7 @@ label {
 
 .slideImage {
     width: 100%; 
-    height: 600px;
+    height: auto;
 }
 
 #previousButton, #nextButton {
@@ -231,6 +225,10 @@ label {
     margin: 0px 5px;
     padding: 3px;
     transition: 0.4s ease;
+}
+
+#slideshow-container {
+    text-align: left;
 }
 
 #nextButton {
