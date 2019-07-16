@@ -58,7 +58,7 @@ router.get('/next', async (req, res) => {
 				res.sendFile(path.join(__dirname + '/../private/postSurveyPage.html'))
 				break
 			case 6:
-				res.send("Done")
+				res.sendFile(path.join(__dirname + '/../private/finishPage.html'))
 				break
 			default:
 				res.status(500).send("Error [5] in module.js")
@@ -76,7 +76,7 @@ router.post('/progress', async (req, res) => {
 		// Find user
 		console.log(req.body)
 		var user = await userModule.findOne({cookie: req.cookies.sessionCookie})
-		if(req.body.page == user.progress && user.progress < 5) {
+		if(req.body.page == user.progress && user.progress <= 5) {
 			var name = ['preSurvey', 'pageOne', 'pageTwo', 'pageThree', 'postSurvey']
 			user.set('progress', user.progress + 1)
 			user.set(name[req.body.page], req.body.data)
