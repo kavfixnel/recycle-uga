@@ -124,7 +124,7 @@ router.get('/googlecb', async (req, res) => {
 
 router.get('/logout', async (req, res) => {
 	try {
-		var user = await userModule.findOne({ cookie: req.cookies.sessionCookie })
+		var user = await userModel.findOne({ cookie: req.cookies.sessionCookie })
 
 		// No user with that cookie found
 		if (!user) {
