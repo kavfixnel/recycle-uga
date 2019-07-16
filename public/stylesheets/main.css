@@ -4,6 +4,12 @@
     clear: both;
 }
 
+/* for the button on index page that enters the module */
+#startModuleButton, #startModuleButton:hover, #startModuleButton:visited {
+    color: black;
+    text-decoration: none;
+}
+
 /* graphArea is the div containing the graph container
     as well as the info text (but not necessarily the actual graph)*/
 .graphArea {
