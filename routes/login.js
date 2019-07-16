@@ -122,7 +122,7 @@ router.get('/googlecb', async (req, res) => {
 	res.redirect('/').send()
 })
 
-router.get('/logout', (req, res) => {
+router.get('/logout', async (req, res) => {
 	try {
 		var user = await userModule.findOne({ cookie: req.cookies.sessionCookie })
 
