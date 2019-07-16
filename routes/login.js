@@ -87,17 +87,16 @@ router.get('/googlecb', async (req, res) => {
 		const { tokens } = await oauth2Client.getToken(req.query.code)
 
 		let url = 'https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + tokens.access_token
-		let axiosResponse = await axios.get(url)
+		let { data } = await axios.get(url)
 
 		// Make new user or grant new cookie
-		console.log(axiosResponse.email)
-		var user = await userModel.findOne({ id: axiosResponse.email })
+		var user = await userModel.findOne({ id: data.email })
 		if (!user) {
 			// New user needs to be created
 			var newCookie = random(30)
-			await userModel.create({ id: axiosResponse.email, ugaStudent: false, cookie: newCookie, cookieExp: (Date.now() + 86400000) })
+			await userModel.create({ id: data.email, ugaStudent: false, cookie: newCookie, cookieExp: (Date.now() + 86400000) })
 			if (process.env.DEVMODE == 'TRUE') {
-				console.log('New User created: ' + axiosResponse.email)
+				console.log('New User created: ' + data.email)
 				console.log('New cookie issued: ' + newCookie)
 			}
 			res.cookie('sessionCookie', newCookie, { maxAge: 86400000 })
@@ -107,10 +106,10 @@ router.get('/googlecb', async (req, res) => {
 			var newCookie = random(30)
 
 			// Update the cookie of the user
-			await userModel.findOneAndUpdate({ id: axiosResponse.email }, { $set: { cookie: newCookie, cookieExp: (Date.now() + 86400000) } })
+			await userModel.findOneAndUpdate({ id: data.email }, { $set: { cookie: newCookie, cookieExp: (Date.now() + 86400000) } })
 
 			if (process.env.DEVMODE == 'TRUE') {
-				console.log(`New cookie (${newCookie}) issued for ${axiosResponse.email}`)
+				console.log(`New cookie (${newCookie}) issued for ${data.email}`)
 			}
 
 			res.cookie('sessionCookie', newCookie, { maxAge: 86400000 })
