@@ -87,7 +87,7 @@ router.get('/googlecb', async (req, res) => {
 		const { tokens } = await oauth2Client.getToken(req.query.code)
 
 		let url = 'https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + tokens.access_token
-		let { data } = await axios.get(url)
+		let { data } = await axios.get(url)z
 
 		// Make new user or grant new cookie
 		var user = await userModel.findOne({ id: data.email })
