@@ -12,6 +12,7 @@ var progress = document.getElementById("progress");
 var gameIsOver = false;
 var score;
 var scoreCalculated = true;
+var endScore;
 
 //Variable that defines an area for the game to be played on the webpage
 var myGameArea = 
@@ -163,11 +164,17 @@ function startGame()
 	hand = new component(30, 30, "/../images/hand.jpg", 10, 120, "image");
 	
 	//Creates the text displayed at the end of the game
-	gameOverText = new component("80px", "Consolas", "black", 180, 150, "text");
+	gameOverText = new component("80px", "Consolas", "black", 170, 150, "text");
 	gameOverText.text = "GAME OVER";
 	
 	scoreText = new component("60px", "Consolas", "black", 200, 300, "text");
 	scoreText.text = 100 + "%";
+	
+	playAgainText = new component("60px", "Consolas", "black", 100, 125, "text");
+	playAgainText.text = "Play Again";
+	
+	viewMissedText = new component("60px", "Consolas", "black", 300, 125, "text");
+	viewMissedText.text = "View Missed";
 	
 	//Creates cans
 	recycleBin = new component(150, 225, "/../images/recyclebin.jpg", 30, 250, "image");
@@ -202,7 +209,7 @@ function startGame()
 	steelCan = new trash("Steel Can", 60, 60, "/../images/steelcan.jpg", 200, 60, "image", true, false);
 	cleanAFoil = new trash("Aluminum Foil (clean)", 60, 60, "/../images/cleanAFoil.jpg", 200, 60, "image", true, false);
 	aerosol = new trash("Aerosol Can", 60, 60, "/../images/aerosol.jpg", 200, 60, "image", true, false);
-	//jug = new trash("Plastic Jug", 60, 60, "/../images/emptyjug.jpg", 200, 60, "image", true, false);
+	jug = new trash("Plastic Jug", 60, 60, "/../images/emptyjug.jpg", 200, 60, "image", true, false);
 	coffeeCov = new trash("Coffee Cover", 60, 60, "/../images/coffeeCover.jpg", 200, 60, "image", true, false);
 	tupper = new trash("Tupperware", 60, 60, "/../images/tup.jpg", 200, 60, "image", true, false);
 	emptyShampoo = new trash("Empty Shampoo Bottle", 60, 60, "/../images/emptyShampoo.jpg", 200, 60, "image", true, false);
@@ -405,8 +412,12 @@ function updateGameArea()
 		}
 		scoreCalculated = false;
 		
-		scoreText.text = "Score: " + parseInt((score/myTrash.length)*100) + "%";
+		endScore = parseInt((score/myTrash.length)*100);
+		scoreText.text = "Score: " + endScore + "%";
 		scoreText.update();
+		
+		playAgainText.update();
+		viewMissedText.update();
 	}
 		
 	hand.update();
