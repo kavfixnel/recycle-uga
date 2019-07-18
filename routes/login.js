@@ -66,7 +66,7 @@ router.get('/cb', async (req, res) => {
 const oauth2Client = new google.auth.OAuth2(
 	process.env.CLIENTID,
 	process.env.CLIENTSECRET,
-	'https://recycle-uga.herokuapp.com/login/googlecb'
+	'https://www.uga-recycle.com/login/google/cb'
 );
 
 // Redirect the users to the Google OAuth page
@@ -82,7 +82,7 @@ router.get('/google', (req, res) => {
 })
 
 // The callback URL for Google OAuth
-router.get('/googlecb', async (req, res) => {
+router.get('/google/cb', async (req, res) => {
 	try {
 		const { tokens } = await oauth2Client.getToken(req.query.code)
 
