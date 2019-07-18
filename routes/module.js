@@ -15,7 +15,7 @@ router.use(async (req, res, next) => {
 		if(user) {
 			var daysSinceCookieIssue = ((new Date()).getTime()-(new Date(user.cookieExp)).getTime())/(24*60*60*1000)
 			if(daysSinceCookieIssue > 1.0) {
-				res.redirect('/login').send()
+				res.redirect('/').send()
 			} else {
 				// Everyhting is fine
 				next()
@@ -23,7 +23,7 @@ router.use(async (req, res, next) => {
 			}
 		} else {
 			// No user with that cookie found
-			res.redirect('/login').send()
+			res.redirect('/').send()
 		}
 	} catch(error) {
 		console.error(error)
@@ -58,7 +58,7 @@ router.get('/next', async (req, res) => {
 				res.sendFile(path.join(__dirname + '/../private/postSurveyPage.html'))
 				break
 			case 6:
-				res.send("Done")
+				res.sendFile(path.join(__dirname + '/../private/finishPage.html'))
 				break
 			default:
 				res.status(500).send("Error [5] in module.js")
@@ -76,7 +76,7 @@ router.post('/progress', async (req, res) => {
 		// Find user
 		console.log(req.body)
 		var user = await userModule.findOne({cookie: req.cookies.sessionCookie})
-		if(req.body.page == user.progress && user.progress < 5) {
+		if(req.body.page == user.progress && user.progress <= 5) {
 			var name = ['preSurvey', 'pageOne', 'pageTwo', 'pageThree', 'postSurvey']
 			user.set('progress', user.progress + 1)
 			user.set(name[req.body.page], req.body.data)

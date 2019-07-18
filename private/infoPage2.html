@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- 3rd page -->>
+<!-- 3rd page -->
 <html>
     <head>
         <title>UGA Recycling</title>
@@ -13,6 +13,13 @@
         
         <!-- main stylesheet -->
         <link href="../stylesheets/main.css" rel="stylesheet">
+        
+        <!-- making min page width 1200px (doesn't really work when its smaller) -->
+        <style>
+            body {
+                min-width: 1200px;
+            }
+        </style>
         
         <!-- on page js, mainly window.onload -->
         <script>
@@ -177,6 +184,8 @@
                     success: function(data){alert("post sucessful");},
                     failure: function(){alert("post failed");}
                 });
+                
+                location.reload(true);
             } // postThings
         </script>
     </head>
@@ -259,7 +268,7 @@
             </div>
         </div>
 
-        <a onclick="postThings()" href="/module/next" class="nextPageButton disabled">Next Page</a>
+        <div class="centered"><a onclick="postThings()" href="/module/next" class="nextPageButton disabled">Next Page</a></div>
         
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>
