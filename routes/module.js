@@ -100,6 +100,7 @@ router.get('/progress', async (req, res) => {
 
 		if(user.progress) {
 			let obj = { found: true }
+			obj.user = user.id
 			obj.progress = user.progress / 5
 			res.send(obj)
 		} else {
