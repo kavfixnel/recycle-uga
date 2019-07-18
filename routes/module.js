@@ -101,10 +101,10 @@ router.get('/progress', async (req, res) => {
 		if(user.progress) {
 			let obj = { found: true }
 			obj.progress = user.progress / 5
-			req.send(obj)
+			res.send(obj)
 		} else {
 			let obj = { found: false, msg: 'Error [7] in module.js'}
-			req.status(500).send(obj)
+			res.status(500).send(obj)
 		}
 
 	} catch (error) {
