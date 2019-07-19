@@ -1,20 +1,20 @@
 // Import the required modules
-var express = require('express')
-var router = express.Router()
-var path = require('path')
+let express = require('express')
+let router = express.Router()
+let path = require('path')
 
-var userModule = require('../schemas/user.js')
+let userModule = require('../schemas/user.js')
 
 /* Middleware that checks if the user has a valid cookie */
 router.use(async (req, res, next) => {
 	try {
 		// Load the user with a cookie
-		var user = await userModule.findOne({cookie: req.cookies.sessionCookie})
+		let user = await userModule.findOne({ cookie: req.cookies.sessionCookie })
 
 		// Check if user exists
-		if(user) {
-			var daysSinceCookieIssue = ((new Date()).getTime()-(new Date(user.cookieExp)).getTime())/(24*60*60*1000)
-			if(daysSinceCookieIssue > 1.0) {
+		if (user) {
+			let daysSinceCookieIssue = ((new Date()).getTime() - (new Date(user.cookieExp)).getTime()) / (24 * 60 * 60 * 1000)
+			if (daysSinceCookieIssue > 1.0) {
 				res.redirect('/').send()
 			} else {
 				// Everyhting is fine
@@ -25,7 +25,7 @@ router.use(async (req, res, next) => {
 			// No user with that cookie found
 			res.redirect('/').send()
 		}
-	} catch(error) {
+	} catch (error) {
 		console.error(error)
 		res.status(500).send("Error [1] in module.js")
 	}
@@ -35,10 +35,10 @@ router.use(async (req, res, next) => {
 /* Send the next avaliable module page */
 router.get('/next', async (req, res) => {
 	try {
-		var user = await userModule.findOne({cookie: req.cookies.sessionCookie})
+		let user = await userModule.findOne({ cookie: req.cookies.sessionCookie })
 
 		// Decide what page needs to be loaded
-		switch(user.progress) {
+		switch (user.progress) {
 			case 0:
 				res.sendFile(path.join(__dirname + '/../private/preSurveyPage.html'))
 				break
@@ -63,7 +63,7 @@ router.get('/next', async (req, res) => {
 			default:
 				res.status(500).send("Error [5] in module.js")
 		}
-	} catch(error) {
+	} catch (error) {
 		console.error(error)
 		res.status(500).send("Error [3] in module.js")
 	}
@@ -75,9 +75,9 @@ router.post('/progress', async (req, res) => {
 	try {
 		// Find user
 		console.log(req.body)
-		var user = await userModule.findOne({cookie: req.cookies.sessionCookie})
-		if(req.body.page == user.progress && user.progress <= 5) {
-			var name = ['preSurvey', 'pageOne', 'pageTwo', 'pageThree', 'postSurvey']
+		let user = await userModule.findOne({ cookie: req.cookies.sessionCookie })
+		if (req.body.page == user.progress && user.progress <= 5) {
+			let name = ['preSurvey', 'pageOne', 'pageTwo', 'pageThree', 'postSurvey']
 			user.set('progress', user.progress + 1)
 			user.set(name[req.body.page], req.body.data)
 			await user.save()
@@ -85,7 +85,31 @@ router.post('/progress', async (req, res) => {
 		} else {
 			res.status(400).send()
 		}
-	} catch(error) {
+	} catch (error) {
+		console.error(error)
+		res.status(500).send('Error [6] in module.js /progress')
+	}
+	//res.status(400).send()
+});
+
+router.get('/progress', async (req, res) => {
+	try {
+		// Find user
+		console.log(req.body)
+		let user = await userModule.findOne({ cookie: req.cookies.sessionCookie })
+
+		if(user.progress) {
+			let obj = { found: true }
+			obj.user = user.id
+			obj.progress = user.progress / 5
+			res.send(obj)
+		} else {
+			let obj = { found: false, msg: 'Error [7] in module.js'}
+			res.status(500).send(obj)
+		}
+
+	} catch (error) {
+		let obj = { found: false, msg: 'Error [6] in module.js'}
 		console.error(error)
 		res.status(500).send('Error [6] in module.js /progress')
 	}
