@@ -24,8 +24,8 @@ router.get('/', async (req, res, next) => {
 	}
 
 	// Some error has occured
-	obj.msg = 'Internal Server Error'
-	res.status(500).send(obj)
+	// obj.msg = 'Internal Server Error'
+	// res.status(500).send(obj)
 });
 
 module.exports = router;
