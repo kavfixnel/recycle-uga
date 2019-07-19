@@ -57,7 +57,7 @@
                             type = "pie";            
                             pieData = [{y: 21.9, indexLabel: "Recycled", label: "Recycled", exploded: true}, 
                                            {y: 78.1, indexLabel: "Landfilled", label: "Landfilled"}];
-                            break; // source: the powerpoint module
+                            break; 
                             
                         case 2: // info for graph 2
                             title = "Energy Savings When Recycled, by Material";
@@ -66,14 +66,14 @@
                                         {y: 90, indexLabel: "Plastic", label: "Plastic"},
                                         {y: 60, indexLabel: "Paper", label: "Paper"},
                                         {y: 33, indexLabel: "Glass", label: "Glass"}];
-                            break; // source: https://www.greenlivingtips.com/articles/recycling-energy-savings.html
+                            break; 
                             
                         case 3: // info for graph 3
                             title = "Contaminated Materials Recycled by Percentage";
                             type = "pie";
                             pieData = [{y: 17.5, indexLabel: "Contaminated", label: "Contaminated", exploded: true},
                                         {y: 82.5, indexLabel: "Recycled", label: "Recycled"}];
-                            break; // source: https://www.redandblack.com/athensnews/wishful-recycling-turns-wasteful-athens-clarke-county-warns-of-recycling/article_7c927d42-6f64-11e8-8ed1-ef48e8d384a2.html
+                            break; 
                             
                         case 4:  // info for graph 4
                             title = "Value of Landfilled Materials and Amount Paid to Landfill";
@@ -165,9 +165,6 @@
                           SHA256(document.getElementsByName("answer4").item(0).value) === "c21365c7ea5b3c9d9326726c52d1ba5f14961d6767619fb1aa14255d4c42e759" ||
                           SHA256(document.getElementsByName("answer4").item(0).value.toUpperCase()) ===
                           "84747dcd831c7131207a1042d74b60ac54fdcc10e7aef9e1f7940dda2c95dcae") {isCorrect = true;}
-                        
-                        // source for graph:
-                        // https://cdn.ymaws.com/www.productstewardship.us/resource/resmgr/imported/SERDC%20Econ%20Cards.pdf
                 } // switch for each question depending on question number
                 
                 // if correct, show correct, else show incorrect

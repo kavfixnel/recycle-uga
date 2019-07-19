@@ -65,9 +65,11 @@
                 var pageClosed = new Date();
                 
                 var serverInfo = {page: 5,
-                        data: {questionAnswers: questionAnswers,
-                               tfAnswers: tfAnswers,
-                               metaData: {timeOnPage: pageClosed - pageOpened}
+                        data: {feedback: document.getElementsByName('feedback')[0].value,
+                                questionAnswers: questionAnswers,
+                                tfAnswers: tfAnswers,
+                                rooseveltInfo: document.getElementsByName('roosevelt')[0].value,
+                                metaData: {timeOnPage: pageClosed - pageOpened}
                               }
                 };
 
@@ -105,7 +107,12 @@
 		<div class="surveyArea">
 			<a id="post" class="smooth"></a>
 			<h1>Post-Survey</h1>
-				<label class="instructions"><b>Answer the following questions on a scale of 0 to 10.</b></label>
+            
+            <label>Feedback:</label><br>
+            <textarea type="text" class="form-control" name="feedback" rows="3"></textarea>
+            <small style="margin-top: 0;">This is where you can tell us what you thought of the module, including things you learned, enjoyed, or found useful.</small>
+            
+            <label class="instructions"><b>Answer the following questions on a scale of 0 to 10.</b></label>
             <br>
 
             <label>Now that you have taken the module, how likely are you to recycle on any given day?</label>
@@ -252,8 +259,11 @@
                         </td>
                     </tr>
                 </tbody>
-            
             </table>
+            
+            <label class="instructions"><b>The idea for this module came from Roosevelt@UGA - a non-partisan, student run think tank with a focus on civic engagement and policy. If you're interested in learning more about Roosevelt@UGA or joining, enter your email below.</b></label><br>
+            <input type="email" class="form-control" name="rooseveltEmail" placeholder="Enter Email"><br>
+            
             
 		</div>
 
