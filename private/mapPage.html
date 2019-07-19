@@ -25,6 +25,13 @@
             window.onload = function() {
                 pageOpened = new Date();
                 
+                // getting username
+                $.get("/users/", function(data){
+                    
+                    if(data.found)
+                        document.getElementById("username").innerHTML += data.userName;
+                });
+                
                 createMap();
             } // window.onload
             

@@ -53,6 +53,12 @@
             window.onload = function() {
                 startGame();
             
+                $.get("/users/", function(data){
+                    
+                    if(data.found)
+                        document.getElementById("username").innerHTML += data.userName;
+                });
+                
                 pageOpened = new Date();
             } // on window load
             

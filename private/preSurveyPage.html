@@ -15,15 +15,16 @@
         <!-- on page js, mainly window.onload -->
         <script>
             var pageOpened;
-            var numForms = 8;
-            var numQuestions = 7;
-            var info;
+            var numForms = 18;
+            var numQuestions = 13;
+
             window.onload = function() {
                  pageOpened = new Date();
                 
                 $.get("/users/", function(data){
-                    info = data;
-                    document.getElementById("username").innerHTML += data.userName;
+                    
+                    if(data.found)
+                        document.getElementById("username").innerHTML += data.userName;
                 });
             } // on window load
             
@@ -31,34 +32,44 @@
             function postThings() {
                 var questionAnswers = [];
                 var tfAnswers = [];
+                var recycleLocations = [];
                 
                 var pageClosed = new Date();
                 
-                // for each question, skims answers to find checked radio button and
-                // pushes the value into the array
-                for(var qCount = 1; qCount <= numQuestions; qCount++) {
-                    var currentAnswers = document.getElementsByName("question" + qCount);
-                    
-                    for(var i = 0; i < currentAnswers.length; i++) {
-                        if(currentAnswers[i].checked) 
-                            
-                            // question numbers greater than 5 are t/f questions
-                            if(qCount < 5) 
-                                questionAnswers.push(currentAnswers[i].value);
-                            else
-                                tfAnswers.push(currentAnswers[i].value);
+                // get the answer to each question
+                for(var i = 1; i <= numQuestions; i++) {
+                    if(i < 8)
+                        questionAnswers.push(document.getElementsByName("question" + i.toString())[0].value);
+                    else {
+                        if(document.getElementsByName('question' + i.toString())[0].parentElement.classList.contains('active'))
+                            tfAnswers.push(document.getElementsByName("question" + i.toString())[0].value);
+                        else
+                            tfAnswers.push(document.getElementsByName("question" + i.toString())[1].value);
+                    } // if before t/f questions, else t/f
                         
-                    } // for each answer choice, find checked option
                 } // for each question
+                
+                // checking the checkboxes
+                var locations = document.getElementsByName("where");
+                for(var i = 0; i < locations.length; i++) {
+                    if(locations[i].checked)
+                        recycleLocations.push(locations[i].value);
+                } // for each checkbox
+                
             
                 var serverInfo = {page: 0,
-                        data: {name: document.getElementById("name").value,
+                        data: {name: document.getElementsByName("name")[0].value,
+                               email: document.getElementsByName("email")[0].value,
+                               age: document.getElementsByName("age")[0].value,
+                               why: document.getElementsByName("why")[0].value,
+                               where: recycleLocations,
                                questionAnswers: questionAnswers,
                                tfAnswers: tfAnswers,
                                metaData: {timeOnPage: pageClosed - pageOpened}
                               }
                         };
 
+                console.log(serverInfo);
                 $.ajax({
                     type: "POST",
                     url: "/module/progress",
@@ -80,9 +91,7 @@
                 <div class="navbar-header" style="font-size: 24pt; color:white; font-family: 'Merriweather', rserif; text-align: center">
                     Roosevelt@UGA Sustainability Project
                 </div>
-                <div id="username">
-                    
-                </div>
+                <div id="username" style="color: white;"></div>
             </div>
         </nav>
         
@@ -105,7 +114,7 @@
                 <input type="email" class="form-control" name="email" maxlength="50"><br>
             
             <label>Why are you taking this module?</label><br>
-            <textarea class="form-control" rows="3"></textarea>
+            <textarea class="form-control" name="why" rows="3"></textarea>
             
             <label class="instructions"><b>Answer the following questions on a scale of 0 to 10.</b></label>
             <br>
@@ -206,13 +215,13 @@
             
             <label>Where do you recycle?</label>
             <form class="checkboxes">
-                <label><input type="checkbox" value="Home">&ensp; At Home</label><br>
-                <label><input type="checkbox" value="Work">&ensp; At Work</label><br>
-                <label><input type="checkbox" value="Dorms">&ensp; Residence Halls</label><br>
-                <label><input type="checkbox" value="Off-Campus">&ensp; Off-Campus Residence</label><br>
-                <label><input type="checkbox" value="Drop-Off">&ensp; Drop-off Location</label><br>
-                <label><input type="checkbox" value="Athens">&ensp; Around Athens</label><br>
-                <label><input type="checkbox" value="None">&ensp; I do not recycle</label><br>
+                <label><input type="checkbox" name="where" value="Home">&ensp; At Home</label><br>
+                <label><input type="checkbox" name="where" value="Work">&ensp; At Work</label><br>
+                <label><input type="checkbox" name="where" value="Dorms">&ensp; Residence Halls</label><br>
+                <label><input type="checkbox" name="where" value="Off-Campus">&ensp; Off-Campus Residence</label><br>
+                <label><input type="checkbox" name="where" value="Drop-Off">&ensp; Drop-off Location</label><br>
+                <label><input type="checkbox" name="where" value="Athens">&ensp; Around Athens</label><br>
+                <label><input type="checkbox" name="where" value="None">&ensp; I do not recycle</label><br>
             </form>
         </div> 	
         

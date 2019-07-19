@@ -10,7 +10,7 @@
         <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
         
         <!-- main stylesheet -->
-        <link href="../stylesheets/main.css" rel="stylesheet">
+        <link href="../public/stylesheets/main.css" rel="stylesheet">
         
         <!-- on page js, mainly window.onload -->
         <script>
@@ -18,41 +18,48 @@
             var pageOpened;
             
             // number of forms/questions for completion check
-            var numForms = 2;
-            var numQuestions = 1; 
+            var numForms = 13;
+            var numQuestions = 13; 
             var username;
             window.onload = function() {
                  pageOpened = new Date();
                 
+                // getting username
                 $.get("/users/", function(data){
-                    username = data;
-                    console.log(username);
+                    
+                    if(data.found)
+                        document.getElementById("username").innerHTML += data.userName;
                 });
             } // on window load
             
             function postThings() {
-                // variable holding all radio buttons
-                var radios = document.getElementsByName("question1");
+                var questionAnswers = [];
+                var tfAnswers = [];
                 
-                // will represent the value of the checked radio button
-                var checkedRadio;
+                // get the answer to each question
+                for(var i = 1; i <= numQuestions; i++) {
+                    if(i < 8)
+                        questionAnswers.push(document.getElementsByName("question" + i.toString())[0].value);
+                    else {
+                        if(document.getElementsByName('question' + i.toString())[0].parentElement.classList.contains('active'))
+                            tfAnswers.push(document.getElementsByName("question" + i.toString())[0].value);
+                        else
+                            tfAnswers.push(document.getElementsByName("question" + i.toString())[1].value);
+                    } // if before t/f questions, else t/f
+                        
+                } // for each question
                 
-                // for each radio button, find checked option
-                for(var i = 0; i < radios.length; i++) {
-                    if(radios[i].checked)
-                        checkedRadio = radios[i].value;
-                } // for each radio button, find checked option
                 
                 // time the page was closed for timeOnPage
                 var pageClosed = new Date();
                 
                 var serverInfo = {page: 5,
-                        data: {moduleHappiness: checkedRadio,
-                               comments: document.getElementById("comments").value,
+                        data: {questionAnswers: questionAnswers,
+                               tfAnswers: tfAnswers,
                                metaData: {timeOnPage: pageClosed - pageOpened}
                               }
                 };
-                
+
                 $.ajax({
                     type: "POST",
                     url: "/module/progress",
@@ -120,10 +127,10 @@
             <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 8">
                 &emsp;
                 <label class="btn btn-sm btn-secondary">
-                    <input type="radio" name="question11" value="True" autocomplete="off">True
+                    <input type="radio" name="question8" value="True" autocomplete="off">True
                 </label>
                 <label class="btn btn-sm btn-secondary">
-                    <input type="radio" name="question11" value="False" autocomplete="off">False
+                    <input type="radio" name="question8" value="False" autocomplete="off">False
                 </label>
             </div><br>
             
@@ -192,6 +199,6 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         
         <!-- Importing js files from javascripts folder in public -->
-        <script src="../javascripts/pageCompleteCheck.js"></script>
+        <script src="../public/javascripts/pageCompleteCheck.js"></script>
     </body>
 </html>

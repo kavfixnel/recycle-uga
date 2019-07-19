@@ -34,6 +34,13 @@
                 // time the page was opened for timeOnPage
                 pageOpened = new Date();
                 
+                // getting username
+                $.get("/users/", function(data){
+                    
+                    if(data.found)
+                        document.getElementById("username").innerHTML += data.userName;
+                });
+                
                 // number of graphs on the page
                 var graphCount = 4;
                 
