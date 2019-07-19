@@ -53,6 +53,12 @@
             window.onload = function() {
                 startGame();
             
+                $.get("/users/", function(data){
+                    
+                    if(data.found)
+                        document.getElementById("username").innerHTML += data.userName;
+                });
+                
                 pageOpened = new Date();
             } // on window load
             
@@ -94,6 +100,7 @@
                 <div class="navbar-header" style="font-size: 24pt; color:white; font-family: 'Merriweather', rserif; text-align: center">
                     Roosevelt@UGA Sustainability Project
                 </div>
+                <div id="username" style="color: white;"></div>
             </div>
         </nav>
         
