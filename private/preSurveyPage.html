@@ -21,10 +21,12 @@
             window.onload = function() {
                  pageOpened = new Date();
                 
-                $.get("/users/", function(data){
-                    
-                    if(data.found)
-                        document.getElementById("username").innerHTML += data.user;
+                // getting username and progress
+                $.get("/module/progress", function(data){
+                   if(data.found) {
+                        document.getElementById('username').innerHTML = data.user;
+                        document.getElementsByClassName('progress-bar')[0].style.width = (data.progress/.01).toString() + "%";
+                   } // if the data was found
                 });
             } // on window load
             
@@ -87,11 +89,10 @@
                     data: JSON.stringify(serverInfo),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: function(data){alert(data);},
+                    success: function(data){location.reload(true);},
                     failure: function(){alert("post failed");}
                 });
                 
-                location.reload(true);
             } // postThings
         </script>
     </head>
