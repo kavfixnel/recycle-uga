@@ -45,7 +45,7 @@
     margin: 10px;
     animation-name: slideIn;
     animation-duration: 2s;
-    font-family: 'Merriweather-Sans', 'sans-serif';
+    font-size: 11pt;
 }
 
 /* represents the center div of the graphArea divs */
@@ -59,7 +59,6 @@
     margin: 10px 5px;
     animation-name: slideIn;
     animation-duration: 2s;
-    font-family: 'Merriweather-Sans', 'sans-serif';
     font-weight: bold;
 }
 
@@ -72,7 +71,6 @@
 /* represents the correct/incorrect popup on question answer */
 .correct {
     margin: 25px;
-    font-family: 'Merriweather', 'serif';
 }
 
 /* button for answering questions */
@@ -80,7 +78,6 @@
     margin-top: 10px;
     width: 120px;
     cursor: pointer;
-    font-family: 'Merriweather', 'serif';
     color: #FFFFFF;
     background-color: #BA0C2F;
     border: 1px solid #997a81;
@@ -91,12 +88,11 @@
 	text-shadow: 0px 1px 0px #1F1F1F;
     display: inline-block;
     text-align: center;
-    padding-top: 3px;
-    padding-left: 1px;
+    padding: 2px;
 }
 
 .submitButton:hover {
-    background-color:#c4163b;
+    background-color:#a4061b;
     color: #FFFFFF;
     text-decoration: none;
 }
@@ -110,10 +106,9 @@
 .nextPageButton {
     height: 3%;
     width: 90px;
-    margin-top: 10px;
+    margin-top: 25px;
     margin-bottom: 25px;
     cursor: pointer;
-    font-family: 'Merriweather', 'serif';
     color: #FFFFFF;
     background-color: #BA0C2F;
     border: 1px solid #997a81;
@@ -122,12 +117,11 @@
 	text-decoration: none;
 	text-shadow: 0px 1px 0px #1F1F1F;
     display: inline-block;
-    padding-top: 3px;
-    
+    padding: 2px;
 }
  
 .nextPageButton:hover {
-    background-color:#c4163b;
+    background-color:#a4061b;
     color: #FFFFFF;
     text-decoration: none;
 }
@@ -146,16 +140,15 @@
 
 /* used to center the survey forms */
 .surveyArea {
-    width: 40%;
-    margin-left: 30%;
-    margin-right: 30%;
+    width: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
 }
 
 /* centers the survey header */
 .surveyArea > h1 {
     text-align: center;
     margin-top: 40px;
-    margin-bottom: 10px;
 }
 
 /* for text fields on survey pages */
@@ -168,9 +161,8 @@
     margin-top: 25px;
 }
 
-/* labels for form text on survey pages */
-label {
-    margin-top: 10px;
+.surveyArea > .instructions {
+    margin-top: 50px;
 }
 
 /* for answer fields on infoPage */
@@ -181,14 +173,12 @@ label {
 .question > h3 {
     font-size: 20px;
     font-weight: bold;
-    font-family: 'Merriweather', 'serif';
     margin-top: 30px;
 }
 
 /* for info windows on map page */
 .mapboxgl-popup {
     max-width: 400px;
-    font: 12px 'Merriweather-Sans', sans-serif;
 }
 
 /* for slides in slideshow on index page*/

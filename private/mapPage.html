@@ -12,7 +12,7 @@
         <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
 
         <!-- main stylesheet -->
-        <link href="../stylesheets/main.css" rel="stylesheet">
+        <link href="../public/stylesheets/main.css" rel="stylesheet">
         
         <!-- Imports for MapBox API -->
         <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
@@ -62,6 +62,11 @@
                 </div>
             </div>
         </nav>
+        
+        <!-- Progress bar for entire module -->
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 71.42%;">Your Progress</div>
+        </div>
 
         <p style="text-align: center; margin-top: 15px">Browse the map and click on the markers to see recycling locations in Athens!</p>
         
@@ -75,6 +80,6 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         
         <!-- Importing js files from javascripts folder in public -->
-        <script src="../javascripts/maps.js"></script>
+        <script src="../public/javascripts/maps.js"></script>
     </body>
 </html>

@@ -10,15 +10,21 @@
         <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
         
         <!-- main stylesheet -->
-        <link href="../stylesheets/main.css" rel="stylesheet">
+        <link href="../public/stylesheets/main.css" rel="stylesheet">
         
         <!-- on page js, mainly window.onload -->
         <script>
             var pageOpened;
             var numForms = 8;
             var numQuestions = 7;
+            var username;
             window.onload = function() {
                  pageOpened = new Date();
+                
+                $.get("/users/", function(data){
+                    username = data;
+                    console.log(username);
+                });
             } // on window load
             
             // posts 'things' data to the server 
@@ -77,56 +83,137 @@
             </div>
         </nav>
         
+        <!-- Progress bar for entire module -->
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 14.28%;">Your Progress</div>
+        </div>
+        
         <!-- Pre-Survey Page -->
-        <div id="page1" class="surveyArea">
+        <div class="surveyArea">
             <h1>Pre-Survey</h1>
 
             <label>Name:</label><br>
-                <input type="text" name="name" id="name" maxlength="50" oninput="checkIfCompletePreSurvey()"><br>
+                <input type="name" class="form-control" name="name" maxlength="50"><br>
+            
+            <label>Age: (optional)</label><br>
+                <input type="number" class="form-control" name="age" min="1" max="99" maxlength="2"><br>
+            
+            <label>Email: (optional)</label><br>
+                <input type="email" class="form-control" name="email" maxlength="50"><br>
+            
+            <label>Why are you taking this module?</label><br>
+            <textarea class="form-control" rows="3"></textarea>
+            
+            <label class="instructions"><b>Answer the following questions on a scale of 0 to 10.</b></label>
+            <br>
 
             <label>How likely are you to recycle on any given day?</label><br>
-                &emsp;<input type="radio" name="question1" value="1" oninput="checkIfCompletePreSurvey()">&ensp;Not at all likely<br>
-                &emsp;<input type="radio" name="question1" value="2" oninput="checkIfCompletePreSurvey()">&ensp;Somewhat unlikely<br>
-                &emsp;<input type="radio" name="question1" value="3" oninput="checkIfCompletePreSurvey()">&ensp;Neutral<br>
-                &emsp;<input type="radio" name="question1" value="4" oninput="checkIfCompletePreSurvey()">&ensp;Somewhat likely<br>
-                &emsp;<input type="radio" name="question1" value="5" oninput="checkIfCompletePreSurvey()">&ensp;Very likely<br>
+                <input class="custom-range" name="question1" type="range" min="0" max="10">
             	
             <label>How knowledgable do you feel about common recycling practices?</label><br>
-                &emsp;<input type="radio" name="question2" value="1" oninput="checkIfCompletePreSurvey()">&ensp;Not at all knowledgable<br>
-                &emsp;<input type="radio" name="question2" value="2" oninput="checkIfCompletePreSurvey()">&ensp;Somewhat unknowledgable<br>
-                &emsp;<input type="radio" name="question2" value="3" oninput="checkIfCompletePreSurvey()">&ensp;Neutral<br>
-                &emsp;<input type="radio" name="question2" value="4" oninput="checkIfCompletePreSurvey()">&ensp;Somewhat knowledgable<br>
-                &emsp;<input type="radio" name="question2" value="5" oninput="checkIfCompletePreSurvey()">&ensp;Very knowledgable<br>
+                <input class="custom-range" name="question2" type="range" min="0" max="10">
                 
             <label>How knowledgable do you feel about recycling practices in Athens?</label><br>
-                &emsp;<input type="radio" name="question3" value="1" oninput="checkIfCompletePreSurvey()">&ensp;Not at all knowledgable<br>
-                &emsp;<input type="radio" name="question3" value="2" oninput="checkIfCompletePreSurvey()">&ensp;Somewhat unknowledgable<br>
-                &emsp;<input type="radio" name="question3" value="3" oninput="checkIfCompletePreSurvey()">&ensp;Neutral<br>
-                &emsp;<input type="radio" name="question3" value="4" oninput="checkIfCompletePreSurvey()">&ensp;Somewhat knowledgable<br>
-                &emsp;<input type="radio" name="question3" value="5" oninput="checkIfCompletePreSurvey()">&ensp;Very knowledgable<br>
+                <input class="custom-range" name="question3" type="range" min="0" max="10">
             
             <label>With any given item, how confident are you that you will place it in the correct bin 
                 (with options being trash or recycling)?</label><br>
-                &emsp;<input type="radio" name="question4" value="1" oninput="checkIfCompletePreSurvey()">&ensp;Not at all confident<br>
-                &emsp;<input type="radio" name="question4" value="2" oninput="checkIfCompletePreSurvey()">&ensp;Somewhat unconfident<br>
-                &emsp;<input type="radio" name="question4" value="3" oninput="checkIfCompletePreSurvey()">&ensp;Neutral<br>
-                &emsp;<input type="radio" name="question4" value="4" oninput="checkIfCompletePreSurvey()">&ensp;Somewhat confident<br>
-                &emsp;<input type="radio" name="question4" value="5" oninput="checkIfCompletePreSurvey()">&ensp;Very confident<br>
+                <input class="custom-range" name="question4" type="range" min="0" max="10">
             
-            <label>TRUE or FALSE: Styrofoam can be recycled anywhere.</label><br>
-                &emsp;<input type="radio" name="question5" value="True" oninput="checkIfCompletePreSurvey()">&ensp;True<br>
-                &emsp;<input type="radio" name="question5" value="False" oninput="checkIfCompletePreSurvey()">&ensp;False<br>
+            <label class="instructions"><b>Answer the following questions on a percentage scale (0-100).</b></label>
             
-            <label>TRUE or FALSE: You can toss a used plastic food container into the recycling bin without cleaning it out.</label><br>
-                &emsp;<input type="radio" name="question6" value="True" oninput="checkIfCompletePreSurvey()">&ensp;True<br>
-                &emsp;<input type="radio" name="question6" value="False" oninput="checkIfCompletePreSurvey()">&ensp;False<br>
+            <label>How much material do you think is compostable?</label><br>
+                <input class="custom-range" name="question5" type="range" min="0" max="100">
             
-            <label>TRUE or FALSE: Hard plastic and film plastic can be recycled in the same place.</label><br>
-                &emsp;<input type="radio" name="question7" value="True" oninput="checkIfCompletePreSurvey()">&ensp;True<br>
-                &emsp;<input type="radio" name="question7" value="False" oninput="checkIfCompletePreSurvey()">&ensp;False<br>
+            <label>How much material do you think is recyclable?</label><br>
+                <input class="custom-range" name="question6" type="range" min="0" max="100">
+        
+            <label>How much material do you think UGA recycles?</label><br>
+                <input class="custom-range" name="question7" type="range" min="0" max="100">
+            
+            <label class="instructions"><b>Answer True or False to the following questions:</b></label><br>
+            
+            <label>Styrofoam can be recycled anywhere.</label>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 8">
+                &emsp;
+                <label class="btn btn-sm btn-secondary">
+                    <input type="radio" name="question8" value="True" autocomplete="off">True
+                </label>
+                <label class="btn btn-sm btn-secondary">
+                    <input type="radio" name="question8" value="False" autocomplete="off">False
+                </label>
+            </div><br>
+            
+            <label>A used plastic food container can go into the recycling bin without being cleaned.</label>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 9">
+                &emsp;
+                <label class="btn btn-sm btn-secondary">
+                    <input type="radio" name="question9" value="True" autocomplete="off">True
+                </label>
+                <label class="btn btn-sm btn-secondary">
+                    <input type="radio" name="question9" value="False" autocomplete="off">False
+                </label>
+            </div><br>
+            
+            <label>Hard plastic and film plastic can be recycled in the same place.</label>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 10">
+                &emsp;
+                <label class="btn btn-sm btn-secondary">
+                    <input type="radio" name="question10" value="True" autocomplete="off">True
+                </label>
+                <label class="btn btn-sm btn-secondary">
+                    <input type="radio" name="question10" value="False" autocomplete="off">False
+                </label>
+            </div><br>
+            
+            <label>You can recycle plastic bags.</label>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 11">
+                &emsp;
+                <label class="btn btn-sm btn-secondary">
+                    <input type="radio" name="question11" value="True" autocomplete="off">True
+                </label>
+                <label class="btn btn-sm btn-secondary">
+                    <input type="radio" name="question11" value="False" autocomplete="off">False
+                </label>
+            </div><br>
+            
+            <label>You can recycle used paper towels.</label>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 12">
+                &emsp;
+                <label class="btn btn-sm btn-secondary">
+                    <input type="radio" name="question12" value="True" autocomplete="off">True
+                </label>
+                <label class="btn btn-sm btn-secondary">
+                    <input type="radio" name="question12" value="False" autocomplete="off">False
+                </label>
+            </div><br>
+            
+            <label>You can recycle pizza boxes.</label>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 13">
+                &emsp;
+                <label class="btn btn-sm btn-secondary">
+                    <input type="radio" name="question13" value="True" autocomplete="off">True
+                </label>
+                <label class="btn btn-sm btn-secondary">
+                    <input type="radio" name="question13" value="False" autocomplete="off">False
+                </label>
+            </div><br>
+            
+            <label class="instructions"><b>Check all of the boxes below that apply to you.</b></label><br>
+            
+            <label>Where do you recycle?</label>
+            <form class="checkboxes">
+                <label><input type="checkbox" value="Home">&ensp; At Home</label><br>
+                <label><input type="checkbox" value="Work">&ensp; At Work</label><br>
+                <label><input type="checkbox" value="Dorms">&ensp; Residence Halls</label><br>
+                <label><input type="checkbox" value="Off-Campus">&ensp; Off-Campus Residence</label><br>
+                <label><input type="checkbox" value="Drop-Off">&ensp; Drop-off Location</label><br>
+                <label><input type="checkbox" value="Athens">&ensp; Around Athens</label><br>
+                <label><input type="checkbox" value="None">&ensp; I do not recycle</label><br>
+            </form>
         </div> 	
         
-        <div class="centered"><a onclick="postThings()" href="/module/next" class="nextPageButton disabled">Next Page</a></div>
+        <div class="centered"><a onclick="postThings()" href="/module/next" class="nextPageButton">Next Page</a></div>
         
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>
@@ -137,6 +224,6 @@
         <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
         <!-- Importing js files from javascripts folder in public -->
-        <script src="../javascripts/pageCompleteCheck.js"></script>
+        <script src="../public/javascripts/pageCompleteCheck.js"></script>
     </body>
 </html>
