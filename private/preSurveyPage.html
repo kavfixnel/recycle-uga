@@ -17,13 +17,13 @@
             var pageOpened;
             var numForms = 8;
             var numQuestions = 7;
-            var username;
+            var info;
             window.onload = function() {
                  pageOpened = new Date();
                 
                 $.get("/users/", function(data){
-                    username = data;
-                    console.log(username);
+                    info = data;
+                    document.getElementById("username").innerHTML += data;
                 });
             } // on window load
             
@@ -79,6 +79,9 @@
             <div class="container">
                 <div class="navbar-header" style="font-size: 24pt; color:white; font-family: 'Merriweather', rserif; text-align: center">
                     Roosevelt@UGA Sustainability Project
+                </div>
+                <div id="username">
+                    
                 </div>
             </div>
         </nav>
