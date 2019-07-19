@@ -56,7 +56,7 @@
                 $.get("/users/", function(data){
                     
                     if(data.found)
-                        document.getElementById("username").innerHTML += data.userName;
+                        document.getElementById("username").innerHTML += data.user;
                 });
                 
                 pageOpened = new Date();
