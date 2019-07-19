@@ -165,6 +165,12 @@
     margin-top: 50px;
 }
 
+.table-borderless td {
+    border: 0;
+    padding-right: 0;
+    padding-left: 0;
+}
+
 /* for answer fields on infoPage */
 .answerText {
     width: 50%;
