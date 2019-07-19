@@ -63,10 +63,17 @@ router.get('/cb', async (req, res) => {
 });
 
 // Create an OAuth2 Google client
+let googleURL
+if (process.env.DEV == 'TRUE') {
+	googleURL = 'http://local.uga-recycle.com:5000/login/google/cb'
+} else {
+	googleURL = 'https://www.uga-recycle.com/login/google/cb'
+}
+
 const oauth2Client = new google.auth.OAuth2(
 	process.env.CLIENTID,
 	process.env.CLIENTSECRET,
-	'https://www.uga-recycle.com/login/google/cb'
+	googleURL
 );
 
 // Redirect the users to the Google OAuth page

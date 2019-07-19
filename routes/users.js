@@ -18,7 +18,7 @@ router.get('/', async (req, res, next) => {
 		res.send(obj)
 	} else {
 		// User found
-		obj.userName = foundUser.id
+		obj.user = foundUser.id
 		obj.found = true
 		res.send(obj)
 	}
