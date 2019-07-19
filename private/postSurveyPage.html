@@ -32,6 +32,18 @@
                 });
             } // on window load
             
+            // updates the value of a slider
+            function updateValue(qnumber) {
+                // if number should be displayed /10, else should be shown as %
+                if(qnumber < 5) {
+                    document.getElementById("value" + qnumber.toString()).innerHTML = 
+                        document.getElementsByName("question" + qnumber.toString())[0].value + "/10";
+                } else {
+                    document.getElementById("value" + qnumber.toString()).innerHTML = 
+                        document.getElementsByName("question" + qnumber.toString())[0].value + "%";
+                }
+            } // updates the value of a slider
+            
             function postThings() {
                 var questionAnswers = [];
                 var tfAnswers = [];
@@ -48,8 +60,7 @@
                     } // if before t/f questions, else t/f
                         
                 } // for each question
-                
-                
+            
                 // time the page was closed for timeOnPage
                 var pageClosed = new Date();
                 
@@ -97,28 +108,48 @@
 				<label class="instructions"><b>Answer the following questions on a scale of 0 to 10.</b></label>
             <br>
 
-            <label>Now that you have taken the module, how likely are you to recycle on any given day?</label><br>
-                <input id="sliderOne" class="custom-range" name="question1" type="range" min="0" max="10">
+            <label>Now that you have taken the module, how likely are you to recycle on any given day?</label>
+            <br>
+            <input class="custom-range" name="question1" type="range" min="0" max="10" oninput="updateValue(1);">
+            <br>
+            <p id="value1" style="text-align: center;">5/10</p>
             	
-            <label>Now that you have taken the module, how knowledgable do you feel about common recycling practices?</label><br>
-                <input class="custom-range" name="question2" type="range" min="0" max="10">
+            <label>Now that you have taken the module, how knowledgable do you feel about common recycling practices?</label>
+            <br>
+            <input class="custom-range" name="question2" type="range" min="0" max="10" oninput="updateValue(2);">
+            <br>
+            <p id="value2" style="text-align: center;">5/10</p>
                 
             <label>Now that you have taken the module, how knowledgable do you feel about recycling practices in Athens?</label><br>
-                <input class="custom-range" name="question3" type="range" min="0" max="10">
+            <input class="custom-range" name="question3" type="range" min="0" max="10" oninput="updateValue(3);">
+            <br>
+            <p id="value3" style="text-align: center;">5/10</p>
             
-            <label>Now that you have taken the module, with any given item, how confident are you that you will place it in the correct bin (with options being trash or recycling)?</label><br>
-                <input class="custom-range" name="question4" type="range" min="0" max="10">
+            <label>Now that you have taken the module, with any given item, how confident are you that you will place it in the correct bin (with options being trash or recycling)?</label>
+            <br>
+            <input class="custom-range" name="question4" type="range" min="0" max="10" oninput="updateValue(4);">
+            <br>
+            <p id="value4" style="text-align: center;">5/10</p>
             
             <label class="instructions"><b>Answer the following questions on a percentage scale (0-100).</b></label>
             
-            <label>Now that you have taken the module, how much material do you think is compostable?</label><br>
-                <input class="custom-range" name="question5" type="range" min="0" max="100">
+            <label>Now that you have taken the module, how much material do you think is compostable?</label>
+            <br>
+            <input class="custom-range" name="question5" type="range" min="0" max="100" oninput="updateValue(5);">
+            <br>
+            <p id="value5" style="text-align: center;">50%</p>
             
-            <label>Now that you have taken the module, how much material do you think is recyclable?</label><br>
-                <input class="custom-range" name="question6" type="range" min="0" max="100">
+            <label>Now that you have taken the module, how much material do you think is recyclable?</label>
+            <br>
+            <input class="custom-range" name="question6" type="range" min="0" max="100" oninput="updateValue(6);">
+            <br>
+            <p id="value6" style="text-align: center;">50%</p>
         
-            <label>Now that you have taken the module, how much material do you think UGA recycles?</label><br>
-                <input class="custom-range" name="question7" type="range" min="0" max="100">
+            <label>Now that you have taken the module, how much material do you think UGA recycles?</label>
+            <br>
+            <input class="custom-range" name="question7" type="range" min="0" max="100" oninput="updateValue(7);">
+            <br>
+            <p id="value7" style="text-align: center;">50%</p>
             
             <label class="instructions"><b>Answer True or False to the following questions:</b></label><br>
             
