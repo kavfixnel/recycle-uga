@@ -26,6 +26,9 @@
             // sets time page is opened
             var pageOpened;
             
+            // focused form
+            var currentForm;
+            
             // tracks how many attempts are taken for each question
             var timesChecked = [0, 0, 0, 0];
             
@@ -36,7 +39,6 @@
                 
                 // getting username
                 $.get("/users/", function(data){
-                    
                     if(data.found)
                         document.getElementById("username").innerHTML += data.user;
                 });
@@ -181,6 +183,13 @@
                 } // if correct, else
             } // checkAnswer
             
+            // detects when enter is pressed
+            function enterPressed(e, formnum) {
+                var key = (e.keyCode ? e.keyCode : e.which);
+                if(key === 13)
+                    checkAnswer(formnum);
+            } // enterPressed
+            
             // posts 'things' (data) to the server 
             function postThings() {
                 
@@ -242,7 +251,7 @@
                     <h3>What percentage of the UGA's waste stream is recycled?</h3>
                 
                     <div class="answers">
-                        <input type="text" name="answer1" maxlength="20" class="answerText"/>
+                        <input type="text" name="answer1" maxlength="20" class="answerText" onkeypress="enterPressed(event, 1)">
                     </div>
                     
                     <a href="javascript:checkAnswer(1);checkIfCompleteInfo()" id="submit1" class="submitButton">Check Answer</a>
@@ -258,7 +267,7 @@
                     <h3>How much energy (percentage) is saved when products are made with recycled plastics compared to virgin plastics?</h3>
                 
                     <div class="answers">
-                        <input type="text" name="answer2" maxlength="20" class="answerText"/>
+                        <input type="text" name="answer2" maxlength="20" class="answerText" onkeypress="enterPressed(event, 2)">
                     </div>
 
                     <a href="javascript:checkAnswer(2);checkIfCompleteInfo()" id="submit2" class="submitButton">Check Answer</a>
@@ -274,7 +283,7 @@
                     <h3>What kind of recycling results in most cases of contamination?</h3>
                 
                     <div class="answers">
-                        <input type="text" name="answer3" maxlength="20" class="answerText"/>
+                        <input type="text" name="answer3" maxlength="20" class="answerText" onkeypress="enterPressed(event, 3)">
                     </div>
                     
                     <a href="javascript:checkAnswer(3);checkIfCompleteInfo()" id="submit3" class="submitButton">Check Answer</a>
@@ -290,7 +299,7 @@
                     <h3>Where does Georgia rank by state in terms of market for recycled materials?</h3>
                 
                     <div class="answers">
-                        <input type="text" name="answer4" maxlength="20" class="answerText"/>
+                        <input type="text" name="answer4" maxlength="20" class="answerText" onkeypress="enterPressed(event, 4)">
                     </div>
                     
                     <a href="javascript:checkAnswer(4);checkIfCompleteInfo()" id="submit4" class="submitButton">Check Answer</a>
