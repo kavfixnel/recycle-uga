@@ -50,15 +50,6 @@
                 return true;
             } // isNumber
             
-            // checks for valid email (for email)
-            function isEmail(e) {
-                if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(document.getElementsByName('email')[0]))
-                    return true;
-                else 
-                    console.log("invalid email");
-                    return false;
-            } // isEmail
-            
             // posts 'things' data to the server 
             function postThings() {
                 var questionAnswers = [];
@@ -140,7 +131,7 @@
                 <input type="tel" class="form-control" name="age" min="1" max="99" maxlength="2" onkeypress="return isNumber(event)"><br>
             
             <label>Email: (optional)</label><br>
-                <input type="email" class="form-control" name="email" maxlength="50" onkeypress="return isEmail(event)"><br>
+                <input type="email" class="form-control" name="email" maxlength="50"><br>
             
             <label>Why are you taking this module?</label><br>
             <textarea class="form-control" name="why" rows="3"></textarea>
