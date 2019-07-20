@@ -28,6 +28,10 @@
                         document.getElementsByClassName('progress-bar')[0].style.width = (data.progress/.01).toString() + "%";
                    } // if the data was found
                 });
+                
+                $('document').ajaxComplete(function() {
+                    location.reload(true);
+                });
             } // on window load
             
             // updates the value of a slider
@@ -89,7 +93,7 @@
                     data: JSON.stringify(serverInfo),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: function(data){location.reload(true);},
+                    success: function(data){alert("post successful")},
                     failure: function(){alert("post failed");}
                 });
             } // postThings
