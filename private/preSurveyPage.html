@@ -89,11 +89,9 @@
                     data: JSON.stringify(serverInfo),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: function(data){},
+                    success: function(data){location.reload(true);},
                     failure: function(){alert("post failed");}
                 });
-                
-                location.reload(true);
             } // postThings
         </script>
     </head>
