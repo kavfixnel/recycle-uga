@@ -33,9 +33,9 @@ var myGameArea =
 		//Event listeners 
 		//Moving the mouse
 		document.getElementById("canvas").addEventListener('mousemove', function (e)
-		{
-                myGameArea.x = e.clientX - document.getElementById("canvas").offsetLeft;
-                myGameArea.y = e.clientY - document.getElementById("canvas").offsetTop;
+		{       
+                myGameArea.x = (e.clientX - document.getElementById("canvas").offsetLeft) / ($('canvas').width()/720);
+                myGameArea.y = (e.clientY - document.getElementById("canvas").offsetTop) / ($('canvas').height()/480);
             
 		});
 		
@@ -60,7 +60,7 @@ var myGameArea =
 						//Current Trash is Recyclable
 						if(currentTrash.recycleable)
 							{
-								feedback.innerHTML = "Good Job this is Recyclable";
+								feedback.innerHTML = "Good job! This is recyclable.";
 								myTrash[i].thrownAway = true;
 								myTrash[i].current = false;
 								trashThrownAway++;
@@ -69,14 +69,14 @@ var myGameArea =
 						//Current Trash needs CHaRM
 						else if(currentTrash.charm)
 						{
-							feedback.innerHTML = "This is Recyclable, But it requires a special Bin";
+							feedback.innerHTML = "This is recyclable, but it requires a special bin.";
 							myTrash[i].correct = false;
 						}
 						
 						//Current Trash is not Recyclable
 						else
 						{
-							feedback.innerHTML = "Hey you can't recycle this!";
+							feedback.innerHTML = "Hey! You can't recycle this!";
 							myTrash[i].correct = false;
 						}
 					}
@@ -87,7 +87,7 @@ var myGameArea =
 						//Current Trash is Recyclable or needs CHaRM
 						if(currentTrash.recycleable || currentTrash.charm)
 						{
-							feedback.innerHTML = "Hey this is Recyclable!";
+							feedback.innerHTML = "Hey! This is recyclable!";
 							myTrash[i].correct = false;
 						}
 
@@ -107,14 +107,14 @@ var myGameArea =
 						//Current Trash is CHaRM
 						if(currentTrash.charm)
 						{
-							feedback.innerHTML = "Nice Job this item requires CHaRM to be recycled";
+							feedback.innerHTML = "Nice job! This item requires CHaRM to be recycled.";
 							myTrash[i].thrownAway = true;
 							myTrash[i].current = false;
 							trashThrownAway++;
 						}
 						else
 						{
-							feedback.innerHTML = "Nope this doesn't go here";	
+							feedback.innerHTML = "Nope! This doesn't go here.";	
 							myTrash[i].correct = false;
 						}
 					}

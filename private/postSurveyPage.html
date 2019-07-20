@@ -69,7 +69,7 @@
                         data: {feedback: document.getElementsByName('feedback')[0].value,
                                 questionAnswers: questionAnswers,
                                 tfAnswers: tfAnswers,
-                                rooseveltInfo: document.getElementsByName('roosevelt')[0].value,
+                                rooseveltInfo: document.getElementsByName('rooseveltEmail')[0].value,
                                 metaData: {timeOnPage: pageClosed - pageOpened}
                               }
                 };
@@ -81,9 +81,8 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function(data){location.reload(true);},
-                    failure: function(){alert("post failed");}
+                    failure: function(){}
                 });
-
             } // postThings
         </script>
     </head>

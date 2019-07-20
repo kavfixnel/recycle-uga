@@ -16,32 +16,51 @@
 				
 		<style>
 			canvas {
-				border:1px solid #d3d3d3;
-				background-color: #f1f1f1;
+				border:1px solid #B7BF10;
+				background-color: #f3efee;
 				position: relative;
-				margin-left: 5%;
-			}
-			
-			.c {
-				position: relative;
-				top: 0%;
-				left: 5%;
+                flex: 50%;
+                margin: 0 2.5% 0 5%;
 			}
 			
 			.key {
-				border:1px solid #d3d3d3;
-				background-color: #f1f1f1;
-				position: absolute;
-				top: 15%;
-				left: 60%;
-				right: 5%;
+				border:1px solid #B7BF10;
+				background-color: #f3efee;
+                position: relative;
+                padding: 10px;
+                flex: 15%;
+                margin: 0 5% 0 2.5%;
 			}
+            
+            #feedback {
+                margin-top: 15%;
+            }
+            
+            #progress {
+                float: left;
+            }
 			
 			.centered {
 				text-align: center;
 			}
-			
-
+            
+            #container {
+                display: flex;
+            }
+            
+            #canvasheader {
+                margin: 0 0 0 5%;
+                width: 720px;
+                display: inline-block;
+            }
+            
+            #hint {
+                position: absolute;
+                bottom: 5%;
+                left: 5%;
+                width: 90%;
+            }
+            
 		</style>
 		
 		
@@ -93,7 +112,7 @@
     </head>
 	
 	
-    <body onload="startGame()">
+    <body onload="startGame()" style="min-width: 800px;">
 	
         <!-- Fixed navigation bar using bootsrap classes, UGA Bulldog Red color, UGA font-->
         <nav class="navbar navbar-fixed-top" style="background-color: #BA0C2F;">
@@ -111,20 +130,25 @@
         </div>
 		
 		<br>
-		<h2 class="c">Grab the items and place them in the correct bins</h2>
-        
 		
         <!-- Game 1 Page -->
-		<div>
+        
+        <div id="canvasheader">
+            <h2 id="progress"></h2>
+            
+        </div>
+        
+		<div id="container">
             <canvas id="canvas"></canvas>
-		</div>
-		
-		<h2 id="progress" class="c"></h2>
-		<h2 id="feedback" class="c"></h2>
-		
-		<div class="key">
-            <h2 class="centered">Hints</h2>
-			<p>Not all items can be recycled. Many that can require a special bin called a CHaRM bin.</p>
+            <div class="key centered">
+                <h2 >Instructions</h2>
+                <hr>
+                <label>Grab the items and place them in the correct bins! You have to get 80% correct to move on.</label>
+                <br>
+                <b id="feedback"></b>
+                
+                <small id="hint">Hint: Not all items can be recycled. Many that can require a special bin called a CHaRM bin.</small>
+            </div>
 		</div>
         
         <div class="centered"><a onclick="postThings()" href="/module/next" class="nextPageButton">Next Page</a></div>
