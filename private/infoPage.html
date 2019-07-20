@@ -26,8 +26,13 @@
             // sets time page is opened
             var pageOpened = new Date();
             
-            // focused form
-            var currentForm;
+            // tracks each incorrect answer entered
+            var incorrectAnswers = [
+                [],
+                [],
+                [],
+                []
+            ];
             
             // tracks how many attempts are taken for each question
             var timesChecked = [0, 0, 0, 0];
@@ -176,6 +181,8 @@
                     document.getElementById("submit" + questionNumber.toString()).classList.add("disabled");
                     document.getElementsByName("answer" + questionNumber.toString())[0].readOnly = true;
                 } else {
+                    incorrectAnswers[questionNumber - 1].push(document.getElementById("answer" + questionNumber.toString()).textContent);
+                    
                     document.getElementById("correct" + questionNumber.toString()).innerHTML = "Incorrect!";
                     document.getElementById("correct" + questionNumber.toString()).style.color = "red";
                     document.getElementsByName("answer" + questionNumber.toString())[0].value = "";
@@ -197,11 +204,8 @@
                 
                 // variable to be converted to JSON
                 var serverInfo = {page: 1,
-                        data: { answer1: document.getElementsByName("answer1")[0].value,
-                                answer2: document.getElementsByName("answer2")[0].value, 
-                                answer3: document.getElementsByName("answer3")[0].value,
-                                answer4: document.getElementsByName("answer4")[0].value,
-                                attemptsPerQuestion: timesChecked,
+                        data: { attemptsPerQuestion: timesChecked,
+                                incorrectAnswers: incorrectAnswers,
                                 metaData: {timeOnPage: pageClosed - pageOpened}
                               }
                 };
