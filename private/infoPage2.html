@@ -12,7 +12,7 @@
         <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans&display=swap" rel="stylesheet">
         
         <!-- main stylesheet -->
-        <link href="../stylesheets/main.css" rel="stylesheet">
+        <link href="../public/stylesheets/main.css" rel="stylesheet">
         
         <!-- making min page width 1200px (doesn't really work when its smaller) -->
         <style>
@@ -235,11 +235,19 @@
 
             <!-- (some) Information from Slide 3 of PP module (uses window.onload function) -->
             <div id="graphArea1" class="graphArea">
-                <div id="graphContainer1" class="graphContainer">
-                    <div class="icon" style="background-color: red"></div>
-                    <div class="icon" style="background-color: green"></div>
-                    <div class="icon" style="background-color: blue"></div>
-                    <div class="icon" style="background-color: yellow"></div>
+                <div id="graphContainer1" class="graphContainer" style="font-size:0;">
+                    <div class="icon">
+                        <img src="../images/can-icon.png" width="120px" height="120px">
+                    </div>
+                    <div class="icon">
+                        <img src="../images/bulb-icon.png" width="90px" height="90px" style="margin-left: 15px; margin-top: 20px;">
+                    </div>
+                    <div class="icon">
+                        <img src="../images/recycle-icon.png" width="100px" height="100px" style="margin-left: 10px; margin-top: 15px;">
+                    </div>
+                    <div class="icon">
+                        <img src="../images/leaf-icon.png" width="80px" height="80px" style="margin-left: 25px; margin-top: 25px;">
+                    </div>
                 </div>
                 <div id="question1" class="question">
                     <h3>Are there more example questions?</h3>
@@ -252,7 +260,7 @@
                     
                     <p id="correct1" class="correct"></p>
                 </div>
-                <p id="infoText1" class="popup">&emsp; This is example text. I call it this because I am using it as an example in the place of actual information. While not the same, it adds value through showcasing what future informational text might look like. I really wanted to fill up this space. I still want to. It's all I could ever really want.</p>
+                <p id="infoText1" class="popup">&emsp; If we as a country or world were to recycle, the results would be tremendous - you can see some incredible statistics by hovering over the icons on the right. The amound of wasted materials that could be used to preserve valuable natural resources or be used as crucial building material is nearly unfathomable. While it may seem like a stretch to recycle <i>all</i> materials of a given kind, progress towards this goal happens one person at a time.</p>
             </div>
 
             <div id="graphArea2" class="graphArea">
@@ -315,9 +323,9 @@
         <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
         <!-- Importing js files from javascripts folder in public -->
-        <script src="../javascripts/graphs.js"></script>
-        <script src="../javascripts/popup.js"></script>
-        <script src="../javascripts/hashing.js"></script>
-        <script src="../javascripts/pageCompleteCheck.js"></script>
+        <script src="../public/javascripts/graphs.js"></script>
+        <script src="../public/javascripts/popup.js"></script>
+        <script src="../public/javascripts/hashing.js"></script>
+        <script src="../public/javascripts/pageCompleteCheck.js"></script>
     </body>
 </html>

@@ -103,11 +103,18 @@
 }
 
 .icon {
-    height: 160px;
-    width: 160px;
+    height: 125px;
+    width: 125px;
+    margin: 15px;
     display: inline-block;
-    flex-wrap: wrap;
-    margin: 0;
+    border-radius: 80px;
+    border: solid 1px #B7BF10;
+    background-color: #eae7e2;
+    overflow: hidden;
+}
+
+.iconpopup {
+    
 }
 
 /* defined for all the buttons at the end of pages */
