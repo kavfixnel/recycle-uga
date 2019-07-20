@@ -67,12 +67,7 @@
                             break; 
                             
                         case 2: // info for graph 2
-                            title = "Energy Savings When Recycled, by Material";
-                            type = "column";
-                            pieData = [{y: 95, indexLabel: "Aluminum", label: "Aluminum"}, 
-                                        {y: 90, indexLabel: "Plastic", label: "Plastic"},
-                                        {y: 60, indexLabel: "Paper", label: "Paper"},
-                                        {y: 33, indexLabel: "Glass", label: "Glass"}];
+                            // replaced with CHaRM
                             break; 
                             
                         case 3: // info for graph 3
@@ -91,9 +86,9 @@
                     
                     // for first three graphs, use percentage for y axis
                     // for fourth, use millions of units
-                    if(i < 4)
+                    if(i < 4 && i != 2)
                         makeGraph(id, title, type, pieData, "##0.00\"%\"");
-                    else 
+                    else if(i == 4) 
                         makeGraph(id, title, type, pieData, "$## million");
                 } // for each of the four graphs, assign graph info                
                 
@@ -156,9 +151,7 @@
                         break;
 
                     case 2:
-                        if(SHA256(document.getElementsByName("answer2").item(0).value) === "69f59c273b6e669ac32a6dd5e1b2cb63333d8b004f9696447aee2d422ce63763" ||
-                        SHA256(document.getElementsByName("answer2").item(0).value) === 
-                        "883caeb7ca1165a22441d8487203cc8aa9284ad7c0f5664c704f98ecb10849b4") {isCorrect = true;}
+                        if(SHA256(document.getElementsByName("answer2").item(0).value.toUpperCase()) === "f9171164593756e56fb197327b529a4955590566560dbe62d586bff41be9d297") {isCorrect = true;}
                         break;
 
                     case 3:
@@ -244,7 +237,7 @@
         <div>
             <!-- shows the answers bc everyone but me forgets them -->
             <p style="text-align: center; margin-top: 20px;">Hover over the graphs and answer all questions to continue!<br>
-                <b>answers in order: '21.9'/'21.9%', '90'/'90%', 'wishful'/'wishful recycling', '2'/'2nd'/'second'</b>
+                <b>answers in order: '21.9'/'21.9%', 'yes', 'wishful'/'wishful recycling', '2'/'2nd'/'second'</b>
             </p>
 
             <!-- (some) Information from Slide 3 of PP module (uses window.onload function) -->
@@ -265,9 +258,13 @@
             </div>
 
             <div id="graphArea2" class="graphArea">
-                <div id="graphContainer2" class="graphContainer"></div>
+                <div id="graphContainer2" class="graphContainer">
+                    <a href="https://www.accgov.com/charm" target="_blank">
+                        <img src="../images/charm.jpg" height="192px" width="320px" style="margin-top: 64px;">
+                    </a>
+                </div>
                 <div id="question2" class="question">
-                    <h3>How much energy (percentage) is saved when products are made with recycled plastics compared to virgin plastics?</h3>
+                    <h3>At the Athens CHaRM facility, can you recycle batteries?</h3>
                 
                     <div class="answers">
                         <input type="text" name="answer2" maxlength="20" class="answerText" onkeypress="enterPressed(event, 2)">
@@ -277,7 +274,7 @@
                     
                     <p id="correct2" class="correct"></p>
                 </div>
-                <p id="infoText2" class="popup">&emsp; Not only does recycling waste save material that could end up in a landfill or in one of many bodies of water, it also saves copious amounts of energy compared to creating products from virgin materials (those that haven't been recycled). Not only does recycling help the earth, it makes the creation of new products more efficient!</p>
+                <p id="infoText2" class="popup">&emsp; Recycling containers seen around UGA's campus are known as 'single-stream' recycling containers - this means they can hold many of the main recycled materials such as plastics, aluminum, paper, etc. While it may seem like all other materials must go to the waste bin, there is another solution. In Athens, CHaRM (the Center for Hard to Recycle Materials) can take items such as monitors, batteries, light bulbs, and other materials that could not normally be recycled. Click the CHaRM image to learn more!</p>
             </div>
 
             <div id="graphArea3" class="graphArea">
