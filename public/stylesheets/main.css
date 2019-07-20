@@ -102,6 +102,13 @@
 	top:1px;
 }
 
+.icon {
+    height: 80px;
+    width: 80px;
+    display: inline-block;
+    flex-wrap: wrap;
+}
+
 /* defined for all the buttons at the end of pages */
 .nextPageButton {
     height: 3%;

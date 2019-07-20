@@ -55,7 +55,7 @@
                 
                 // making graphs
                 var id, title, type, pieData;
-                for(var i = 1; i <= graphCount; i++) {
+                for(var i = 2; i <= graphCount; i++) {
                     id = "graphContainer" + i.toString();
                     
                     switch(i) {
@@ -235,7 +235,12 @@
 
             <!-- (some) Information from Slide 3 of PP module (uses window.onload function) -->
             <div id="graphArea1" class="graphArea">
-                <div id="graphContainer1" class="graphContainer"></div>
+                <div id="graphContainer1" class="graphContainer">
+                    <div class="icon" style="background-color: red"></div>
+                    <div class="icon" style="background-color: green"></div>
+                    <div class="icon" style="background-color: blue"></div>
+                    <div class="icon" style="background-color: yellow"></div>
+                </div>
                 <div id="question1" class="question">
                     <h3>Are there more example questions?</h3>
                 
