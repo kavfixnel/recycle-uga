@@ -181,7 +181,7 @@
                     document.getElementById("submit" + questionNumber.toString()).classList.add("disabled");
                     document.getElementsByName("answer" + questionNumber.toString())[0].readOnly = true;
                 } else {
-                    incorrectAnswers[questionNumber - 1].push(document.getElementById("answer" + questionNumber.toString()).textContent);
+                    incorrectAnswers[questionNumber - 1].push(document.getElementById("answer" + questionNumber.toString()).innerHTML);
                     
                     document.getElementById("correct" + questionNumber.toString()).innerHTML = "Incorrect!";
                     document.getElementById("correct" + questionNumber.toString()).style.color = "red";
