@@ -107,6 +107,7 @@
     width: 160px;
     display: inline-block;
     flex-wrap: wrap;
+    margin: 0;
 }
 
 /* defined for all the buttons at the end of pages */
