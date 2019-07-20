@@ -42,6 +42,14 @@
                 }
             } // updates the value of a slider
             
+            // checks for number value (for age)
+            function isNumber(e) {
+                var charCode = (e.which) ? e.which : e.keyCode;
+                if(charCode > 31 && (charCode < 48 || charCode > 57))
+                    return false;
+                return true;
+            } // isNumber
+            
             // posts 'things' data to the server 
             function postThings() {
                 var questionAnswers = [];
@@ -120,7 +128,7 @@
                 <input type="name" class="form-control" name="name" maxlength="50"><br>
             
             <label>Age: (optional)</label><br>
-                <input type="number" class="form-control" name="age" min="1" max="99" maxlength="2"><br>
+                <input type="number" class="form-control" name="age" min="1" max="99" maxlength="2" onkeypress=" reutrn isNumber(event)"><br>
             
             <label>Email: (optional)</label><br>
                 <input type="email" class="form-control" name="email" maxlength="50"><br>
