@@ -13,6 +13,11 @@ var gameIsOver = false;
 var score;
 var scoreCalculated = true;
 var endScore;
+var missedText;
+var missedNames = [];
+var missed = [];
+var showMissed = false;
+var alreadyPrintedMissed = false;
 
 //Variable that defines an area for the game to be played on the webpage
 var myGameArea = 
@@ -33,9 +38,9 @@ var myGameArea =
 		//Event listeners 
 		//Moving the mouse
 		document.getElementById("canvas").addEventListener('mousemove', function (e)
-		{       
-                myGameArea.x = (e.clientX - document.getElementById("canvas").offsetLeft) / ($('canvas').width()/720);
-                myGameArea.y = (e.clientY - document.getElementById("canvas").offsetTop) / ($('canvas').height()/480);
+		{
+                myGameArea.x = e.clientX - document.getElementById("canvas").offsetLeft;
+                myGameArea.y = e.clientY - document.getElementById("canvas").offsetTop;
             
 		});
 		
@@ -44,6 +49,69 @@ var myGameArea =
 		{
 			clickX = e.clientX - document.getElementById("canvas").offsetLeft;
 			clickY = e.clientY - document.getElementById("canvas").offsetTop;
+			
+			if(gameIsOver && isCollided(hand,playAgainBox) && playAgainBox.clickable) 
+			{
+				//Restarting game
+				
+				//Reset vars
+				trashThrownAway = 1;
+				isClicked = false;
+				gameIsOver = false;
+				scoreCalculated = true;
+				shuffleArray(myTrash);
+				score = myTrash.length;
+				missedNames = [];
+				missed = [];
+				alreadyPrintedMissed = false;
+				
+				//Reset Trash			
+				for(i = 0; i < myTrash.length; i++)
+				{
+					
+					myTrash[i].thrownAway = false;
+					myTrash[i].correct = true;
+					myTrash[i].current = false;
+					myTrash[i].x = 30;
+					myTrash[i].y = 90;				
+				}
+			}
+			
+			else if(gameIsOver && isCollided(hand,viewMissedBox) && playAgainBox.clickable)
+			{
+				missedText.text = "MISSED: "
+				
+				for(i = 0; i < myTrash.length; i++)
+				{
+					if(!myTrash[i].correct && !alreadyPrintedMissed)
+					{
+						//missedText.text += "\n" + myTrash[i].name;
+						missedNames.push(myTrash[i].name);
+					}
+					showMissed = true;					
+					backText.clickable = true;
+				}
+				
+				for(i = 0; i < missedNames.length; i++)
+				{
+					yVal = i*25;
+					
+					missedY = 100 + yVal;
+					newMissed = new component("25px", "Consolas", "black", 130, missedY, "text");
+					newMissed.text = missedNames[i];
+					
+					missed.push(newMissed);
+					
+				}
+				
+				alreadyPrintedMissed = true;
+				
+			}
+			
+			else if(isCollided(hand, backText) && backText.clickable)
+			{
+				showMissed = false;
+			}
 			
 			//Check if item clicked is trash
 			for(i = 0; i < myTrash.length; i++)
@@ -60,7 +128,7 @@ var myGameArea =
 						//Current Trash is Recyclable
 						if(currentTrash.recycleable)
 							{
-								feedback.innerHTML = "Good job! This is recyclable.";
+								feedback.innerHTML = "Good Job " + currentTrashName + " is Recyclable";
 								myTrash[i].thrownAway = true;
 								myTrash[i].current = false;
 								trashThrownAway++;
@@ -69,14 +137,14 @@ var myGameArea =
 						//Current Trash needs CHaRM
 						else if(currentTrash.charm)
 						{
-							feedback.innerHTML = "This is recyclable, but it requires a special bin.";
+							feedback.innerHTML =  currentTrashName + " is Recyclable, But " + currentTrashName + " requires a special Bin";
 							myTrash[i].correct = false;
 						}
 						
 						//Current Trash is not Recyclable
 						else
 						{
-							feedback.innerHTML = "Hey! You can't recycle this!";
+							feedback.innerHTML = "Hey you can't recycle  " + currentTrashName + " !";
 							myTrash[i].correct = false;
 						}
 					}
@@ -87,14 +155,14 @@ var myGameArea =
 						//Current Trash is Recyclable or needs CHaRM
 						if(currentTrash.recycleable || currentTrash.charm)
 						{
-							feedback.innerHTML = "Hey! This is recyclable!";
+							feedback.innerHTML = "Hey " + currentTrashName + " is Recyclable!";
 							myTrash[i].correct = false;
 						}
 
 						//Current Trash is just Trash
 						else
 						{
-							feedback.innerHTML = "Good job! This can't be recycled.";
+							feedback.innerHTML = "Good job! " + currentTrashName + " can't be recycled.";
 							myTrash[i].thrownAway = true;
 							myTrash[i].current = false;
 							trashThrownAway++;
@@ -107,14 +175,14 @@ var myGameArea =
 						//Current Trash is CHaRM
 						if(currentTrash.charm)
 						{
-							feedback.innerHTML = "Nice job! This item requires CHaRM to be recycled.";
+							feedback.innerHTML = "Nice Job  " + currentTrashName + "  requires CHaRM to be recycled";
 							myTrash[i].thrownAway = true;
 							myTrash[i].current = false;
 							trashThrownAway++;
 						}
 						else
 						{
-							feedback.innerHTML = "Nope! This doesn't go here.";	
+							feedback.innerHTML = "Nope  " + currentTrashName + "  doesn't go here";	
 							myTrash[i].correct = false;
 						}
 					}
@@ -128,6 +196,7 @@ var myGameArea =
 					isClicked = true;					
 				}
 			}
+			
 
 		})		
 		
@@ -157,6 +226,7 @@ var myGameArea =
 }
 
 	
+	
 //Function to start the game
 function startGame()
 {
@@ -164,17 +234,25 @@ function startGame()
 	hand = new component(30, 30, "/../images/hand.jpg", 10, 120, "image");
 	
 	//Creates the text displayed at the end of the game
-	gameOverText = new component("80px", "Consolas", "black", 170, 150, "text");
+	gameOverText = new component("80px", "Consolas", "black", 160, 150, "text");
 	gameOverText.text = "GAME OVER";
 	
-	scoreText = new component("60px", "Consolas", "black", 200, 300, "text");
+	scoreText = new component("60px", "Consolas", "black", 180, 280, "text");
 	scoreText.text = 100 + "%";
 	
-	playAgainText = new component("60px", "Consolas", "black", 100, 125, "text");
+	playAgainText = new component("50px", "Consolas", "white", 30, 420, "text");
 	playAgainText.text = "Play Again";
+	playAgainBox = new component(280, 60, "black", 30, 380, "box");
 	
-	viewMissedText = new component("60px", "Consolas", "black", 300, 125, "text");
+	viewMissedText = new component("50px", "Consolas", "white", 370, 420, "text");
 	viewMissedText.text = "View Missed";
+	viewMissedBox = new component(310, 60, "black", 370, 380, "box");
+	
+	missedText = new component("40px", "Consolas", "black", 30, 50, "text");
+	missedText.text = "MISSED:"
+	
+	backText = new component("35px", "Consolas", "black", 420, 420, "text");
+	backText.text = "Go Back"
 	
 	//Creates cans
 	recycleBin = new component(150, 225, "/../images/recyclebin.jpg", 30, 250, "image");
@@ -298,6 +376,7 @@ function shuffleArray(array) {
 function component(width, height, color, x, y, type)
 {
 	this.type = type;
+	this.clickable = true;
 	
 	if(type == "image")
 	{
@@ -350,7 +429,8 @@ function component(width, height, color, x, y, type)
 }
 
 
-function isCollided(a, b) {
+function isCollided(a, b) 
+{
     return !(
         ((a.y + a.height) < (b.y)) ||
         (a.y > (b.y + b.height)) ||
@@ -374,6 +454,7 @@ function updateGameArea()
 	if(myTrash.length == trashThrownAway-1)
 		gameIsOver = true;
 	
+	//Game is not over
 	if(!gameIsOver)
 	{
 		recycleBin.update();
@@ -391,33 +472,61 @@ function updateGameArea()
 			}					
 		}	
 		
-	if(isClicked)
+		if(isClicked)
 		{
 			currentTrash.y = myGameArea.y - (currentTrash.height/4);
 			currentTrash.x = myGameArea.x - (currentTrash.width/4);
 		}
 		
-	//Updating progress
-	progress.innerHTML = "Item " + trashThrownAway + " of " + myTrash.length + ": " + currentTrashName;
+		//Updating progress
+		progress.innerHTML = "Item " + trashThrownAway + " of " + myTrash.length + ": " + currentTrashName;
 	}
 	
+	//Game is over
 	else
 	{
-		gameOverText.update();
-		
-		for(i = 0; i < myTrash.length; i++)
+		if(!showMissed)
 		{
-			if(!myTrash[i].correct && scoreCalculated)
-				score--;		
+			playAgainBox.clickable = true;
+			viewMissedBox.clickable = true;
+			
+			gameOverText.update();
+			
+			for(i = 0; i < myTrash.length; i++)
+			{
+				if(!myTrash[i].correct && scoreCalculated)
+					score--;		
+			}
+			scoreCalculated = false;
+			
+			endScore = parseInt((score/myTrash.length)*100);
+
+			scoreText.text = "Score: " + endScore + "%";
+			scoreText.update();
+			
+			playAgainBox.update();
+			playAgainText.update();
+			viewMissedBox.update();
+			viewMissedText.update();
+			
 		}
-		scoreCalculated = false;
 		
-		endScore = parseInt((score/myTrash.length)*100);
-		scoreText.text = "Score: " + endScore + "%";
-		scoreText.update();
+		else
+		{
+			playAgainBox.clickable = false;
+			viewMissedBox.clickable = false;
+			missedText.update();
+			
+			for(i = 0; i < missed.length; i++)
+			{
+				
+				missed[i].update();
+				
+			}
+			
+			backText.update();
+		}
 		
-		playAgainText.update();
-		viewMissedText.update();
 	}
 		
 	hand.update();
