@@ -70,8 +70,6 @@ function checkIfCompleteInfo() {
         if(document.getElementById("correct" + i.toString()).style.color === "green")
             notEmptyCount++;
     } // for each answer section
-    
-    console.log(notEmptyCount);
 
     if(notEmptyCount === 4)
         document.getElementById("nextPage").classList.remove("disabled");

@@ -52,7 +52,7 @@
                         document.getElementsByClassName('progress-bar')[0].style.width = (data.progress*100).toString() + "%";
                        
                        // checking if page has already been completed
-                        if(data.progress > .8) {
+                        if(data.progress > .6) {
                             document.getElementById("nextPage").classList.remove("disabled");
                             document.getElementById('nextPage').onclick = "";
                         } // if this page has already been completed
@@ -236,7 +236,7 @@
         
         <!-- Progress bar for entire module -->
         <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" >Your Progress</div>
+            <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">Your Progress</div>
         </div>
         
         <div>
