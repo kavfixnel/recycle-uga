@@ -1,20 +1,29 @@
 // Import the required modules
-let express = require('express')
-let router = express.Router()
-let axios = require('axios')
-let crypto = require('crypto')
-let { google } = require('googleapis');
+const express = require('express')
+const router = express.Router()
+const axios = require('axios')
+const crypto = require('crypto')
+const { google } = require('googleapis')
+const debug = require('debug')('recycle-uga:login-router')
 
 let userModel = require('../schemas/user.js')
 
-// Redirect users to the cas login page
+/**
+ * Login with CAS
+ */
 router.get('/cas', (req, res, next) => {
+	debug('New CAS login')
 	res.redirect('https://cas2.stage.uga.edu/cas/login?service=https://recycle-uga.herokuapp.com/login/cb')
 });
 
+/**
+ * CAS login callback URL
+ */
 router.get('/cb', async (req, res) => {
+	debug('New CAS callback')
 	if (req.query.ticket == null) {
 		// There is no ticket avaliable
+		debug('No ticket avaliable')
 		res.redirect('/')
 	} else {
 		// Get the ticket contents
@@ -24,15 +33,13 @@ router.get('/cb', async (req, res) => {
 			var ans = response.data.split('\n')
 			if (ans[0] == 'yes') {
 				// Ticket was valid and ans[1] has username
+				debug('Valid CAS ticket')
 				var user = await userModel.findOne({ id: ans[1] })
 				if (!user) {
 					// New user needs to be created
 					var newCookie = random(30)
 					await userModel.create({ id: ans[1], ugaStudent: true, cookie: newCookie, cookieExp: (Date.now() + 86400000) })
-					if (process.env.DEVMODE == 'TRUE') {
-						console.log('New User created: ' + ans[1])
-						console.log('New cookie issued: ' + newCookie)
-					}
+					debug(`New user ${ans[1]} created`)
 					res.cookie('sessionCookie', newCookie, { maxAge: 86400000 })
 				} else {
 					// User already exists
@@ -41,16 +48,12 @@ router.get('/cb', async (req, res) => {
 
 					// Update the cookie of the user
 					await userModel.findOneAndUpdate({ id: ans[1] }, { $set: { cookie: newCookie, cookieExp: (Date.now() + 86400000) } })
-
-					if (process.env.DEVMODE == 'True') {
-						console.log(`New cookie (${newCookie}) issued for ${ans[1]}`)
-					}
-
+					debug(`New cookie for user ${ans[1]} issued`)
 					res.cookie('sessionCookie', newCookie, { maxAge: 86400000 })
 				}
 			}
 		} catch (error) {
-			console.error(error)
+			debug(`Error [1]: ${error}`)
 		}
 
 		// Redirect the user to the homepage
@@ -58,7 +61,7 @@ router.get('/cb', async (req, res) => {
 	}
 
 	// Something went wrong and redirect the user to the homepage
-	console.error("Something went wrong with /login/cb")
+	debug('Error [2]')
 	res.redirect('/').send()
 });
 
@@ -69,16 +72,23 @@ if (process.env.DEV == 'TRUE') {
 } else {
 	googleURL = 'https://www.uga-recycle.com/login/google/cb'
 }
+debug(`Google URL: ${googleURL}`)
 
+/** 
+ * Create a new Google OAuth client
+ */
 const oauth2Client = new google.auth.OAuth2(
 	process.env.CLIENTID,
 	process.env.CLIENTSECRET,
 	googleURL
 );
 
-// Redirect the users to the Google OAuth page
+/**
+ * Redirect the users to the Google OAuth page
+ */
 router.get('/google', (req, res) => {
 	// Generate a new redirection URL to Googles OAuth network
+	debug('New Google login')
 	let redirectURL = oauth2Client.generateAuthUrl({
 		access_type: 'offline',
 		scope: 'https://www.googleapis.com/auth/userinfo.email'
@@ -88,9 +98,13 @@ router.get('/google', (req, res) => {
 	res.redirect(redirectURL)
 })
 
-// The callback URL for Google OAuth
+/**
+ *  The callback URL for Google OAuth
+ */
 router.get('/google/cb', async (req, res) => {
+	debug('New Google callback')
 	try {
+		// Extract the token and send a request to google
 		const { tokens } = await oauth2Client.getToken(req.query.code)
 
 		let url = 'https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + tokens.access_token
@@ -102,10 +116,7 @@ router.get('/google/cb', async (req, res) => {
 			// New user needs to be created
 			var newCookie = random(30)
 			await userModel.create({ id: data.email, ugaStudent: false, cookie: newCookie, cookieExp: (Date.now() + 86400000) })
-			if (process.env.DEVMODE == 'TRUE') {
-				console.log('New User created: ' + data.email)
-				console.log('New cookie issued: ' + newCookie)
-			}
+			debug(`New user ${data.email} created`)
 			res.cookie('sessionCookie', newCookie, { maxAge: 86400000 })
 		} else {
 			// User already exists
@@ -114,22 +125,22 @@ router.get('/google/cb', async (req, res) => {
 
 			// Update the cookie of the user
 			await userModel.findOneAndUpdate({ id: data.email }, { $set: { cookie: newCookie, cookieExp: (Date.now() + 86400000) } })
-
-			if (process.env.DEVMODE == 'TRUE') {
-				console.log(`New cookie (${newCookie}) issued for ${data.email}`)
-			}
-
+			debug(`New cookie for ${data.email} issued`)
 			res.cookie('sessionCookie', newCookie, { maxAge: 86400000 })
 		}
 	} catch (error) {
-		console.log('Error in login.js [1]: ' + error)
+		debug(`Error [3]: ${error}`)
 	}
 
 	// Send the user back to the main page
 	res.redirect('/').send()
 })
 
+/**
+ * Logout requests are handled here
+ */
 router.get('/logout', async (req, res) => {
+	debug('New logout request')
 	try {
 		var user = await userModel.findOne({ cookie: req.cookies.sessionCookie })
 
@@ -146,13 +157,17 @@ router.get('/logout', async (req, res) => {
 		res.redirect('/').send(obj)
 
 	} catch (error) {
-		console.log('Error [2] in login.js:')
-		console.log(error)
-		let obj = {success: false, error: 'Server error'}
+		debug(`Error [4]: ${error}`)
+		let obj = { success: false, error: 'Server error' }
 		res.status(500).redirect('/').send(obj)
 	}
 })
 
+/**
+ * A function to generate a cryptographic cookie
+ * @param {number} howMany 
+ * @param {number} chars 
+ */
 function random(howMany, chars) {
 	chars = chars
 		|| 'abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789';
@@ -168,4 +183,5 @@ function random(howMany, chars) {
 	return value.join('')
 }
 
+// Export the login router
 module.exports = router

@@ -1,31 +1,31 @@
 // Import the required modules
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const debug = require('debug')('recycle-uga:users-router')
 
-var userModel = require('../schemas/user.js');
+let userModel = require('../schemas/user.js');
 
 /* GET users listing. */
 router.get('/', async (req, res, next) => {
-	var obj = {}
+	let obj = {}
 	obj.found = false
 
 	// Look for user
-	var foundUser = await userModel.findOne({cookie: req.cookies.sessionCookie})
+	let foundUser = await userModel.findOne({ cookie: req.cookies.sessionCookie })
 
-	if(foundUser == null) {
+	if (foundUser == null) {
 		// User not found
+		debug('User not found')
 		obj.msg = 'No user with that cookie found'
 		res.send(obj)
 	} else {
 		// User found
+		debug('User found')
 		obj.user = foundUser.id
 		obj.found = true
 		res.send(obj)
 	}
-
-	// Some error has occured
-	// obj.msg = 'Internal Server Error'
-	// res.status(500).send(obj)
 });
 
+// Export user router
 module.exports = router;
