@@ -25,8 +25,8 @@ var myGameArea =
 	canvas : document.getElementById("canvas"),
 	start : function() 
 	{
-		this.canvas.width = 720;
-		this.canvas.height = 480;
+		this.canvas.width = 1080;
+		this.canvas.height = 720;
 		
 		//Hide Cursor
 		this.canvas.style.cursor = "none";
