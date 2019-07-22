@@ -28,17 +28,26 @@
             
             // tracks how many attempts are taken for each question
             var timesChecked = [0, 0, 0, 0];
+
+            // tracks each incorrect answer entered
+            var incorrectAnswers = [
+                [],
+                [],
+                [],
+                []
+            ];
             
             // runs on page load
             window.onload = function() {
                 // time the page was opened for timeOnPage
                 pageOpened = new Date();
                 
-                // getting username
-                $.get("/users/", function(data){
-                    
-                    if(data.found)
-                        document.getElementById("username").innerHTML += data.user;
+                // getting username and progress
+                $.get("/module/progress", function(data){
+                   if(data.found) {
+                        document.getElementById('username').innerHTML = data.user;
+                        document.getElementsByClassName('progress-bar')[0].style.width = (data.progress/.01).toString() + "%";
+                   } // if the data was found
                 });
                 
                 // number of graphs on the page
@@ -46,32 +55,29 @@
                 
                 // making graphs
                 var id, title, type, pieData;
-                for(var i = 1; i <= graphCount; i++) {
+                for(var i = 2; i <= graphCount; i++) {
                     id = "graphContainer" + i.toString();
                     
                     switch(i) {
-                        case 1: // info for graph 1
-                            title = "We Have Graphs";
-                            type = "pie";            
-                            pieData = [{y: 21.9, indexLabel: "Recycled", label: "Recycled", exploded: true}, 
-                                           {y: 78.1, indexLabel: "Landfilled", label: "Landfilled"}];
-                            break; // source: the powerpoint module
+                        case 1:
+                            // this has been replaced with the four icons
+                            break; 
                             
                         case 2: // info for graph 2
-                            title = "A Second Graph";
+                            title = "Energy Savings When Recycled, by Material";
                             type = "column";
                             pieData = [{y: 95, indexLabel: "Aluminum", label: "Aluminum"}, 
                                         {y: 90, indexLabel: "Plastic", label: "Plastic"},
                                         {y: 60, indexLabel: "Paper", label: "Paper"},
                                         {y: 33, indexLabel: "Glass", label: "Glass"}];
-                            break; // source: https://www.greenlivingtips.com/articles/recycling-energy-savings.html
+                            break; 
                             
                         case 3: // info for graph 3
                             title = "This is a Graph";
                             type = "pie";
                             pieData = [{y: 17.5, indexLabel: "Contaminated", label: "Contaminated", exploded: true},
                                         {y: 82.5, indexLabel: "Recycled", label: "Recycled"}];
-                            break; // source: https://www.redandblack.com/athensnews/wishful-recycling-turns-wasteful-athens-clarke-county-warns-of-recycling/article_7c927d42-6f64-11e8-8ed1-ef48e8d384a2.html
+                            break; 
                             
                         case 4:  // info for graph 4
                             title = "Another Graph";
@@ -125,7 +131,7 @@
             //text based on its correctness
             function checkAnswer(questionNumber) {
                 // boolean for question correctness
-                var isCorrect;
+                var isCorrect = false;
                 
                 //incrementing question attempts
                 timesChecked[questionNumber - 1]++;
@@ -136,19 +142,17 @@
                     // are compared to their has values
                     case 1:
                         if(SHA256(document.getElementsByName("answer1").item(0).value) === "8a798890fe93817163b10b5f7bd2ca4d25d84c52739a645a889c173eee7d9d3d") {isCorrect = true;}
-                        else {isCorrect = false;}
                         break;
                     case 2:
-                        if(SHA256(document.getElementsByName("answer2").item(0).value) === "8a798890fe93817163b10b5f7bd2ca4d25d84c52739a645a889c173eee7d9d3d") {isCorrect = true;}
-                        else {isCorrect = false;}
+                        if(SHA256(document.getElementsByName("answer2").item(0).value) === "69f59c273b6e669ac32a6dd5e1b2cb63333d8b004f9696447aee2d422ce63763" ||
+                        SHA256(document.getElementsByName("answer2").item(0).value) === 
+                        "883caeb7ca1165a22441d8487203cc8aa9284ad7c0f5664c704f98ecb10849b4") {isCorrect = true;}
                         break;
                     case 3:
                         if(SHA256(document.getElementsByName("answer3").item(0).value) === "8a798890fe93817163b10b5f7bd2ca4d25d84c52739a645a889c173eee7d9d3d") {isCorrect = true;}
-                        else {isCorrect = false;}
                         break;
                     case 4:
                         if(SHA256(document.getElementsByName("answer4").item(0).value) === "8a798890fe93817163b10b5f7bd2ca4d25d84c52739a645a889c173eee7d9d3d") {isCorrect = true;}
-                        else {isCorrect = false;}
                 } // switch for each question depending on question number
                 
                 // if correct, show correct, else show incorrect
@@ -158,11 +162,21 @@
                     document.getElementById("submit" + questionNumber.toString()).classList.add("disabled");
                     document.getElementsByName("answer" + questionNumber.toString())[0].readOnly = true;
                 } else {
+                    incorrectAnswers[questionNumber - 1].push(document.getElementsByName("answer" + questionNumber.toString())[0].value);
+                    
+                    
                     document.getElementById("correct" + questionNumber.toString()).innerHTML = "Incorrect!";
                     document.getElementById("correct" + questionNumber.toString()).style.color = "red";
                     document.getElementsByName("answer" + questionNumber.toString())[0].value = "";
                 } // if correct, else
             } // checkAnswer
+            
+            // detects when enter is pressed
+            function enterPressed(e, formnum) {
+                var key = (e.keyCode ? e.keyCode : e.which);
+                if(key === 13)
+                    checkAnswer(formnum);
+            } // enterPressed
             
             // posts 'things' (data) to the server 
             function postThings() {
@@ -172,11 +186,12 @@
                 
                 // variable to be converted to JSON
                 var serverInfo = {page: 3,
-                data: { attemptsPerQuestion: timesChecked,
-                        metaData: {timeOnPage: pageClosed - pageOpened}
-                      }
+                        data: { attemptsPerQuestion: timesChecked,
+                                incorrectAnswers: incorrectAnswers,
+                                metaData: {timeOnPage: pageClosed - pageOpened}
+                              }
                 };
-                
+
                 // posts data to the backend
                 $.ajax({
                     type: "POST",
@@ -184,11 +199,10 @@
                     data: JSON.stringify(serverInfo),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: function(data){alert("post sucessful");},
+                    success: function(data){location.reload(true);},
                     failure: function(){alert("post failed");}
                 });
-                
-                location.reload(true);
+
             } // postThings
         </script>
     </head>
@@ -196,8 +210,9 @@
         <!-- Fixed navigation bar using bootsrap classes, UGA Bulldog Red color, UGA font-->
         <nav class="navbar navbar-fixed-top" style="background-color: #BA0C2F;">
             <div class="container">
-                <div class="navbar-header" style="font-size: 24pt; color:white; font-family: 'Merriweather', rserif; text-align: center">
-                    Roosevelt@UGA Sustainability Project
+                <div class="navbar-header" style="font-size: 24pt; color:white; font-family: 'Merriweather', rserif; text-align: center;" style:hover="font-decoration: none;">
+                    <a href=".."><img src="../images/uga-arch.png" alt="Logo" style="width: 40px; "></a>
+                    &thinsp; Roosevelt@UGA Sustainability Project
                 </div>
                 <div id="username" style="color: white;"></div>
             </div>
@@ -205,45 +220,58 @@
         
         <!-- Progress bar for entire module -->
         <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 57.14%;">Your Progress</div>
+            <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" >Your Progress</div>
         </div>
         
         <div>
             <p style="text-align: center; margin-top: 20px;">Hover over the graphs and answer all questions to continue!<br>
-                <b>all the answers on this page are 'yes'</b>
+                <b>answers in order: 'yes', '90'/'90%', 'yes', 'yes'</b>
             </p>
 
             <!-- (some) Information from Slide 3 of PP module (uses window.onload function) -->
             <div id="graphArea1" class="graphArea">
-                <div id="graphContainer1" class="graphContainer"></div>
+                <div id="graphContainer1" class="graphContainer" style="font-size:0;">
+                    <div class="icon">
+                        <img src="../images/can-icon.png" width="120px" height="120px">
+                    </div>
+                    <div class="icon">
+                        <img src="../images/bulb-icon.png" width="90px" height="90px" style="margin-left: 15px; margin-top: 20px;">
+                    </div>
+                    <div class="icon">
+                        <img src="../images/recycle-icon.png" width="100px" height="100px" style="margin-left: 10px; margin-top: 15px;">
+                    </div>
+                    <div class="icon">
+                        <img src="../images/leaf-icon.png" width="80px" height="80px" style="margin-left: 25px; margin-top: 25px;">
+                    </div>
+                </div>
                 <div id="question1" class="question">
-                    <h3>Are there more example questions?</h3>
+                    <h3>Put a question here once the icons are complete?</h3>
                 
                     <div class="answers">
-                        <input type="text" name="answer1" maxlength="20" class="answerText"/>
+                        <input type="text" name="answer1" maxlength="20" class="answerText" onkeypress="enterPressed(event, 1)">
                     </div>
                     
                     <a href="javascript:checkAnswer(1);checkIfCompleteInfo()" id="submit1" class="submitButton">Check Answer</a>
                     
                     <p id="correct1" class="correct"></p>
                 </div>
-                <p id="infoText1" class="popup">&emsp; This is example text. I call it this because I am using it as an example in the place of actual information. While not the same, it adds value through showcasing what future informational text might look like. I really wanted to fill up this space. I still want to. It's all I could ever really want.</p>
+                <p id="infoText1" class="popup">&emsp; If we as a country or world were to recycle, the results would be tremendous - you can see some incredible statistics by hovering over the icons on the right. The amound of wasted materials that could be used to preserve valuable natural resources or be used as crucial building material is nearly unfathomable. While it may seem like a stretch to recycle <i>all</i> materials of a given kind, progress towards this goal happens one person at a time.</p>
             </div>
 
             <div id="graphArea2" class="graphArea">
                 <div id="graphContainer2" class="graphContainer"></div>
                 <div id="question2" class="question">
-                    <h3>Are there more example questions?</h3>
+                    <h3>How much energy (percentage) is saved when products are made with recycled plastics compared to virgin plastics?</h3>
                 
                     <div class="answers">
-                        <input type="text" name="answer2" maxlength="20" class="answerText"/>
+                        <input type="text" name="answer2" maxlength="20" class="answerText" onkeypress="enterPressed(event, 2)">
                     </div>
 
                     <a href="javascript:checkAnswer(2);checkIfCompleteInfo()" id="submit2" class="submitButton">Check Answer</a>
                     
                     <p id="correct2" class="correct"></p>
                 </div>
-                <p id="infoText2" class="popup">&emsp; This is example text. I call it this because I am using it as an example in the place of actual information. While not the same, it adds value through showcasing what future informational text might look like. I really wanted to fill up this space. I still want to. It's all I could ever really want.</p>
+                <p id="infoText2" class="popup">&emsp; Not only does recycling waste save material that could end up in a landfill or in one of many bodies of water, it also saves copious amounts of energy in comparison to creating products from virgin materials (those that haven't been recycled). Not only does recycling help the earth, it makes the creation of new products more efficient - especially with materials like aluminum and plastic.</p>
             </div>
 
             <div id="graphArea3" class="graphArea">
@@ -252,7 +280,7 @@
                     <h3>Are there more example questions?</h3>
                 
                     <div class="answers">
-                        <input type="text" name="answer3" maxlength="20" class="answerText"/>
+                        <input type="text" name="answer3" maxlength="20" class="answerText" onkeypress="enterPressed(event, 3)">
                     </div>
                     
                     <a href="javascript:checkAnswer(3);checkIfCompleteInfo()" id="submit3" class="submitButton">Check Answer</a>
@@ -268,7 +296,7 @@
                     <h3>Are there more example questions?</h3>
                 
                     <div class="answers">
-                        <input type="text" name="answer4" maxlength="20" class="answerText"/>
+                        <input type="text" name="answer4" maxlength="20" class="answerText" onkeypress="enterPressed(event, 4)">
                     </div>
                     
                     <a href="javascript:checkAnswer(4);checkIfCompleteInfo()" id="submit4" class="submitButton">Check Answer</a>

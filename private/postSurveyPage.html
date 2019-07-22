@@ -24,13 +24,26 @@
             window.onload = function() {
                  pageOpened = new Date();
                 
-                // getting username
-                $.get("/users/", function(data){
-                    
-                    if(data.found)
-                        document.getElementById("username").innerHTML += data.user;
+                // getting username and progress
+                $.get("/module/progress", function(data){
+                   if(data.found) {
+                        document.getElementById('username').innerHTML = data.user;
+                        document.getElementsByClassName('progress-bar')[0].style.width = (data.progress/.01).toString() + "%";
+                   } // if the data was found
                 });
             } // on window load
+            
+            // updates the value of a slider
+            function updateValue(qnumber) {
+                // if number should be displayed /10, else should be shown as %
+                if(qnumber < 5) {
+                    document.getElementById("value" + qnumber.toString()).innerHTML = 
+                        document.getElementsByName("question" + qnumber.toString())[0].value + "/10";
+                } else {
+                    document.getElementById("value" + qnumber.toString()).innerHTML = 
+                        document.getElementsByName("question" + qnumber.toString())[0].value + "%";
+                }
+            } // updates the value of a slider
             
             function postThings() {
                 var questionAnswers = [];
@@ -48,15 +61,16 @@
                     } // if before t/f questions, else t/f
                         
                 } // for each question
-                
-                
+            
                 // time the page was closed for timeOnPage
                 var pageClosed = new Date();
                 
                 var serverInfo = {page: 5,
-                        data: {questionAnswers: questionAnswers,
-                               tfAnswers: tfAnswers,
-                               metaData: {timeOnPage: pageClosed - pageOpened}
+                        data: {feedback: document.getElementsByName('feedback')[0].value,
+                                questionAnswers: questionAnswers,
+                                tfAnswers: tfAnswers,
+                                rooseveltInfo: document.getElementsByName('rooseveltEmail')[0].value,
+                                metaData: {timeOnPage: pageClosed - pageOpened}
                               }
                 };
 
@@ -66,11 +80,9 @@
                     data: JSON.stringify(serverInfo),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: function(data){alert("post sucessful");},
-                    failure: function(){alert("post failed");}
+                    success: function(data){location.reload(true);},
+                    failure: function(){}
                 });
-                
-                location.reload(true);
             } // postThings
         </script>
     </head>
@@ -78,8 +90,9 @@
         <!-- Fixed navigation bar using bootsrap classes, UGA Bulldog Red color, UGA font-->
         <nav class="navbar navbar-fixed-top" style="background-color: #BA0C2F;">
             <div class="container">
-                <div class="navbar-header" style="font-size: 24pt; color:white; font-family: 'Merriweather', rserif; text-align: center">
-                    Roosevelt@UGA Sustainability Project
+                <div class="navbar-header" style="font-size: 24pt; color:white; font-family: 'Merriweather', rserif; text-align: center;" style:hover="font-decoration: none;">
+                    <a href=".."><img src="../images/uga-arch.png" alt="Logo" style="width: 40px; "></a>
+                    &thinsp; Roosevelt@UGA Sustainability Project
                 </div>
                 <div id="username" style="color: white;"></div>
             </div>
@@ -94,99 +107,163 @@
 		<div class="surveyArea">
 			<a id="post" class="smooth"></a>
 			<h1>Post-Survey</h1>
-				<label class="instructions"><b>Answer the following questions on a scale of 0 to 10.</b></label>
+            
+            <label>Feedback:</label><br>
+            <textarea type="text" class="form-control" name="feedback" rows="3"></textarea>
+            <small style="margin-top: 0;">This is where you can tell us what you thought of the module, including things you learned, enjoyed, or found useful.</small>
+            
+            <label class="instructions"><b>Answer the following questions on a scale of 0 to 10.</b></label>
             <br>
 
-            <label>Now that you have taken the module, how likely are you to recycle on any given day?</label><br>
-                <input id="sliderOne" class="custom-range" name="question1" type="range" min="0" max="10">
+            <label>Now that you have taken the module, how likely are you to recycle on any given day?</label>
+            <br>
+            <input class="custom-range" name="question1" type="range" min="0" max="10" oninput="updateValue(1);">
+            <br>
+            <p id="value1" style="text-align: center;">5/10</p>
             	
-            <label>Now that you have taken the module, how knowledgable do you feel about common recycling practices?</label><br>
-                <input class="custom-range" name="question2" type="range" min="0" max="10">
+            <label>Now that you have taken the module, how knowledgable do you feel about common recycling practices?</label>
+            <br>
+            <input class="custom-range" name="question2" type="range" min="0" max="10" oninput="updateValue(2);">
+            <br>
+            <p id="value2" style="text-align: center;">5/10</p>
                 
             <label>Now that you have taken the module, how knowledgable do you feel about recycling practices in Athens?</label><br>
-                <input class="custom-range" name="question3" type="range" min="0" max="10">
+            <input class="custom-range" name="question3" type="range" min="0" max="10" oninput="updateValue(3);">
+            <br>
+            <p id="value3" style="text-align: center;">5/10</p>
             
-            <label>Now that you have taken the module, with any given item, how confident are you that you will place it in the correct bin (with options being trash or recycling)?</label><br>
-                <input class="custom-range" name="question4" type="range" min="0" max="10">
+            <label>Now that you have taken the module, with any given item, how confident are you that you will place it in the correct bin (with options being trash or recycling)?</label>
+            <br>
+            <input class="custom-range" name="question4" type="range" min="0" max="10" oninput="updateValue(4);">
+            <br>
+            <p id="value4" style="text-align: center;">5/10</p>
             
             <label class="instructions"><b>Answer the following questions on a percentage scale (0-100).</b></label>
             
-            <label>Now that you have taken the module, how much material do you think is compostable?</label><br>
-                <input class="custom-range" name="question5" type="range" min="0" max="100">
+            <label>Now that you have taken the module, how much material do you think is compostable?</label>
+            <br>
+            <input class="custom-range" name="question5" type="range" min="0" max="100" oninput="updateValue(5);">
+            <br>
+            <p id="value5" style="text-align: center;">50%</p>
             
-            <label>Now that you have taken the module, how much material do you think is recyclable?</label><br>
-                <input class="custom-range" name="question6" type="range" min="0" max="100">
+            <label>Now that you have taken the module, how much material do you think is recyclable?</label>
+            <br>
+            <input class="custom-range" name="question6" type="range" min="0" max="100" oninput="updateValue(6);">
+            <br>
+            <p id="value6" style="text-align: center;">50%</p>
         
-            <label>Now that you have taken the module, how much material do you think UGA recycles?</label><br>
-                <input class="custom-range" name="question7" type="range" min="0" max="100">
+            <label>Now that you have taken the module, how much material do you think UGA recycles?</label>
+            <br>
+            <input class="custom-range" name="question7" type="range" min="0" max="100" oninput="updateValue(7);">
+            <br>
+            <p id="value7" style="text-align: center;">50%</p>
             
             <label class="instructions"><b>Answer True or False to the following questions:</b></label><br>
             
-            <label>Styrofoam can be recycled anywhere.</label>
-            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 8">
-                &emsp;
-                <label class="btn btn-sm btn-secondary">
-                    <input type="radio" name="question8" value="True" autocomplete="off">True
-                </label>
-                <label class="btn btn-sm btn-secondary">
-                    <input type="radio" name="question8" value="False" autocomplete="off">False
-                </label>
-            </div><br>
+            <table class="table table-borderless" style="margin-top: 25px;">
+                <tbody>
+                    <tr>
+                        <td>
+                            <label>Styrofoam can be recycled anywhere.</label>
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 8">
+                                &emsp;
+                                <label class="btn btn-sm btn-secondary">
+                                    <input type="radio" name="question8" value="True" autocomplete="off">True
+                                </label>
+                                <label class="btn btn-sm btn-secondary">
+                                    <input type="radio" name="question8" value="False" autocomplete="off">False
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>A used plastic food container can go into the recycling bin without being cleaned.</label>
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 9">
+                                &emsp;
+                                <label class="btn btn-sm btn-secondary">
+                                    <input type="radio" name="question9" value="True" autocomplete="off">True
+                                </label>
+                                <label class="btn btn-sm btn-secondary">
+                                    <input type="radio" name="question9" value="False" autocomplete="off">False
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Hard plastic and film plastic can be recycled in the same place.</label>
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 10">
+                                &emsp;
+                                <label class="btn btn-sm btn-secondary">
+                                    <input type="radio" name="question10" value="True" autocomplete="off">True
+                                </label>
+                                <label class="btn btn-sm btn-secondary">
+                                    <input type="radio" name="question10" value="False" autocomplete="off">False
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>You can recycle plastic bags.</label>
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 11">
+                                &emsp;
+                                <label class="btn btn-sm btn-secondary">
+                                    <input type="radio" name="question11" value="True" autocomplete="off">True
+                                </label>
+                                <label class="btn btn-sm btn-secondary">
+                                    <input type="radio" name="question11" value="False" autocomplete="off">False
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>You can recycle used paper towels.</label>
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 12">
+                                &emsp;
+                                <label class="btn btn-sm btn-secondary">
+                                    <input type="radio" name="question12" value="True" autocomplete="off">True
+                                </label>
+                                <label class="btn btn-sm btn-secondary">
+                                    <input type="radio" name="question12" value="False" autocomplete="off">False
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>You can recycle pizza boxes.</label>
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 13">
+                                &emsp;
+                                <label class="btn btn-sm btn-secondary">
+                                    <input type="radio" name="question13" value="True" autocomplete="off">True
+                                </label>
+                                <label class="btn btn-sm btn-secondary">
+                                    <input type="radio" name="question13" value="False" autocomplete="off">False
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             
-            <label>A used plastic food container can go into the recycling bin without being cleaned.</label>
-            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 9">
-                &emsp;
-                <label class="btn btn-sm btn-secondary">
-                    <input type="radio" name="question9" value="True" autocomplete="off">True
-                </label>
-                <label class="btn btn-sm btn-secondary">
-                    <input type="radio" name="question9" value="False" autocomplete="off">False
-                </label>
-            </div><br>
+            <label class="instructions"><b>The idea for this module came from Roosevelt@UGA - a non-partisan, student run think tank with a focus on civic engagement and policy. If you're interested in learning more about Roosevelt@UGA or joining, enter your email below.</b></label><br>
+            <input type="email" class="form-control" name="rooseveltEmail" placeholder="Enter Email"><br>
             
-            <label>Hard plastic and film plastic can be recycled in the same place.</label>
-            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 10">
-                &emsp;
-                <label class="btn btn-sm btn-secondary">
-                    <input type="radio" name="question10" value="True" autocomplete="off">True
-                </label>
-                <label class="btn btn-sm btn-secondary">
-                    <input type="radio" name="question10" value="False" autocomplete="off">False
-                </label>
-            </div><br>
-            
-            <label>You can recycle plastic bags.</label>
-            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 11">
-                &emsp;
-                <label class="btn btn-sm btn-secondary">
-                    <input type="radio" name="question11" value="True" autocomplete="off">True
-                </label>
-                <label class="btn btn-sm btn-secondary">
-                    <input type="radio" name="question11" value="False" autocomplete="off">False
-                </label>
-            </div><br>
-            
-            <label>You can recycle used paper towels.</label>
-            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 12">
-                &emsp;
-                <label class="btn btn-sm btn-secondary">
-                    <input type="radio" name="question12" value="True" autocomplete="off">True
-                </label>
-                <label class="btn btn-sm btn-secondary">
-                    <input type="radio" name="question12" value="False" autocomplete="off">False
-                </label>
-            </div><br>
-            
-            <label>You can recycle pizza boxes.</label>
-            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 13">
-                &emsp;
-                <label class="btn btn-sm btn-secondary">
-                    <input type="radio" name="question13" value="True" autocomplete="off">True
-                </label>
-                <label class="btn btn-sm btn-secondary">
-                    <input type="radio" name="question13" value="False" autocomplete="off">False
-                </label>
-            </div><br>	
             
 		</div>
 

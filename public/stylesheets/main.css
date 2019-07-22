@@ -102,6 +102,21 @@
 	top:1px;
 }
 
+.icon {
+    height: 125px;
+    width: 125px;
+    margin: 15px;
+    display: inline-block;
+    border-radius: 80px;
+    border: solid 1px #B7BF10;
+    background-color: #eae7e2;
+    overflow: hidden;
+}
+
+.iconpopup {
+    
+}
+
 /* defined for all the buttons at the end of pages */
 .nextPageButton {
     height: 3%;
@@ -165,6 +180,12 @@
     margin-top: 50px;
 }
 
+.table-borderless td {
+    border: 0;
+    padding-right: 0;
+    padding-left: 0;
+}
+
 /* for answer fields on infoPage */
 .answerText {
     width: 50%;
@@ -179,72 +200,4 @@
 /* for info windows on map page */
 .mapboxgl-popup {
     max-width: 400px;
-}
-
-/* for slides in slideshow on index page*/
-.slides {
-    display: none;
-    margin-top: 10px;
-    position: relative;
-    width: 100%;
-}
-
-.slideText {
-    color: floralwhite;
-    position: absolute;
-    width: 100%;
-    bottom: 100px;
-    text-align: center;
-}
-
-.slideNumber {
-    color: floralwhite;
-    position: absolute;
-    top: 5px;
-    left: 10px;
-    width: 100%;
-}
-
-.slideImage {
-    width: 100%;
-    object-fit: contain;
-}
-
-#previousButton, #nextButton {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    color: floralwhite;
-    width: auto;
-    font-size: 36px;
-    border-radius: 6px;
-    margin: 0px 5px;
-    padding: 3px;
-    transition: 0.4s ease;
-}
-
-#slideshow-container {
-    text-align: left;
-    height: 600px;
-    overflow: hidden;
-}
-
-#nextButton {
-    right: 0;
-}
-
-#previousButton:hover, #nextButton:hover {
-    background-color: rgba(0, 0, 0, 0.4);
-}
-
-/* animation for slides */
-.fade {
-    animation-name: fade;
-    animation-duration: 1s;
-    animation-fill-mode: forwards;
-}
-
-@keyframes fade {
-    from {opacity: .6}
-    to {opacity: 1}
 }

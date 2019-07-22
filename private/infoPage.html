@@ -24,7 +24,15 @@
         <!-- on page js, mainly window.onload -->
         <script>
             // sets time page is opened
-            var pageOpened;
+            var pageOpened = new Date();
+            
+            // tracks each incorrect answer entered
+            var incorrectAnswers = [
+                [],
+                [],
+                [],
+                []
+            ];
             
             // tracks how many attempts are taken for each question
             var timesChecked = [0, 0, 0, 0];
@@ -34,11 +42,12 @@
                 // time the page was opened for timeOnPage
                 pageOpened = new Date();
                 
-                // getting username
-                $.get("/users/", function(data){
-                    
-                    if(data.found)
-                        document.getElementById("username").innerHTML += data.user;
+                // getting username and progress
+                $.get("/module/progress", function(data){
+                   if(data.found) {
+                        document.getElementById('username').innerHTML = data.user;
+                        document.getElementsByClassName('progress-bar')[0].style.width = (data.progress/.01).toString() + "%";
+                   } // if the data was found
                 });
                 
                 // number of graphs on the page
@@ -55,23 +64,18 @@
                             type = "pie";            
                             pieData = [{y: 21.9, indexLabel: "Recycled", label: "Recycled", exploded: true}, 
                                            {y: 78.1, indexLabel: "Landfilled", label: "Landfilled"}];
-                            break; // source: the powerpoint module
+                            break; 
                             
                         case 2: // info for graph 2
-                            title = "Energy Savings When Recycled, by Material";
-                            type = "column";
-                            pieData = [{y: 95, indexLabel: "Aluminum", label: "Aluminum"}, 
-                                        {y: 90, indexLabel: "Plastic", label: "Plastic"},
-                                        {y: 60, indexLabel: "Paper", label: "Paper"},
-                                        {y: 33, indexLabel: "Glass", label: "Glass"}];
-                            break; // source: https://www.greenlivingtips.com/articles/recycling-energy-savings.html
+                            // replaced with CHaRM
+                            break; 
                             
                         case 3: // info for graph 3
                             title = "Contaminated Materials Recycled by Percentage";
                             type = "pie";
                             pieData = [{y: 17.5, indexLabel: "Contaminated", label: "Contaminated", exploded: true},
                                         {y: 82.5, indexLabel: "Recycled", label: "Recycled"}];
-                            break; // source: https://www.redandblack.com/athensnews/wishful-recycling-turns-wasteful-athens-clarke-county-warns-of-recycling/article_7c927d42-6f64-11e8-8ed1-ef48e8d384a2.html
+                            break; 
                             
                         case 4:  // info for graph 4
                             title = "Value of Landfilled Materials and Amount Paid to Landfill";
@@ -82,9 +86,9 @@
                     
                     // for first three graphs, use percentage for y axis
                     // for fourth, use millions of units
-                    if(i < 4)
+                    if(i < 4 && i != 2)
                         makeGraph(id, title, type, pieData, "##0.00\"%\"");
-                    else 
+                    else if(i == 4) 
                         makeGraph(id, title, type, pieData, "$## million");
                 } // for each of the four graphs, assign graph info                
                 
@@ -147,9 +151,7 @@
                         break;
 
                     case 2:
-                        if(SHA256(document.getElementsByName("answer2").item(0).value) === "69f59c273b6e669ac32a6dd5e1b2cb63333d8b004f9696447aee2d422ce63763" ||
-                        SHA256(document.getElementsByName("answer2").item(0).value) === 
-                        "883caeb7ca1165a22441d8487203cc8aa9284ad7c0f5664c704f98ecb10849b4") {isCorrect = true;}
+                        if(SHA256(document.getElementsByName("answer2").item(0).value.toUpperCase()) === "f9171164593756e56fb197327b529a4955590566560dbe62d586bff41be9d297") {isCorrect = true;}
                         break;
 
                     case 3:
@@ -163,9 +165,6 @@
                           SHA256(document.getElementsByName("answer4").item(0).value) === "c21365c7ea5b3c9d9326726c52d1ba5f14961d6767619fb1aa14255d4c42e759" ||
                           SHA256(document.getElementsByName("answer4").item(0).value.toUpperCase()) ===
                           "84747dcd831c7131207a1042d74b60ac54fdcc10e7aef9e1f7940dda2c95dcae") {isCorrect = true;}
-                        
-                        // source for graph:
-                        // https://cdn.ymaws.com/www.productstewardship.us/resource/resmgr/imported/SERDC%20Econ%20Cards.pdf
                 } // switch for each question depending on question number
                 
                 // if correct, show correct, else show incorrect
@@ -175,11 +174,20 @@
                     document.getElementById("submit" + questionNumber.toString()).classList.add("disabled");
                     document.getElementsByName("answer" + questionNumber.toString())[0].readOnly = true;
                 } else {
+                    incorrectAnswers[questionNumber - 1].push(document.getElementsByName("answer" + questionNumber.toString())[0].value);
+                    
                     document.getElementById("correct" + questionNumber.toString()).innerHTML = "Incorrect!";
                     document.getElementById("correct" + questionNumber.toString()).style.color = "red";
                     document.getElementsByName("answer" + questionNumber.toString())[0].value = "";
                 } // if correct, else
             } // checkAnswer
+            
+            // detects when enter is pressed
+            function enterPressed(e, formnum) {
+                var key = (e.keyCode ? e.keyCode : e.which);
+                if(key === 13)
+                    checkAnswer(formnum);
+            } // enterPressed
             
             // posts 'things' (data) to the server 
             function postThings() {
@@ -189,11 +197,8 @@
                 
                 // variable to be converted to JSON
                 var serverInfo = {page: 1,
-                        data: { answer1: document.getElementsByName("answer1")[0].value,
-                                answer2: document.getElementsByName("answer2")[0].value, 
-                                answer3: document.getElementsByName("answer3")[0].value,
-                                answer4: document.getElementsByName("answer4")[0].value,
-                                attemptsPerQuestion: timesChecked,
+                        data: { attemptsPerQuestion: timesChecked,
+                                incorrectAnswers: incorrectAnswers,
                                 metaData: {timeOnPage: pageClosed - pageOpened}
                               }
                 };
@@ -205,11 +210,10 @@
                     data: JSON.stringify(serverInfo),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: function(data){alert("post sucessful");},
+                    success: function(data){location.reload(true);},
                     failure: function(){alert("post failed");}
                 });
                 
-                location.reload(true);
             } // postThings
         </script>
     </head>
@@ -217,8 +221,9 @@
         <!-- Fixed navigation bar using bootsrap classes, UGA Bulldog Red color, UGA font-->
         <nav class="navbar navbar-fixed-top" style="background-color: #BA0C2F;">
             <div class="container">
-                <div class="navbar-header" style="font-size: 24pt; color:white; font-family: 'Merriweather', rserif; text-align: center">
-                    Roosevelt@UGA Sustainability Project
+                <div class="navbar-header" style="font-size: 24pt; color:white; font-family: 'Merriweather', rserif; text-align: center;" style:hover="font-decoration: none;">
+                    <a href=".."><img src="../images/uga-arch.png" alt="Logo" style="width: 40px; "></a>
+                    &thinsp; Roosevelt@UGA Sustainability Project
                 </div>
                 <div id="username" style="color: white;"></div>
             </div>
@@ -232,7 +237,7 @@
         <div>
             <!-- shows the answers bc everyone but me forgets them -->
             <p style="text-align: center; margin-top: 20px;">Hover over the graphs and answer all questions to continue!<br>
-                <b>answers in order: '21.9'/'21.9%', '90'/'90%', 'wishful'/'wishful recycling', '2'/'2nd'/'second'</b>
+                <b>answers in order: '21.9'/'21.9%', 'yes', 'wishful'/'wishful recycling', '2'/'2nd'/'second'</b>
             </p>
 
             <!-- (some) Information from Slide 3 of PP module (uses window.onload function) -->
@@ -242,7 +247,7 @@
                     <h3>What percentage of the UGA's waste stream is recycled?</h3>
                 
                     <div class="answers">
-                        <input type="text" name="answer1" maxlength="20" class="answerText"/>
+                        <input type="text" name="answer1" maxlength="20" class="answerText" onkeypress="enterPressed(event, 1)">
                     </div>
                     
                     <a href="javascript:checkAnswer(1);checkIfCompleteInfo()" id="submit1" class="submitButton">Check Answer</a>
@@ -253,19 +258,23 @@
             </div>
 
             <div id="graphArea2" class="graphArea">
-                <div id="graphContainer2" class="graphContainer"></div>
+                <div id="graphContainer2" class="graphContainer">
+                    <a href="https://www.accgov.com/charm" target="_blank">
+                        <img src="../images/CHaRM.jpg" height="192px" width="320px" style="margin-top: 64px;">
+                    </a>
+                </div>
                 <div id="question2" class="question">
-                    <h3>How much energy (percentage) is saved when products are made with recycled plastics compared to virgin plastics?</h3>
+                    <h3>At the Athens CHaRM facility, can you recycle batteries?</h3>
                 
                     <div class="answers">
-                        <input type="text" name="answer2" maxlength="20" class="answerText"/>
+                        <input type="text" name="answer2" maxlength="20" class="answerText" onkeypress="enterPressed(event, 2)">
                     </div>
 
                     <a href="javascript:checkAnswer(2);checkIfCompleteInfo()" id="submit2" class="submitButton">Check Answer</a>
                     
                     <p id="correct2" class="correct"></p>
                 </div>
-                <p id="infoText2" class="popup">&emsp; Not only does recycling waste save material that could end up in a landfill or in one of many bodies of water, it also saves copious amounts of energy compared to creating products from virgin materials (those that haven't been recycled). Not only does recycling help the earth, it makes the creation of new products more efficient!</p>
+                <p id="infoText2" class="popup">&emsp; Recycling containers seen around UGA's campus are known as 'single-stream' recycling containers - this means they can hold many of the main recycled materials such as plastics, aluminum, paper, etc. While it may seem like all other materials must go to the waste bin, there is another solution. In Athens, CHaRM (the Center for Hard to Recycle Materials) can take items such as monitors, batteries, light bulbs, and other materials that could not normally be recycled. Click the CHaRM image to learn more!</p>
             </div>
 
             <div id="graphArea3" class="graphArea">
@@ -274,7 +283,7 @@
                     <h3>What kind of recycling results in most cases of contamination?</h3>
                 
                     <div class="answers">
-                        <input type="text" name="answer3" maxlength="20" class="answerText"/>
+                        <input type="text" name="answer3" maxlength="20" class="answerText" onkeypress="enterPressed(event, 3)">
                     </div>
                     
                     <a href="javascript:checkAnswer(3);checkIfCompleteInfo()" id="submit3" class="submitButton">Check Answer</a>
@@ -290,7 +299,7 @@
                     <h3>Where does Georgia rank by state in terms of market for recycled materials?</h3>
                 
                     <div class="answers">
-                        <input type="text" name="answer4" maxlength="20" class="answerText"/>
+                        <input type="text" name="answer4" maxlength="20" class="answerText" onkeypress="enterPressed(event, 4)">
                     </div>
                     
                     <a href="javascript:checkAnswer(4);checkIfCompleteInfo()" id="submit4" class="submitButton">Check Answer</a>
