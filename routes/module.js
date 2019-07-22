@@ -37,8 +37,15 @@ router.get('/next', async (req, res) => {
 	try {
 		let user = await userModule.findOne({ cookie: req.cookies.sessionCookie })
 
+		let page
+		if(req.query.page && (req.query.page <= user.progress)) {
+			page = parseInt(req.query.page)
+		} else {
+			page = user.progress
+		}
+
 		// Decide what page needs to be loaded
-		switch (user.progress) {
+		switch (page) {
 			case 0:
 				res.sendFile(path.join(__dirname + '/../private/preSurveyPage.html'))
 				break
