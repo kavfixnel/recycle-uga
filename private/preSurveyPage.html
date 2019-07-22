@@ -17,12 +17,11 @@
             var pageOpened;
             var numForms = 18;
             var numQuestions = 13;
+            // page number
+            var page = 0;
 
             window.onload = function() {
                  pageOpened = new Date();
-                
-                // page number
-                var page = 0;
                 
                 // getting username and progress
                 $.get("/module/progress", function(data){
