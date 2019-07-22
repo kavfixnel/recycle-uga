@@ -49,7 +49,13 @@
                 $.get("/module/progress", function(data){
                    if(data.found) {
                         document.getElementById('username').innerHTML = data.user;
-                        document.getElementsByClassName('progress-bar')[0].style.width = (data.progress/.01).toString() + "%";
+                        document.getElementsByClassName('progress-bar')[0].style.width = (data.progress*100).toString() + "%";
+                       
+                       // checking if page has already been completed
+                        if(data.progress > .8) {
+                            document.getElementById("nextPage").classList.remove("disabled");
+                            document.getElementById('nextPage').onclick = "";
+                        } // if this page has already been completed
                    } // if the data was found
                 });
                 
@@ -181,8 +187,10 @@
             // detects when enter is pressed
             function enterPressed(e, formnum) {
                 var key = (e.keyCode ? e.keyCode : e.which);
-                if(key === 13)
+                if(key === 13) {
                     checkAnswer(formnum);
+                    checkIfCompleteInfo();
+                } // if enter was pressed
             } // enterPressed
             
             // posts 'things' (data) to the server 
@@ -317,7 +325,7 @@
 
         <div class="centered">
             <a id="lastPage" class="nextPageButton">Last Page</a>
-            <a onclick="postThings()" id="nextPage" class="nextPageButton">Next Page</a>
+            <a onclick="postThings()" id="nextPage" class="nextPageButton disabled">Next Page</a>
         </div>
         
         <!-- Load all the Bootstrap requirements at the end of the document -->

@@ -27,7 +27,13 @@
                 $.get("/module/progress", function(data){
                    if(data.found) {
                         document.getElementById('username').innerHTML = data.user;
-                        document.getElementsByClassName('progress-bar')[0].style.width = (data.progress/.01).toString() + "%";
+                        document.getElementsByClassName('progress-bar')[0].style.width = (data.progress*100).toString() + "%";
+                        
+                       // checking if page has already been completed
+                        if(data.progress > .2) {
+                            document.getElementById("nextPage").classList.remove("disabled");
+                            document.getElementById('nextPage').onclick = "";
+                        } // if this page has already been completed
                    } // if the data was found
                 });
                 
@@ -131,42 +137,42 @@
             <h1>Pre-Survey</h1>
 
             <label>Name:</label><br>
-                <input type="name" class="form-control" name="name" maxlength="50"><br>
+                <input type="name" class="form-control" name="name" maxlength="50" oninput="checkIfCompletePreSurvey();"><br>
             
             <label>Age: (optional)</label><br>
-                <input type="tel" class="form-control" name="age" min="1" max="99" maxlength="2" onkeypress="return isNumber(event)"><br>
+                <input type="tel" class="form-control" name="age" min="1" max="99" maxlength="2" onkeypress="return isNumber(event)" oninput="checkIfCompletePreSurvey();"><br>
             
             <label>Email: (optional)</label><br>
-                <input type="email" class="form-control" name="email" maxlength="50"><br>
+                <input type="email" class="form-control" name="email" maxlength="50" oninput="checkIfCompletePreSurvey();"><br>
             
             <label>Why are you taking this module?</label><br>
-            <textarea class="form-control" name="why" rows="3"></textarea>
+            <textarea class="form-control" name="why" rows="3" oninput="checkIfCompletePreSurvey();"></textarea>
             
             <label class="instructions"><b>Answer the following questions on a scale of 0 to 10.</b></label>
             <br>
 
             <label>How likely are you to recycle on any given day?</label>
             <br>
-            <input class="custom-range" name="question1" type="range" min="0" max="10" oninput="updateValue(1);">
+            <input class="custom-range" name="question1" type="range" min="0" max="10" oninput="updateValue(1);checkIfCompletePreSurvey();">
             <br>
             <p id="value1" style="text-align: center;">5/10</p>
             	
             <label>How knowledgable do you feel about common recycling practices?</label>
             <br>
-            <input class="custom-range" name="question2" type="range" min="0" max="10" oninput="updateValue(2);">
+            <input class="custom-range" name="question2" type="range" min="0" max="10" oninput="updateValue(2);checkIfCompletePreSurvey();">
             <br>
             <p id="value2" style="text-align: center;">5/10</p>
                 
             <label>How knowledgable do you feel about recycling practices in Athens?</label>
             <br>
-            <input class="custom-range" name="question3" type="range" min="0" max="10" oninput="updateValue(3);">
+            <input class="custom-range" name="question3" type="range" min="0" max="10" oninput="updateValue(3);checkIfCompletePreSurvey();">
             <br>
             <p id="value3" style="text-align: center;">5/10</p>
             
             <label>With any given item, how confident are you that you will place it in the correct bin 
                 (with options being trash or recycling)?</label>
             <br>
-            <input class="custom-range" name="question4" type="range" min="0" max="10" oninput="updateValue(4);">
+            <input class="custom-range" name="question4" type="range" min="0" max="10" oninput="updateValue(4);checkIfCompletePreSurvey();">
             <br>
             <p id="value4" style="text-align: center;">5/10</p>
             
@@ -174,19 +180,19 @@
             
             <label>How much material do you think is compostable?</label>
             <br>
-            <input class="custom-range" name="question5" type="range" min="0" max="100" oninput="updateValue(5);">
+            <input class="custom-range" name="question5" type="range" min="0" max="100" oninput="updateValue(5);checkIfCompletePreSurvey();">
             <br>
             <p id="value5" style="text-align: center;">50%</p>
             
             <label>How much material do you think is recyclable?</label>
             <br>
-            <input class="custom-range" name="question6" type="range" min="0" max="100" oninput="updateValue(6);">
+            <input class="custom-range" name="question6" type="range" min="0" max="100" oninput="updateValue(6);checkIfCompletePreSurvey();">
             <br>
             <p id="value6" style="text-align: center;">50%</p>
         
             <label>How much material do you think UGA recycles?</label>
             <br>
-            <input class="custom-range" name="question7" type="range" min="0" max="100" oninput="updateValue(7);">
+            <input class="custom-range" name="question7" type="range" min="0" max="100" oninput="updateValue(7);checkIfCompletePreSurvey();">
             <br>
             <p id="value7" style="text-align: center;">50%</p>
             
@@ -199,7 +205,7 @@
                             <label>Styrofoam can be recycled anywhere.</label>
                         </td>
                         <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 8">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 8" onchange="checkIfCompletePreSurvey();">
                                 &emsp;
                                 <label class="btn btn-sm btn-secondary">
                                     <input type="radio" name="question8" value="True" autocomplete="off">True
@@ -215,7 +221,7 @@
                             <label>A used plastic food container can go into the recycling bin without being cleaned.</label>
                         </td>
                         <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 9">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 9" onchange="checkIfCompletePreSurvey();">
                                 &emsp;
                                 <label class="btn btn-sm btn-secondary">
                                     <input type="radio" name="question9" value="True" autocomplete="off">True
@@ -231,7 +237,7 @@
                             <label>Hard plastic and film plastic can be recycled in the same place.</label>
                         </td>
                         <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 10">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 10" onchange="checkIfCompletePreSurvey();">
                                 &emsp;
                                 <label class="btn btn-sm btn-secondary">
                                     <input type="radio" name="question10" value="True" autocomplete="off">True
@@ -247,7 +253,7 @@
                             <label>You can recycle plastic bags.</label>
                         </td>
                         <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 11">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 11" onchange="checkIfCompletePreSurvey();">
                                 &emsp;
                                 <label class="btn btn-sm btn-secondary">
                                     <input type="radio" name="question11" value="True" autocomplete="off">True
@@ -263,7 +269,7 @@
                             <label>You can recycle used paper towels.</label>
                         </td>
                         <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 12">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 12" onchange="checkIfCompletePreSurvey();">
                                 &emsp;
                                 <label class="btn btn-sm btn-secondary">
                                     <input type="radio" name="question12" value="True" autocomplete="off">True
@@ -279,13 +285,13 @@
                             <label>You can recycle pizza boxes.</label>
                         </td>
                         <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 13">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 13" onchange="checkIfCompletePreSurvey();">
                                 &emsp;
                                 <label class="btn btn-sm btn-secondary">
                                     <input type="radio" name="question13" value="True" autocomplete="off">True
                                 </label>
                                 <label class="btn btn-sm btn-secondary">
-                                    <input type="radio" name="question13" value="False" autocomplete="off">False
+                                    <input type="radio" name="question13" value="False" autocomplete="off" >False
                                 </label>
                             </div>
                         </td>
@@ -298,17 +304,24 @@
             
             <label>Where do you recycle?</label>
             <form class="checkboxes">
-                <label><input type="checkbox" name="where" value="Home">&ensp; At Home</label><br>
-                <label><input type="checkbox" name="where" value="Work">&ensp; At Work</label><br>
-                <label><input type="checkbox" name="where" value="Dorms">&ensp; Residence Halls</label><br>
-                <label><input type="checkbox" name="where" value="Off-Campus">&ensp; Off-Campus Residence</label><br>
-                <label><input type="checkbox" name="where" value="Drop-Off">&ensp; Drop-off Location</label><br>
-                <label><input type="checkbox" name="where" value="Athens">&ensp; Around Athens</label><br>
-                <label><input type="checkbox" name="where" value="None">&ensp; I do not recycle</label><br>
+                <label><input type="checkbox" name="where" value="Home" oninput="checkIfCompletePreSurvey();">
+                    &ensp; At Home</label><br>
+                <label><input type="checkbox" name="where" value="Work" oninput="checkIfCompletePreSurvey();">
+                    &ensp; At Work</label><br>
+                <label><input type="checkbox" name="where" value="Dorms" oninput="checkIfCompletePreSurvey();">
+                    &ensp; Residence Halls</label><br>
+                <label><input type="checkbox" name="where" value="Off-Campus" oninput="checkIfCompletePreSurvey();">
+                    &ensp; Off-Campus Residence</label><br>
+                <label><input type="checkbox" name="where" value="Drop-Off" oninput="checkIfCompletePreSurvey();">
+                    &ensp; Drop-off Location</label><br>
+                <label><input type="checkbox" name="where" value="Athens" oninput="checkIfCompletePreSurvey();">
+                    &ensp; Around Athens</label><br>
+                <label><input type="checkbox" name="where" value="None" oninput="checkIfCompletePreSurvey();">
+                    &ensp; I do not recycle</label><br>
             </form>
         </div> 	
         
-        <div class="centered"><a onclick="postThings()" id="nextPage" class="nextPageButton">Next Page</a></div>
+        <div class="centered"><a onclick="postThings()" id="nextPage" class="nextPageButton disabled">Next Page</a></div>
         
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>
