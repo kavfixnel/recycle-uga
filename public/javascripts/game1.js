@@ -255,10 +255,10 @@ function startGame()
 	backText.text = "Go Back"
 	
 	//Creates cans
-	recycleBin = new component(150, 225, "/../images/recyclebin.jpg", 30, 250, "image");
-	trashBin = new component(150, 225, "/../images/trashcan.png", 550, 250, "image");
-	charmBin = new component(150, 225, "/../images/paperbin.jpg", 300, 250, "image");
-	charmLogo = new component(100, 60, "/../images/CHaRM.jpg", 325, 380, "image");
+	recycleBin = new component(150, 225, "/../images/recyclebin.jpg", 50, 300, "image");
+	trashBin = new component(150, 225, "/../images/trashcan.png", 750, 300, "image");
+	charmBin = new component(150, 225, "/../images/paperbin.jpg", 400, 300, "image");
+	charmLogo = new component(100, 60, "/../images/CHaRM.jpg", 400, 380, "image");
 	
 	//Creates garbage
 	//For CHaRM Bin
