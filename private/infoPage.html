@@ -26,6 +26,9 @@
             // sets time page is opened
             var pageOpened = new Date();
             
+            // page number
+            var page = 1;
+            
             // tracks each incorrect answer entered
             var incorrectAnswers = [
                 [],
@@ -46,9 +49,19 @@
                 $.get("/module/progress", function(data){
                    if(data.found) {
                         document.getElementById('username').innerHTML = data.user;
-                        document.getElementsByClassName('progress-bar')[0].style.width = (data.progress/.01).toString() + "%";
+                        document.getElementsByClassName('progress-bar')[0].style.width = (data.progress*100).toString() + "%";
+
+                       // checking if page has already been completed
+                        if(data.progress > .2) {
+                            document.getElementById("nextPage").classList.remove("disabled");
+                            document.getElementById('nextPage').onclick = "";
+                        } // if this page has already been completed
                    } // if the data was found
                 });
+                
+                // setting location of last/next page buttons
+                document.getElementById('lastPage').href = '/module/next?page=' + (page-1).toString();
+                document.getElementById('nextPage').href = '/module/next?page=' + (page+1).toString();
                 
                 // number of graphs on the page
                 var graphCount = 4;
@@ -185,8 +198,10 @@
             // detects when enter is pressed
             function enterPressed(e, formnum) {
                 var key = (e.keyCode ? e.keyCode : e.which);
-                if(key === 13)
+                if(key === 13) {
                     checkAnswer(formnum);
+                    checkIfCompleteInfo();
+                } // if enter was pressed
             } // enterPressed
             
             // posts 'things' (data) to the server 
@@ -196,7 +211,7 @@
                 var pageClosed = new Date();
                 
                 // variable to be converted to JSON
-                var serverInfo = {page: 1,
+                var serverInfo = {page: page,
                         data: { attemptsPerQuestion: timesChecked,
                                 incorrectAnswers: incorrectAnswers,
                                 metaData: {timeOnPage: pageClosed - pageOpened}
@@ -210,11 +225,20 @@
                     data: JSON.stringify(serverInfo),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: function(data){location.reload(true);},
+                    success: function(){alert("post success");},
                     failure: function(){alert("post failed");}
                 });
                 
+                return true;
             } // postThings
+            
+            // logs the user out and redirects to home page
+            function logout() {
+                $.get("/login/logout", function(data) {
+                   if(data.success)
+                       location.href="/";
+                });
+            } // logout
         </script>
     </head>
     <body>
@@ -226,12 +250,13 @@
                     &thinsp; Roosevelt@UGA Sustainability Project
                 </div>
                 <div id="username" style="color: white;"></div>
+                <div><button type="button" onclick="logout();" class="btn btn-light">Logout</button></div>
             </div>
         </nav>
         
         <!-- Progress bar for entire module -->
         <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 28.56%;">Your Progress</div>
+            <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">Your Progress</div>
         </div>
         
         <div>
@@ -310,7 +335,10 @@
             </div>
         </div>
 
-        <div class="centered"><a onclick="postThings()" href="/module/next" class="nextPageButton">Next Page</a></div>
+        <div class="centered">
+            <a id="lastPage" class="nextPageButton">Last Page</a>
+            <a onclick="postThings()" id="nextPage" class="nextPageButton disabled">Next Page</a>
+        </div>
         
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>

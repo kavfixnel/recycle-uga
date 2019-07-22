@@ -21,6 +21,9 @@
         <!-- JavaScript functions-->
         <script>
             var pageOpened;
+            
+            // page number
+            var page = 4;
 
             window.onload = function() {
                 pageOpened = new Date();
@@ -32,6 +35,10 @@
                         document.getElementsByClassName('progress-bar')[0].style.width = (data.progress/.01).toString() + "%";
                    } // if the data was found
                 });
+
+                // setting location of last/next page buttons
+                document.getElementById('lastPage').href = '/module/next?page=' + (page-1).toString();
+                document.getElementById('nextPage').href = '/module/next?page=' + (page+1).toString();
                 
                 createMap();
             } // window.onload
@@ -39,7 +46,7 @@
             function postThings() {
                 var pageClosed = new Date();
                 var serverInfo = {
-                        page: 4, 
+                        page: page, 
                         data: {
                             metaData: {timeOnPage: pageClosed - pageOpened},
                         }
@@ -51,11 +58,20 @@
                     data: JSON.stringify(serverInfo),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: function(data){location.reload(true);},
+                    success: function(){alert("post success");},
                     failure: function(){alert("post failed");}
                 });
                 
+                return true;
             } // postThings
+            
+            // logs the user out and redirects to home page
+            function logout() {
+                $.get("/login/logout", function(data) {
+                   if(data.success)
+                       location.href="/";
+                });
+            } // logout
         </script>
         
     </head>
@@ -69,19 +85,23 @@
                     &thinsp; Roosevelt@UGA Sustainability Project
                 </div>
                 <div id="username" style="color: white;"></div>
+                <div><button type="button" onclick="logout();" class="btn btn-light">Logout</button></div>
             </div>
         </nav>
         
         <!-- Progress bar for entire module -->
         <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 71.42%;">Your Progress</div>
+            <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">Your Progress</div>
         </div>
 
         <p style="text-align: center; margin-top: 15px">Browse the map and click on the markers to see recycling locations in Athens!</p>
         
         <div id="map" style="height: 600px;"></div>
         
-        <div class="centered"><a onclick="postThings()" href="/module/next" class="nextPageButton">Next Page</a></div>
+        <div class="centered">
+            <a id="lastPage" class="nextPageButton">Last Page</a>
+            <a onclick="postThings()" id="nextPage" class="nextPageButton">Next Page</a>
+        </div>
         
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>

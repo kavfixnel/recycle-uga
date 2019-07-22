@@ -17,7 +17,20 @@
             var pageOpened;
             window.onload = function() {
                 pageOpened = new Date();
-            }
+                
+                // page number
+                var page = 6;
+                
+                // getting username and progress
+                $.get("/users", function(data){
+                   if(data.found) {
+                        document.getElementById('username').innerHTML = data.user;
+                   } // if the data was found
+                });
+                
+                // setting location of last/next page buttons
+                document.getElementById('lastPage').href = '/module/next?page=' + (page-1).toString();
+            } // window.onload
             
             function postThings() {
                 var pageClosed = new Date();
@@ -34,10 +47,20 @@
                     data: JSON.stringify(serverInfo),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: function(data){location.reload(true);},
+                    success: function(){alert("post success");},
                     failure: function(){alert("post failed");}
                 });
+                
+                return true;
             } // postThings
+            
+            // logs the user out and redirects to home page
+            function logout() {
+                $.get("/login/logout", function(data) {
+                   if(data.success)
+                       location.href="/";
+                });
+            } // logout
         </script>
 
     </head>
@@ -50,7 +73,8 @@
                     <a href=".."><img src="../images/uga-arch.png" alt="Logo" style="width: 40px; "></a>
                     &thinsp; Roosevelt@UGA Sustainability Project
                 </div>
-                <div><button type="button" onclick="location.href='/login/logout';" class="btn btn-light">Logout</button></div>
+                <div id="username" style="color: white;"></div>
+                <div><button type="button" onclick="logout();" class="btn btn-light">Logout</button></div>
             </div>
         </nav>
 
@@ -76,6 +100,8 @@
                 https://cdn.ymaws.com/www.productstewardship.us/resource/resmgr/imported/SERDC%20Econ%20Cards.pdf</a>
             <br>
         </div>
+        
+        <div class="centered"><a id="lastPage" class="nextPageButton">Last Page</a></div>
         
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>
