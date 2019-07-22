@@ -29,6 +29,7 @@
                         document.getElementById('username').innerHTML = data.user;
                         document.getElementsByClassName('progress-bar')[0].style.width = (data.progress*100).toString() + "%";
                         
+                       console.log(data.progress);
                        // checking if page has already been completed
                         if(data.progress > 0) {
                             document.getElementById("nextPage").classList.remove("disabled");
