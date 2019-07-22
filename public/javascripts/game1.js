@@ -234,31 +234,31 @@ function startGame()
 	hand = new component(30, 30, "/../images/hand.jpg", 10, 120, "image");
 	
 	//Creates the text displayed at the end of the game
-	gameOverText = new component("80px", "Consolas", "black", 160, 150, "text");
+	gameOverText = new component("80px", "Consolas", "black", 240, 150, "text");
 	gameOverText.text = "GAME OVER";
 	
-	scoreText = new component("60px", "Consolas", "black", 180, 280, "text");
+	scoreText = new component("60px", "Consolas", "black", 270, 280, "text");
 	scoreText.text = 100 + "%";
 	
-	playAgainText = new component("50px", "Consolas", "white", 30, 420, "text");
+	playAgainText = new component("50px", "Consolas", "white", 50, 420, "text");
 	playAgainText.text = "Play Again";
-	playAgainBox = new component(280, 60, "black", 30, 380, "box");
+	playAgainBox = new component(280, 60, "black", 50, 380, "box");
 	
-	viewMissedText = new component("50px", "Consolas", "white", 370, 420, "text");
+	viewMissedText = new component("50px", "Consolas", "white", 555, 420, "text");
 	viewMissedText.text = "View Missed";
-	viewMissedBox = new component(310, 60, "black", 370, 380, "box");
+	viewMissedBox = new component(310, 60, "black", 555, 380, "box");
 	
 	missedText = new component("40px", "Consolas", "black", 30, 50, "text");
 	missedText.text = "MISSED:"
 	
-	backText = new component("35px", "Consolas", "black", 420, 420, "text");
+	backText = new component("35px", "Consolas", "black", 560, 420, "text");
 	backText.text = "Go Back"
 	
 	//Creates cans
 	recycleBin = new component(150, 225, "/../images/recyclebin.jpg", 50, 300, "image");
 	trashBin = new component(150, 225, "/../images/trashcan.png", 750, 300, "image");
 	charmBin = new component(150, 225, "/../images/paperbin.jpg", 400, 300, "image");
-	charmLogo = new component(100, 60, "/../images/CHaRM.jpg", 400, 380, "image");
+	charmLogo = new component(100, 60, "/../images/CHaRM.jpg", 420, 420, "image");
 	
 	//Creates garbage
 	//For CHaRM Bin
@@ -274,8 +274,8 @@ function startGame()
 	dirtyAlumFoil = new trash("Aluminum Foil (dirty)", 60, 60, "/../images/dirtyafoil.jpg", 30, 30, "image", false, false);
 	paperPlate = new trash("Paper Plate", 60, 60, "/../images/paperplate.jpg", 50, 30, "image", false, false);
 	plasticCutlery = new trash("Plastic Cutlery", 60, 60, "/../images/plasticcut.jpg", 70, 30, "image", false, false);
-	straw = new trash("Straw", 60, 60, "/../images/straw.jpg", 100, 30, "image", false, false);
-	napkin = new trash("Napkin", 60, 60, "/../images/napkin.jpg", 120, 30, "image", false, false);
+	straw = new trash("Straws", 60, 60, "/../images/straw.jpg", 100, 30, "image", false, false);
+	napkin = new trash("Napkins", 60, 60, "/../images/napkin.jpg", 120, 30, "image", false, false);
 	usedCoffeeCup = new trash("Used Coffee Cup", 60, 60, "/../images/usedCoffeeCup.jpg", 140, 30, "image", false, false);
 	greasyPizzaBox = new trash("Greasy Pizza Box", 60, 60, "/../images/greasyPBox.jpg", 160, 30, "image", false, false);
 	
@@ -286,7 +286,7 @@ function startGame()
 	cardBox = new trash("Cardboard Box", 60, 60, "/../images/cardBox.jpg", 200, 60, "image", true, false);
 	steelCan = new trash("Steel Can", 60, 60, "/../images/steelcan.jpg", 200, 60, "image", true, false);
 	cleanAFoil = new trash("Aluminum Foil (clean)", 60, 60, "/../images/cleanAFoil.jpg", 200, 60, "image", true, false);
-	aerosol = new trash("Aerosol Can", 60, 60, "/../images/aerosol.jpg", 200, 60, "image", true, false);
+	aerosol = new trash("Empty Aerosol Can", 60, 60, "/../images/aerosol.jpg", 200, 60, "image", true, false);
 	jug = new trash("Plastic Jug", 60, 60, "/../images/emptyjug.jpg", 200, 60, "image", true, false);
 	coffeeCov = new trash("Coffee Cover", 60, 60, "/../images/coffeeCover.jpg", 200, 60, "image", true, false);
 	tupper = new trash("Tupperware", 60, 60, "/../images/tup.jpg", 200, 60, "image", true, false);
