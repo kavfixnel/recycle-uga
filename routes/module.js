@@ -77,7 +77,7 @@ router.post('/progress', async (req, res) => {
 		console.log(req.body)
 		let user = await userModule.findOne({ cookie: req.cookies.sessionCookie })
 		if (req.body.page == user.progress && user.progress <= 5) {
-			let name = ['preSurvey', 'pageOne', 'pageTwo', 'pageThree', 'postSurvey']
+			let name = ['preSurvey', 'infoPage', 'gamePage', 'infoPage2', 'mapPage', 'postSurvey']
 			user.set('progress', user.progress + 1)
 			user.set(name[req.body.page], req.body.data)
 			await user.save()
