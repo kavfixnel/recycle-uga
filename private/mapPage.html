@@ -33,7 +33,6 @@
                    if(data.found) {
                         document.getElementById('username').innerHTML = data.user;
                         document.getElementsByClassName('progress-bar')[0].style.width = (data.progress/.01).toString() + "%";
-                       console.log(data.progress);
                    } // if the data was found
                 });
 

@@ -32,9 +32,9 @@
                    if(data.found) {
                         document.getElementById('username').innerHTML = data.user;
                         document.getElementsByClassName('progress-bar')[0].style.width = (data.progress*100).toString() + "%";
-                       console.log(data.progress);
+                       
                        // checking if page has already been completed
-                        if(data.progress > .8) {
+                        if(data.progress > 1) {
                             document.getElementById("nextPage").classList.remove("disabled");
                             document.getElementById('nextPage').onclick = "";
                         } // if this page has already been completed
@@ -43,7 +43,7 @@
                 
                 // setting location of last/next page buttons
                 document.getElementById('lastPage').href = '/module/next?page=' + (page-1).toString();
-                document.getElementById('nextPage').href = '/module/next?page=' + (page+1).toString();
+                document.getElementById('nextPage').href = '/module/next';
             } // on window load
             
             // updates the value of a slider
