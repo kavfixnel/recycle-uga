@@ -12,12 +12,16 @@ var progress = document.getElementById("progress");
 var gameIsOver = false;
 var score;
 var scoreCalculated = true;
-var endScore;
 var missedText;
-var missedNames = [];
 var missed = [];
 var showMissed = false;
 var alreadyPrintedMissed = false;
+var missedNames = [];
+
+//Variables to be passed to database
+var score80 = false;
+var allMissed = [];
+var endScore;
 
 //Variable that defines an area for the game to be played on the webpage
 var myGameArea = 
@@ -240,13 +244,13 @@ function startGame()
 	scoreText = new component("60px", "Consolas", "black", 300, 280, "text");
 	scoreText.text = 100 + "%";
 	
-	playAgainText = new component("50px", "Consolas", "white", 50, 420, "text");
+	playAgainText = new component("50px", "Consolas", "white", 50, 470, "text");
 	playAgainText.text = "Play Again";
-	playAgainBox = new component(280, 60, "black", 50, 380, "box");
+	playAgainBox = new component(280, 60, "black", 50, 430, "box");
 	
-	viewMissedText = new component("50px", "Consolas", "white", 585, 420, "text");
+	viewMissedText = new component("50px", "Consolas", "white", 585, 470, "text");
 	viewMissedText.text = "View Missed";
-	viewMissedBox = new component(310, 60, "black", 585, 380, "box");
+	viewMissedBox = new component(310, 60, "black", 585, 430, "box");
 	
 	missedText = new component("40px", "Consolas", "black", 30, 50, "text");
 	missedText.text = "MISSED:";
@@ -500,6 +504,9 @@ function updateGameArea()
 			scoreCalculated = false;
 			
 			endScore = parseInt((score/myTrash.length)*100);
+			
+			if(endScore >= 80)
+				score80 = true;
 
 			scoreText.text = "Score: " + endScore + "%";
 			scoreText.update();
