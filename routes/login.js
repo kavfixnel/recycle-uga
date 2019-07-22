@@ -136,20 +136,20 @@ router.get('/logout', async (req, res) => {
 		// No user with that cookie found
 		if (!user) {
 			let obj = { success: false, error: 'User not found' }
-			res.send(obj)
+			res.redirect('/').send(obj)
 		}
 
 		// Delete user cookie
 		user.set('cookie', '')
 		await user.save()
 		let obj = { success: true }
-		res.send(obj)
+		res.redirect('/').send(obj)
 
 	} catch (error) {
 		console.log('Error [2] in login.js:')
 		console.log(error)
 		let obj = {success: false, error: 'Server error'}
-		res.status(500).send(obj)
+		res.status(500).redirect('/').send(obj)
 	}
 })
 
