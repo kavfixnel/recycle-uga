@@ -229,7 +229,16 @@
                     failure: function(){alert("post failed");}
                 });
                 
+                return true;
             } // postThings
+            
+            // logs the user out and redirects to home page
+            function logout() {
+                $.get("/login/logout", function(data) {
+                   if(data.success)
+                       location.href="/";
+                });
+            } // logout
         </script>
     </head>
     <body>
@@ -241,7 +250,7 @@
                     &thinsp; Roosevelt@UGA Sustainability Project
                 </div>
                 <div id="username" style="color: white;"></div>
-                <div><button type="button" onclick="location.href='/login/logout';" class="btn btn-light">Logout</button></div>
+                <div><button type="button" onclick="logout();" class="btn btn-light">Logout</button></div>
             </div>
         </nav>
         

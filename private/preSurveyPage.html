@@ -25,7 +25,8 @@
                 
                 // getting username and progress
                 $.get("/module/progress", function(data){
-                   if(data.found) {
+                    
+                    if(data.found) {
                         document.getElementById('username').innerHTML = data.user;
                         document.getElementsByClassName('progress-bar')[0].style.width = (data.progress*100).toString() + "%";
                         
@@ -111,7 +112,17 @@
                     success: function(){alert("post success");},
                     failure: function(){alert("post failed");}
                 });
+                
+                return true;
             } // postThings
+            
+            // logs the user out and redirects to home page
+            function logout() {
+                $.get("/login/logout", function(data) {
+                   if(data.success)
+                       location.href="/";
+                });
+            } // logout
         </script>
     </head>
     <body>
@@ -123,7 +134,7 @@
                     &thinsp; Roosevelt@UGA Sustainability Project
                 </div>
                 <div id="username" style="color: white;"></div>
-                <div><button type="button" onclick="location.href='/login/logout';" class="btn btn-light">Logout</button></div>
+                <div><button type="button" onclick="logout();" class="btn btn-light">Logout</button></div>
             </div>
         </nav>
         
@@ -135,7 +146,7 @@
         <!-- Pre-Survey Page -->
         <div class="surveyArea">
             <h1>Pre-Survey</h1>
-
+            
             <label>Name:</label><br>
                 <input type="name" class="form-control" name="name" maxlength="50" oninput="checkIfCompletePreSurvey();"><br>
             

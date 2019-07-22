@@ -21,10 +21,16 @@
                 // page number
                 var page = 6;
                 
+                // getting username and progress
+                $.get("/users", function(data){
+                   if(data.found) {
+                        document.getElementById('username').innerHTML = data.user;
+                   } // if the data was found
+                });
+                
                 // setting location of last/next page buttons
                 document.getElementById('lastPage').href = '/module/next?page=' + (page-1).toString();
-                document.getElementById('nextPage').href = '/module/next?page=' + (page+1).toString();
-            }
+            } // window.onload
             
             function postThings() {
                 var pageClosed = new Date();
@@ -44,7 +50,17 @@
                     success: function(){alert("post success");},
                     failure: function(){alert("post failed");}
                 });
+                
+                return true;
             } // postThings
+            
+            // logs the user out and redirects to home page
+            function logout() {
+                $.get("/login/logout", function(data) {
+                   if(data.success)
+                       location.href="/";
+                });
+            } // logout
         </script>
 
     </head>
@@ -57,7 +73,8 @@
                     <a href=".."><img src="../images/uga-arch.png" alt="Logo" style="width: 40px; "></a>
                     &thinsp; Roosevelt@UGA Sustainability Project
                 </div>
-                <div><button type="button" onclick="location.href='/login/logout';" class="btn btn-light">Logout</button></div>
+                <div id="username" style="color: white;"></div>
+                <div><button type="button" onclick="logout();" class="btn btn-light">Logout</button></div>
             </div>
         </nav>
 
