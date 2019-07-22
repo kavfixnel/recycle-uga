@@ -17,6 +17,9 @@
             // time the page was opened for timeOnPage
             var pageOpened;
             
+            // page number
+            var page = 5;
+            
             // number of forms/questions for completion check
             var numForms = 13;
             var numQuestions = 13; 
@@ -31,6 +34,10 @@
                         document.getElementsByClassName('progress-bar')[0].style.width = (data.progress/.01).toString() + "%";
                    } // if the data was found
                 });
+                
+                // setting location of last/next page buttons
+                document.getElementById('lastPage').href = '/module/next?page=' + (page-1).toString();
+                document.getElementById('nextPage').href = '/module/next?page=' + (page+1).toString();
             } // on window load
             
             // updates the value of a slider
@@ -65,7 +72,7 @@
                 // time the page was closed for timeOnPage
                 var pageClosed = new Date();
                 
-                var serverInfo = {page: 5,
+                var serverInfo = {page: page,
                         data: {feedback: document.getElementsByName('feedback')[0].value,
                                 questionAnswers: questionAnswers,
                                 tfAnswers: tfAnswers,
@@ -264,11 +271,12 @@
             
             <label class="instructions"><b>The idea for this module came from Roosevelt@UGA - a non-partisan, student run think tank with a focus on civic engagement and policy. If you're interested in learning more about Roosevelt@UGA or joining, enter your email below.</b></label><br>
             <input type="email" class="form-control" name="rooseveltEmail" placeholder="Enter Email"><br>
-            
-            
 		</div>
-
-        <div class="centered"><a onclick="postThings()" href="/module/next" class="nextPageButton">Next Page</a></div>
+        
+        <div class="centered">
+            <a id="lastPage" class="nextPageButton">Last Page</a>
+            <a onclick="postThings()" id="nextPage" class="nextPageButton">Next Page</a>
+        </div>
         
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>

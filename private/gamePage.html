@@ -40,7 +40,7 @@
                 float: left;
             }
 			
-			.centered {
+			.centeredGame {
 				text-align: center;
 			}
             
@@ -69,9 +69,15 @@
         <script>
             // time the page was opened for timeOnPage
             var pageOpened;
+            
+            // page number
+            var page = 2;
+            
             window.onload = function() {
                 startGame();
-            
+                
+                pageOpened = new Date();
+                
                 // getting username and progress
                 $.get("/module/progress", function(data){
                    if(data.found) {
@@ -80,7 +86,9 @@
                    } // if the data was found
                 });
                 
-                pageOpened = new Date();
+                // setting location of last/next page buttons
+                document.getElementById('lastPage').href = '/module/next?page=' + (page-1).toString();
+                document.getElementById('nextPage').href = '/module/next?page=' + (page+1).toString();
             } // on window load
             
             // posts 'things' (data) to the server 
@@ -89,7 +97,7 @@
                 var pageClosed = new Date();
                 
                 // data variable to be posted to the backend
-                var serverInfo = {page: 2,
+                var serverInfo = {page: page,
                         data: {
                             metaData: {timeOnPage: pageClosed - pageOpened}
                         }
@@ -108,11 +116,10 @@
                 
             } // postThings
         </script>
-
     </head>
 	
 	
-    <body onload="startGame()" style="min-width: 800px;">
+    <body style="min-width: 800px;">
 	
         <!-- Fixed navigation bar using bootsrap classes, UGA Bulldog Red color, UGA font-->
         <nav class="navbar navbar-fixed-top" style="background-color: #BA0C2F;">
@@ -142,7 +149,7 @@
         
 		<div id="container">
             <canvas id="canvas"></canvas>
-            <div class="key centered">
+            <div class="key centeredGame">
                 <h2 >Instructions</h2>
                 <hr>
                 <label>Grab the items and place them in the correct bins! You have to get 80% correct to move on.</label>
@@ -153,7 +160,10 @@
             </div>
 		</div>
         
-        <div class="centered"><a onclick="postThings()" href="/module/next" class="nextPageButton">Next Page</a></div>
+        <div class="centered">
+            <a id="lastPage" class="nextPageButton">Last Page</a>
+            <a onclick="postThings()" id="nextPage" class="nextPageButton">Next Page</a>
+        </div>
 
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>

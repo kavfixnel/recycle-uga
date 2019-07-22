@@ -17,6 +17,13 @@
             var pageOpened;
             window.onload = function() {
                 pageOpened = new Date();
+                
+                // page number
+                var page = 6;
+                
+                // setting location of last/next page buttons
+                document.getElementById('lastPage').href = '/module/next?page=' + (page-1).toString();
+                document.getElementById('nextPage').href = '/module/next?page=' + (page+1).toString();
             }
             
             function postThings() {
@@ -76,6 +83,8 @@
                 https://cdn.ymaws.com/www.productstewardship.us/resource/resmgr/imported/SERDC%20Econ%20Cards.pdf</a>
             <br>
         </div>
+        
+        <a id="lastPage" class="nextPageButton">Last Page</a>
         
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>

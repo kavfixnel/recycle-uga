@@ -26,6 +26,9 @@
             // sets time page is opened
             var pageOpened;
             
+            // page number
+            var page = 3;
+            
             // tracks how many attempts are taken for each question
             var timesChecked = [0, 0, 0, 0];
 
@@ -49,6 +52,10 @@
                         document.getElementsByClassName('progress-bar')[0].style.width = (data.progress/.01).toString() + "%";
                    } // if the data was found
                 });
+                
+                // setting location of last/next page buttons
+                document.getElementById('lastPage').href = '/module/next?page=' + (page-1).toString();
+                document.getElementById('nextPage').href = '/module/next?page=' + (page+1).toString();
                 
                 // number of graphs on the page
                 var graphCount = 4;
@@ -185,7 +192,7 @@
                 var pageClosed = new Date();
                 
                 // variable to be converted to JSON
-                var serverInfo = {page: 3,
+                var serverInfo = {page: page,
                         data: { attemptsPerQuestion: timesChecked,
                                 incorrectAnswers: incorrectAnswers,
                                 metaData: {timeOnPage: pageClosed - pageOpened}
@@ -308,7 +315,10 @@
             </div>
         </div>
 
-        <div class="centered"><a onclick="postThings()" href="/module/next" class="nextPageButton">Next Page</a></div>
+        <div class="centered">
+            <a id="lastPage" class="nextPageButton">Last Page</a>
+            <a onclick="postThings()" id="nextPage" class="nextPageButton">Next Page</a>
+        </div>
         
         <!-- Load all the Bootstrap requirements at the end of the document -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>
