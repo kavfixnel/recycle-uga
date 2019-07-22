@@ -234,25 +234,25 @@ function startGame()
 	hand = new component(30, 30, "/../images/hand.jpg", 10, 120, "image");
 	
 	//Creates the text displayed at the end of the game
-	gameOverText = new component("80px", "Consolas", "black", 240, 150, "text");
+	gameOverText = new component("80px", "Consolas", "black", 270, 150, "text");
 	gameOverText.text = "GAME OVER";
 	
-	scoreText = new component("60px", "Consolas", "black", 270, 280, "text");
+	scoreText = new component("60px", "Consolas", "black", 300, 280, "text");
 	scoreText.text = 100 + "%";
 	
 	playAgainText = new component("50px", "Consolas", "white", 50, 420, "text");
 	playAgainText.text = "Play Again";
 	playAgainBox = new component(280, 60, "black", 50, 380, "box");
 	
-	viewMissedText = new component("50px", "Consolas", "white", 555, 420, "text");
+	viewMissedText = new component("50px", "Consolas", "white", 585, 420, "text");
 	viewMissedText.text = "View Missed";
-	viewMissedBox = new component(310, 60, "black", 555, 380, "box");
+	viewMissedBox = new component(310, 60, "black", 585, 380, "box");
 	
 	missedText = new component("40px", "Consolas", "black", 30, 50, "text");
-	missedText.text = "MISSED:"
+	missedText.text = "MISSED:";
 	
-	backText = new component("35px", "Consolas", "black", 560, 420, "text");
-	backText.text = "Go Back"
+	backText = new component("35px", "Consolas", "black", 760, 520, "text");
+	backText.text = "Go Back";
 	
 	//Creates cans
 	recycleBin = new component(150, 225, "/../images/recyclebin.jpg", 50, 300, "image");
