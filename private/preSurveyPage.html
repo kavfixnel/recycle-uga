@@ -23,11 +23,15 @@
             window.onload = function() {
                  pageOpened = new Date();
                 
+                $.get("/users/", function(data) {
+                   if(data.found) {
+                       document.getElementById('username').innerHTML = data.user;
+                   } // the user was found
+                });
+                
                 // getting username and progress
                 $.get("/module/progress", function(data){
-                    
                     if(data.found) {
-                        document.getElementById('username').innerHTML = data.user;
                         document.getElementsByClassName('progress-bar')[0].style.width = (data.progress*100).toString() + "%";
                         
                        // checking if page has already been completed
