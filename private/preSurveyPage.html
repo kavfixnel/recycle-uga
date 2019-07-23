@@ -30,7 +30,7 @@
                 });
                 
                 // getting username and progress
-                $.get("/module/progress", function(data){
+                $.get("/module/progress/", function(data){
                     if(data.found) {
                         document.getElementsByClassName('progress-bar')[0].style.width = (data.progress*100).toString() + "%";
                         
