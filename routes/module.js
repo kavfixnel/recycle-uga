@@ -101,6 +101,35 @@ router.post('/progress', async (req, res) => {
 	}
 });
 
+/**
+ * Retrieve the newest user data
+ */
+router.get('/data', (req, res) => {
+	console.log('Test')
+	try {
+		if(req.query.page) {
+			let name = ['preSurvey', 'infoPage', 'gamePage', 'infoPage2', 'mapPage', 'postSurvey']
+			let userData = req.user[name[req.query.page]]
+			if(!userData) {
+				let obj = {success: false, msg: 'No data found here'}
+				debug(obj)
+				res.status(400).send(obj)
+			} else {
+				userData.success = true
+				debug(userData)
+				res.send(userData)
+			}
+		} else {
+			let obj = { success: 'false' , msg: 'No page number' }
+			debug(obj)
+			res.status(400).send(obj)
+		}
+	} catch(error) {
+		debug(`Error [9]: ${error}`)
+		res.status(500).send('Error [9] in module.js')
+	}
+})
+
 /* Get the current progress of a user */
 router.get('/progress', async (req, res) => {
 	try {

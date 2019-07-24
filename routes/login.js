@@ -13,13 +13,13 @@ let userModel = require('../schemas/user.js')
  */
 router.get('/cas', (req, res, next) => {
 	debug('New CAS login')
-	res.redirect('https://cas2.stage.uga.edu/cas/login?service=https://recycle-uga.herokuapp.com/login/cb')
+	res.redirect('https://cas2.stage.uga.edu/cas/login?service=https://uga-recycle.com/login/cas/cb')
 });
 
 /**
  * CAS login callback URL
  */
-router.get('/cb', async (req, res) => {
+router.get('/cas/cb', async (req, res) => {
 	debug('New CAS callback')
 	if (req.query.ticket == null) {
 		// There is no ticket avaliable
@@ -28,7 +28,7 @@ router.get('/cb', async (req, res) => {
 	} else {
 		// Get the ticket contents
 		try {
-			const url = 'https://cas2.stage.uga.edu/cas/validate?service=https://recycle-uga.herokuapp.com/login/cb&ticket=' + req.query.ticket
+			const url = 'https://cas2.stage.uga.edu/cas/validate?service=https://uga-recycle.com/login/cas/cb&ticket=' + req.query.ticket
 			const response = await axios.get(url)
 			var ans = response.data.split('\n')
 			if (ans[0] == 'yes') {
