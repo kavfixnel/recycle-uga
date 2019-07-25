@@ -10,7 +10,7 @@ let userModule = require('../schemas/user.js')
 router.use(async (req, res, next) => {
 	try {
 		// Load the user with a cookie
-		let user = await userModule.findOne({ cookie: req.cookies.sessionCookie })
+		let user = await userModule.findOne({ cookie: req.cookies._ugaRecycle })
 
 		// Check if user exists
 		if (user) {
@@ -23,7 +23,7 @@ router.use(async (req, res, next) => {
 					res.redirect('/').send()
 				} else {
 					// Everyhting is fine
-					debug(`Found user with cookie: ${req.cookies.sessionCookie}`)
+					debug(`Found user with cookie: ${req.cookies._ugaRecycle}`)
 					req.user = user
 					next()
 					return
@@ -82,7 +82,6 @@ router.get('/next', async (req, res) => {
 		debug(`Error [3]: ${error}`)
 		res.status(500).send("Error [3] in module.js")
 	}
-	//res.status(500).send("Error [4] in module.js")
 });
 
 /* Let the user post their progress to this endpoint */
