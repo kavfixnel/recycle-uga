@@ -114,7 +114,16 @@ var myGameArea =
 				//Unfortunately canvas has no next line char so next lines must be done manually
 				if(!alreadyPrintedMissed)
 				{
-					for(i = 0; i < missedNames.length; i++)
+					var length = missedNames.length;
+					var playerIsIdiot = false;
+					
+					if(missedNames.length > 18)
+					{
+						length = 18
+						playerIsIdiot = true
+					}
+						
+					for(i = 0; i < length; i++)
 					{
 						//Spacing on canvas
 						yVal = i*25;
@@ -125,6 +134,22 @@ var myGameArea =
 						
 						missed.push(newMissed);
 						
+					}
+					
+					if(playerIsIdiot)
+					{
+						for(i = 0; i < (missedNames.length - 18); i++)
+						{
+							//Spacing on canvas
+							yVal = i*25;
+							
+							missedY = 100 + yVal;
+							newMissed = new component("25px", "Consolas", "black", 330, missedY, "text");
+							newMissed.text = missedNames[i];
+							
+							missed.push(newMissed);
+						
+						}
 					}
 					
 					//Adding in bool so the game won't print missed over and over
