@@ -138,10 +138,9 @@ var myGameArea =
 					
 					if(playerIsIdiot)
 					{
+						var count = 0;
 						for(i = 18; i < (missedNames.length); i++)
-						{
-							var count = 0;
-							
+						{							
 							//Spacing on canvas
 							yVal2 = count*25;
 							
