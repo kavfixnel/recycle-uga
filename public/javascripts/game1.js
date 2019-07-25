@@ -138,16 +138,20 @@ var myGameArea =
 					
 					if(playerIsIdiot)
 					{
-						for(i = 17; i < (missedNames.length); i++)
+						for(i = 18; i < (missedNames.length); i++)
 						{
-							//Spacing on canvas
-							yVal = i*25;
+							var count = 0;
 							
-							missedY = 100 + yVal;
+							//Spacing on canvas
+							yVal2 = count*25;
+							
+							missedY = 100 + yVal2;
 							newMissed = new component("25px", "Consolas", "black", 530, missedY, "text");
 							newMissed.text = missedNames[i];
 							
 							missed.push(newMissed);
+							
+							count++;
 						
 						}
 					}
