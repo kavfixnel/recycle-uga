@@ -340,6 +340,8 @@ function startGame()
 	napkin = new trash("Napkins", 60, 60, "/../images/napkin.jpg", 120, 30, "image", false, false);
 	usedCoffeeCup = new trash("Used Coffee Cup", 60, 60, "/../images/usedCoffeeCup.jpg", 140, 30, "image", false, false);
 	greasyPizzaBox = new trash("Greasy Pizza Box", 60, 60, "/../images/greasyPBox.jpg", 160, 30, "image", false, false);
+	appleCore = new trash("Apple Core", 60, 60, "/../images/applecore.png", 160, 30, "image", false, false);
+	burrito = new trash("Half-Eaten Burrito", 60, 60, "/../images/burrito.jpg", 160, 30, "image", false, false);
 	
 	
 	//For Recycle Bin
