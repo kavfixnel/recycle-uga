@@ -40,7 +40,7 @@ router.get('/cas/cb', async (req, res) => {
 					var newCookie = random(30)
 					await userModel.create({ id: ans[1], ugaStudent: true, cookie: newCookie, cookieExp: (Date.now() + 86400000) })
 					debug(`New user ${ans[1]} created`)
-					res.cookie('sessionCookie', newCookie, { maxAge: 86400000 })
+					res.cookie('_ugaRecycle', newCookie, { maxAge: 86400000 })
 				} else {
 					// User already exists
 					// Create new cookie
@@ -49,7 +49,7 @@ router.get('/cas/cb', async (req, res) => {
 					// Update the cookie of the user
 					await userModel.findOneAndUpdate({ id: ans[1] }, { $set: { cookie: newCookie, cookieExp: (Date.now() + 86400000) } })
 					debug(`New cookie for user ${ans[1]} issued`)
-					res.cookie('sessionCookie', newCookie, { maxAge: 86400000 })
+					res.cookie('_ugaRecycle', newCookie, { maxAge: 86400000 })
 				}
 			}
 		} catch (error) {
@@ -117,7 +117,7 @@ router.get('/google/cb', async (req, res) => {
 			var newCookie = random(30)
 			await userModel.create({ id: data.email, ugaStudent: false, cookie: newCookie, cookieExp: (Date.now() + 86400000) })
 			debug(`New user ${data.email} created`)
-			res.cookie('sessionCookie', newCookie, { maxAge: 86400000 })
+			res.cookie('_ugaRecycle', newCookie, { maxAge: 86400000 })
 		} else {
 			// User already exists
 			// Create new cookie
@@ -126,7 +126,7 @@ router.get('/google/cb', async (req, res) => {
 			// Update the cookie of the user
 			await userModel.findOneAndUpdate({ id: data.email }, { $set: { cookie: newCookie, cookieExp: (Date.now() + 86400000) } })
 			debug(`New cookie for ${data.email} issued`)
-			res.cookie('sessionCookie', newCookie, { maxAge: 86400000 })
+			res.cookie('_ugaRecycle', newCookie, { maxAge: 86400000 })
 		}
 	} catch (error) {
 		debug(`Error [3]: ${error}`)
@@ -142,7 +142,7 @@ router.get('/google/cb', async (req, res) => {
 router.get('/logout', async (req, res) => {
 	debug('New logout request')
 	try {
-		var user = await userModel.findOne({ cookie: req.cookies.sessionCookie })
+		var user = await userModel.findOne({ cookie: req.cookies._ugaRecycle })
 
 		// No user with that cookie found
 		if (!user) {

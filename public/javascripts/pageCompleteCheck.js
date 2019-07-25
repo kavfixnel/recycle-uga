@@ -6,12 +6,6 @@ function checkIfCompletePreSurvey() {
     if(document.getElementsByName('name')[0].value.length > 0) 
         finishedFormCount++;
     
-    if(document.getElementsByName('email')[0].value.length > 0)
-        finishedFormCount++;
-    
-    if(document.getElementsByName('age')[0].value.length > 0)
-        finishedFormCount++;
-    
     if(document.getElementsByName('why')[0].value.length > 0)
         finishedFormCount++;
     

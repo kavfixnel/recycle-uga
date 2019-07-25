@@ -580,7 +580,7 @@ function updateGameArea()
 			endScore = parseInt((score/myTrash.length)*100);
 	
 			if(endScore >= 80)
-				score80 = true;
+				document.getElementById('nextPage').classList.remove('disabled');
 
 			scoreText.text = "Score: " + endScore + "%";
 			scoreText.update();

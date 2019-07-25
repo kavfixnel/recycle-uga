@@ -11,7 +11,7 @@ router.get('/', async (req, res, next) => {
 	obj.found = false
 
 	// Look for user
-	let foundUser = await userModel.findOne({ cookie: req.cookies.sessionCookie })
+	let foundUser = await userModel.findOne({ cookie: req.cookies._ugaRecycle })
 
 	if (foundUser == null) {
 		// User not found
