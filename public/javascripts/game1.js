@@ -1,4 +1,5 @@
 
+//Setting Variables
 var hand;
 var currentTrash;
 var currentTrashName;
@@ -37,9 +38,11 @@ var myGameArea =
 		this.context = this.canvas.getContext("2d");
 		
 		this.interval = setInterval(updateGameArea, 20);
+		
+		//Setting Current Trash
 		currentTrashName = myTrash[0].name;
 		
-		//Event listeners 
+		//EVENT LISTENERS
 		//Moving the mouse
 		document.getElementById("canvas").addEventListener('mousemove', function (e)
 		{
@@ -48,12 +51,17 @@ var myGameArea =
             
 		});
 		
-		//Clicking
+		//On Clicking
 		window.addEventListener('mousedown', function (e) 
 		{
+			//Fixing mouse drifting error
 			clickX = e.clientX - document.getElementById("canvas").offsetLeft;
 			clickY = e.clientY - document.getElementById("canvas").offsetTop;
 			
+			
+			//A GAME IS FINISHED
+			
+			//If Player Clicks on Play Again -> Resets Game
 			if(gameIsOver && isCollided(hand,playAgainBox) && playAgainBox.clickable) 
 			{
 				//Restarting game
@@ -81,10 +89,14 @@ var myGameArea =
 				}
 			}
 			
+			
+			//Player Clicks on View Missed
 			else if(gameIsOver && isCollided(hand,viewMissedBox) && playAgainBox.clickable)
 			{
+				//Initial Text
 				missedText.text = "MISSED: "
 				
+				//Looping through trash and pushing missed trash info to arrays
 				for(i = 0; i < myTrash.length; i++)
 				{
 					if(!myTrash[i].correct && !alreadyPrintedMissed)
@@ -98,26 +110,37 @@ var myGameArea =
 					backText.clickable = true;
 				}
 				
-				for(i = 0; i < missedNames.length; i++)
+				//Creating a new text object for every missed trash item
+				//Unfortunately canvas has no next line char so next lines must be done manually
+				if(!alreadyPrintedMissed)
 				{
-					yVal = i*25;
+					for(i = 0; i < missedNames.length; i++)
+					{
+						//Spacing on canvas
+						yVal = i*25;
+						
+						missedY = 100 + yVal;
+						newMissed = new component("25px", "Consolas", "black", 130, missedY, "text");
+						newMissed.text = missedNames[i];
+						
+						missed.push(newMissed);
+						
+					}
 					
-					missedY = 100 + yVal;
-					newMissed = new component("25px", "Consolas", "black", 130, missedY, "text");
-					newMissed.text = missedNames[i];
-					
-					missed.push(newMissed);
-					
+					//Adding in bool so the game won't print missed over and over
+					alreadyPrintedMissed = true;
 				}
-				
-				alreadyPrintedMissed = true;
 				
 			}
 			
+			//Player clicks on go back
 			else if(isCollided(hand, backText) && backText.clickable)
 			{
 				showMissed = false;
 			}
+			
+			
+			//A GAME HAS NOT YET FINISHED
 			
 			//Check if item clicked is trash
 			for(i = 0; i < myTrash.length; i++)
@@ -199,6 +222,7 @@ var myGameArea =
 						
 				}
 				
+				//Set trash to Clicked so it follows the hand
 				else if(myTrash[i].clicked() && myTrash[i].current)
 				{
 					currentTrash = myTrash[i];
@@ -311,18 +335,44 @@ function startGame()
 
 
 //Function to create trash
+/*
+ * Parameters:
+ * name: name of trash item. This will be displayed
+ * 		 above the game ----------------------------- string
+ * width: width of item (in pixels) ----------------- int
+ * height: height of item (in pixels) --------------- int
+ * imgSrc: Source of image to be displayed ---------- string
+ * x: x val of trash on the game canvas ------------- int
+ * y: y val of trash on the game canvas ------------- int
+ * type: should be "image" for trash items unless
+ *       you don't want trash to show as an image --- string
+ * recycleable: Does the item go in the recycle bin - boolean
+ * charm: does the item go in a CHaRM bin ----------- boolean
+ *
+ */
 function trash(name, width, height, imgSrc, x, y, type, recycleable, charm)
 {
 	comp = new component(width, height, imgSrc, x, y, "image");  
+	
+	//Trash Variables
 	this.name = name;
 	this.type = type;
 	this.recycleable = recycleable;
 	this.charm = charm;
+	
+	//Boolean for if the trash is thrown away
 	var thrownAway;
 	this.thrownAway = false;
+	
+	//Boolean for if the trash is current
 	var current;
 	this.current = false;
+	
+	//Boolean for if the trash is correct
 	this.correct = true;
+	
+	//String to store if trash is put in the wrong bin
+	var wrongBin;
 	this.wrongBin = "";
 	
 	if(type == "image")
@@ -352,6 +402,8 @@ function trash(name, width, height, imgSrc, x, y, type, recycleable, charm)
 		}
 	}
 	
+	
+	//Function to return if clicked
 	this.clicked = function() 
 	{
 		var myleft = this.x;
@@ -368,10 +420,12 @@ function trash(name, width, height, imgSrc, x, y, type, recycleable, charm)
 		return clicked;
 	}		
 	
+	//Pushing item to the myTrash array
 	myTrash.push(this);
 }
 
 
+//Function to shuffle an array
 function shuffleArray(array) {
     for (var i = array.length - 1; i > 0; i--) 
 	{
@@ -440,6 +494,7 @@ function component(width, height, color, x, y, type)
 }
 
 
+//Returns if a and b are close enough to be considered collided
 function isCollided(a, b) 
 {
     return !(
@@ -451,10 +506,15 @@ function isCollided(a, b)
 }
 
 
+
+//Function that displays all the items on the canvas.
+//Called every frame
 function updateGameArea()
 {
+	//Clear game area
 	myGameArea.clear();
 	
+	//Set hand to follow cursor
 	if(myGameArea.x && myGameArea.y)
 	{
 		hand.x = myGameArea.x;
@@ -462,17 +522,21 @@ function updateGameArea()
 	}
 	
 	
+	//Checking if game is over
 	if(myTrash.length == trashThrownAway-1)
 		gameIsOver = true;
+	
 	
 	//Game is not over
 	if(!gameIsOver)
 	{
+		//Update Bins
 		recycleBin.update();
 		trashBin.update();
 		charmBin.update();
 		charmLogo.update();
 	
+		//Set current visible trash
 		for(i = 0; i < trashThrownAway; i++)
 		{
 			if(!myTrash[i].thrownAway)
@@ -483,6 +547,7 @@ function updateGameArea()
 			}					
 		}	
 		
+		//Sticking trash to hand if its clicked
 		if(isClicked)
 		{
 			currentTrash.y = myGameArea.y - (currentTrash.height/4);
@@ -496,6 +561,7 @@ function updateGameArea()
 	//Game is over
 	else
 	{
+		//Regular game over menu screen
 		if(!showMissed)
 		{
 			playAgainBox.clickable = true;
@@ -503,6 +569,7 @@ function updateGameArea()
 			
 			gameOverText.update();
 			
+			//Calculating Score
 			for(i = 0; i < myTrash.length; i++)
 			{
 				if(!myTrash[i].correct && scoreCalculated)
@@ -511,7 +578,7 @@ function updateGameArea()
 			scoreCalculated = false;
 			
 			endScore = parseInt((score/myTrash.length)*100);
-			
+	
 			if(endScore >= 80)
 				score80 = true;
 
@@ -525,12 +592,14 @@ function updateGameArea()
 			
 		}
 		
+		//Showing missed trash items
 		else
 		{
 			playAgainBox.clickable = false;
 			viewMissedBox.clickable = false;
 			missedText.update();
 			
+			//Looping through and updating missed trash
 			for(i = 0; i < missed.length; i++)
 			{
 				
@@ -542,6 +611,7 @@ function updateGameArea()
 		}
 		
 	}
-		
+	
+	//Updating hand
 	hand.update();
 }
