@@ -89,8 +89,10 @@ var myGameArea =
 				{
 					if(!myTrash[i].correct && !alreadyPrintedMissed)
 					{
-						//missedText.text += "\n" + myTrash[i].name;
 						missedNames.push(myTrash[i].name);
+						
+						var missedTrashAndBin = myTrash[i].name + " was placed in " + myTrash[i].wrongBin;
+						allMissed.push(missedTrashAndBin);
 					}
 					showMissed = true;					
 					backText.clickable = true;
@@ -143,6 +145,7 @@ var myGameArea =
 						{
 							feedback.innerHTML =  currentTrashName + " is Recyclable, But " + currentTrashName + " requires a special Bin";
 							myTrash[i].correct = false;
+							myTrash[i].wrongBin = "Recycle Bin";
 						}
 						
 						//Current Trash is not Recyclable
@@ -150,6 +153,7 @@ var myGameArea =
 						{
 							feedback.innerHTML = "Hey you can't recycle  " + currentTrashName + " !";
 							myTrash[i].correct = false;
+							myTrash[i].wrongBin = "Recycle Bin";
 						}
 					}
 						
@@ -161,6 +165,7 @@ var myGameArea =
 						{
 							feedback.innerHTML = "Hey " + currentTrashName + " is Recyclable!";
 							myTrash[i].correct = false;
+							myTrash[i].wrongBin = "Trash Bin";
 						}
 
 						//Current Trash is just Trash
@@ -188,6 +193,7 @@ var myGameArea =
 						{
 							feedback.innerHTML = "Nope  " + currentTrashName + "  doesn't go here";	
 							myTrash[i].correct = false;
+							myTrash[i].wrongBin = "CHaRM Bin";
 						}
 					}
 						
@@ -317,6 +323,7 @@ function trash(name, width, height, imgSrc, x, y, type, recycleable, charm)
 	var current;
 	this.current = false;
 	this.correct = true;
+	this.wrongBin = "";
 	
 	if(type == "image")
 	{
