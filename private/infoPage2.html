@@ -44,7 +44,7 @@
             window.onload = function() {
                 // time the page was opened for timeOnPage
                 pageOpened = new Date();
-                
+                console.log(SHA256('YES'));
                 // getting username and progress
                 $.get("/module/progress", function(data){
                    if(data.found) {
@@ -154,16 +154,16 @@
                     // answer values have been hashed prior to deplyoment and 
                     // are compared to their has values
                     case 1:
-                        if(SHA256(document.getElementsByName("answer1").item(0).value) === "8a798890fe93817163b10b5f7bd2ca4d25d84c52739a645a889c173eee7d9d3d") {isCorrect = true;}
+                        if(SHA256(document.getElementsByName("answer1").item(0).value.toUpperCase()) === "f9171164593756e56fb197327b529a4955590566560dbe62d586bff41be9d297") {isCorrect = true;}
                         break;
                     case 2:
-                        if(SHA256(document.getElementsByName("answer1").item(0).value) === "8a798890fe93817163b10b5f7bd2ca4d25d84c52739a645a889c173eee7d9d3d") {isCorrect = true;}
+                        if(SHA256(document.getElementsByName("answer2").item(0).value.toUpperCase()) === "f9171164593756e56fb197327b529a4955590566560dbe62d586bff41be9d297") {isCorrect = true;}
                         break;
                     case 3:
-                        if(SHA256(document.getElementsByName("answer3").item(0).value) === "8a798890fe93817163b10b5f7bd2ca4d25d84c52739a645a889c173eee7d9d3d") {isCorrect = true;}
+                        if(SHA256(document.getElementsByName("answer3").item(0).value.toUpperCase()) === "f9171164593756e56fb197327b529a4955590566560dbe62d586bff41be9d297") {isCorrect = true;}
                         break;
                     case 4:
-                        if(SHA256(document.getElementsByName("answer4").item(0).value) === "8a798890fe93817163b10b5f7bd2ca4d25d84c52739a645a889c173eee7d9d3d") {isCorrect = true;}
+                        if(SHA256(document.getElementsByName("answer4").item(0).value.toUpperCase()) === "f9171164593756e56fb197327b529a4955590566560dbe62d586bff41be9d297") {isCorrect = true;}
                 } // switch for each question depending on question number
                 
                 // if correct, show correct, else show incorrect
@@ -174,7 +174,6 @@
                     document.getElementsByName("answer" + questionNumber.toString())[0].readOnly = true;
                 } else {
                     incorrectAnswers[questionNumber - 1].push(document.getElementsByName("answer" + questionNumber.toString())[0].value);
-                    
                     
                     document.getElementById("correct" + questionNumber.toString()).innerHTML = "Incorrect!";
                     document.getElementById("correct" + questionNumber.toString()).style.color = "red";

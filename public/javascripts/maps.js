@@ -23,8 +23,10 @@ function createMap() {
                             { // marker 1
                                 type: 'Feature',
                                 properties: {
-                                    description: "<strong>Athens-Clarke County Recycling Divison</strong><br>" +
-                                    "725 Hancock Industrial Way, Athens, GA 30605<br>"
+                                    description: "<strong>Athens-Clarke County Recycling Divison</strong><br>\
+                                    725 Hancock Industrial Way, Athens, GA 30605<br><br>\
+                                    The ACC recycling division is the perfect place in Athens to recycle traditional items\
+                                    in bulk, such as hard plastic, glass, metal cans, cardboard, and mixed paper. For non-traditional items, see CHaRM."
                                 },
                                 geometry: { // geometry of this point
                                     type: "Point",
@@ -33,8 +35,10 @@ function createMap() {
                             }, { // marker 2
                                 type: 'Feature',
                                 properties: {
-                                    description: "<strong>CMC Recycling</strong><br>" + 
-                                    "1570, 590 Old Hull Rd, Athens, GA 30601"
+                                    description: "<strong>CMC Recycling</strong><br>\
+                                    1570, 590 Old Hull Rd, Athens, GA 30601<br><br>\
+                                    CMC recycling accepts both ferrous and non-ferrous scrap metals\
+                                    as well as items like car batteries, radiators, and auto bodies."
                                 },
                                 geometry: { // geometry of this point
                                     type: "Point",
@@ -43,8 +47,10 @@ function createMap() {
                             }, { // marker 3
                                 type: 'Feature',
                                 properties: {
-                                    description: "<strong>CHaRM (Center for Hard to Recycle Materials)</strong><br>" + 
-                                    "1005 College Ave, Athens, GA 30601"
+                                    description: "<strong>CHaRM (Center for Hard to Recycle Materials)</strong><br>\
+                                    1005 College Ave, Athens, GA 30601<br><br>\
+                                    CHaRM accepts all kinds of non-traditional recycled materials that can't be recycled\
+                                    anywhere else, such as batteries, styrofoam, bulbs, clothing, paint, and books."
                                 },
                                 geometry: { // geometry of this point
                                     type: "Point",
@@ -53,8 +59,10 @@ function createMap() {
                             }, { // marker 4
                                 type: 'Feature',
                                 properties: {
-                                    description: "<strong>Georgia Computer Recycling</strong><br>" + 
-                                    "240 Collins Ind Blvd, Athens, GA 30601"
+                                    description: "<strong>Georgia Computer Recycling</strong><br>\
+                                    240 Collins Ind Blvd, Athens, GA 30601<br><br>\
+                                    Georgia Computer Recycling accepts electronic parts from computers\
+                                    and similar technological devices for repurposing and recycling."
                                 },
                                 geometry: { // geometry of this point
                                     type: "Point",
@@ -63,8 +71,10 @@ function createMap() {
                             }, { // marker 5
                                 type: 'Feature',
                                 properties: {
-                                    description: "<strong>Free I.T. Athens</strong><br>" +
-                                    "2465 Jefferson Rd, Athens, GA 30607"
+                                    description: "<strong>Free I.T. Athens</strong><br>\
+                                    2465 Jefferson Rd, Athens, GA 30607<br><br>\
+                                    Free I.T. Athens is a non-profit organization that accepts various types of technology\
+                                    such as computers, printers, drives, speakers, monitors, and much more for repurposing and recycling."
                                 }, 
                                 geometry: { // geometry of this point
                                     type: "Point",
@@ -73,8 +83,10 @@ function createMap() {
                             }, { // marker 6
                                 type: 'Feature',
                                 properties: {
-                                    description: "<strong>ecoATM</strong><br>" +
-                                    "191 Alps Rd, Athens, GA 30606 (inside Kroger)"
+                                    description: "<strong>ecoATM</strong><br>\
+                                    191 Alps Rd, Athens, GA 30606 (inside Kroger)<br><br>\
+                                    ecoATM accepts phones and tablets for reuse and even gives money in\
+                                    exchange for unwanted items!"
                                 },
                                 geometry: { // geometry of this point
                                     type: "Point",
