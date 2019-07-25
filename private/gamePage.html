@@ -72,6 +72,8 @@
             // page number
             var page = 2;
             
+            document.addEventListener()
+            
             window.onload = function() {
                 startGame();
                 
@@ -90,8 +92,11 @@
                 document.getElementById('nextPage').href = '/module/next?page=' + (page+1).toString();
             } // on window load
             
+            function checkIfComplete() {
+                
+            } // checkIfComplete
+            
             // posts 'things' (data) to the server 
-            //score80 is check boolean
             function postThings() {
                 // time the page was closed for timeOnPage
                 var pageClosed = new Date();
@@ -99,7 +104,7 @@
                 // data variable to be posted to the backend
                 var serverInfo = {page: page,
                         data: {
-                            missedNames: missedNames,
+                            allMissed: allMissed,
                             endScore: endScore,
                             metaData: {timeOnPage: pageClosed - pageOpened}
                         }
@@ -149,7 +154,6 @@
 		<br>
 		
         <!-- Game 1 Page -->
-        
         <div id="canvasheader">
             <h2 id="progress"></h2>
             
@@ -170,7 +174,7 @@
         
         <div class="centered">
             <a id="lastPage" class="nextPageButton">Previous Page</a>
-            <a onclick="postThings()" id="nextPage" class="nextPageButton">Next Page</a>
+            <a onclick="postThings()" id="nextPage" class="nextPageButton disabled">Next Page</a>
         </div>
 
         <!-- Load all the Bootstrap requirements at the end of the document -->
