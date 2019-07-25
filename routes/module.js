@@ -14,15 +14,20 @@ router.use(async (req, res, next) => {
 
 		// Check if user exists
 		if (user) {
-			let daysSinceCookieIssue = ((new Date()).getTime() - (new Date(user.cookieExp)).getTime()) / (24 * 60 * 60 * 1000)
-			if (daysSinceCookieIssue > 1.0) {
+			// Check if users cookie is ''
+			if (user.cookie == '') {
 				res.redirect('/').send()
 			} else {
-				// Everyhting is fine
-				debug(`Found user with cookie: ${req.cookies.sessionCookie}`)
-				req.user = user
-				next()
-				return
+				let daysSinceCookieIssue = ((new Date()).getTime() - (new Date(user.cookieExp)).getTime()) / (24 * 60 * 60 * 1000)
+				if (daysSinceCookieIssue > 1.0) {
+					res.redirect('/').send()
+				} else {
+					// Everyhting is fine
+					debug(`Found user with cookie: ${req.cookies.sessionCookie}`)
+					req.user = user
+					next()
+					return
+				}
 			}
 		} else {
 			// No user with that cookie found
@@ -107,11 +112,11 @@ router.post('/progress', async (req, res) => {
 router.get('/data', (req, res) => {
 	console.log('Test')
 	try {
-		if(req.query.page) {
+		if (req.query.page) {
 			let name = ['preSurvey', 'infoPage', 'gamePage', 'infoPage2', 'mapPage', 'postSurvey']
 			let userData = req.user[name[req.query.page]]
-			if(!userData) {
-				let obj = {success: false, msg: 'No data found here'}
+			if (!userData) {
+				let obj = { success: false, msg: 'No data found here' }
 				debug(obj)
 				res.status(400).send(obj)
 			} else {
@@ -120,11 +125,11 @@ router.get('/data', (req, res) => {
 				res.send(userData)
 			}
 		} else {
-			let obj = { success: 'false' , msg: 'No page number' }
+			let obj = { success: 'false', msg: 'No page number' }
 			debug(obj)
 			res.status(400).send(obj)
 		}
-	} catch(error) {
+	} catch (error) {
 		debug(`Error [9]: ${error}`)
 		res.status(500).send('Error [9] in module.js')
 	}
