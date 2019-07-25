@@ -71,6 +71,7 @@
 /* represents the correct/incorrect popup on question answer */
 .correct {
     margin: 25px;
+    font-size: 9pt;
 }
 
 /* button for answering questions */
@@ -116,7 +117,7 @@
 /* defined for all the buttons at the end of pages */
 .nextPageButton {
     height: 3%;
-    width: 90px;
+    width: 110px;
     margin-top: 25px;
     margin-bottom: 25px;
     cursor: pointer;

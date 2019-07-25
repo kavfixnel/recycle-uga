@@ -67,10 +67,7 @@
             
             // logs the user out and redirects to home page
             function logout() {
-                $.get("/login/logout", function(data) {
-                   if(data.success)
-                       location.href="/";
-                });
+                location.href ="/login/logout";
             } // logout
         </script>
         
@@ -99,7 +96,7 @@
         <div id="map" style="height: 600px;"></div>
         
         <div class="centered">
-            <a id="lastPage" class="nextPageButton">Last Page</a>
+            <a id="lastPage" class="nextPageButton">Previous Page</a>
             <a onclick="postThings()" id="nextPage" class="nextPageButton">Next Page</a>
         </div>
         

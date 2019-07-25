@@ -157,9 +157,7 @@
                         if(SHA256(document.getElementsByName("answer1").item(0).value) === "8a798890fe93817163b10b5f7bd2ca4d25d84c52739a645a889c173eee7d9d3d") {isCorrect = true;}
                         break;
                     case 2:
-                        if(SHA256(document.getElementsByName("answer2").item(0).value) === "69f59c273b6e669ac32a6dd5e1b2cb63333d8b004f9696447aee2d422ce63763" ||
-                        SHA256(document.getElementsByName("answer2").item(0).value) === 
-                        "883caeb7ca1165a22441d8487203cc8aa9284ad7c0f5664c704f98ecb10849b4") {isCorrect = true;}
+                        if(SHA256(document.getElementsByName("answer1").item(0).value) === "8a798890fe93817163b10b5f7bd2ca4d25d84c52739a645a889c173eee7d9d3d") {isCorrect = true;}
                         break;
                     case 3:
                         if(SHA256(document.getElementsByName("answer3").item(0).value) === "8a798890fe93817163b10b5f7bd2ca4d25d84c52739a645a889c173eee7d9d3d") {isCorrect = true;}
@@ -223,10 +221,7 @@
             
             // logs the user out and redirects to home page
             function logout() {
-                $.get("/login/logout", function(data) {
-                   if(data.success)
-                       location.href="/";
-                });
+                location.href ="/login/logout";
             } // logout
         </script>
     </head>
@@ -250,7 +245,7 @@
         
         <div>
             <p style="text-align: center; margin-top: 20px;">Hover over the graphs and answer all questions to continue!<br>
-                <b>answers in order: 'yes', '90'/'90%', 'yes', 'yes'</b>
+                <b>answers in order: 'yes', 'yes', 'yes', 'yes'</b>
             </p>
 
             <!-- (some) Information from Slide 3 of PP module (uses window.onload function) -->
@@ -286,7 +281,7 @@
             <div id="graphArea2" class="graphArea">
                 <div id="graphContainer2" class="graphContainer"></div>
                 <div id="question2" class="question">
-                    <h3>How much energy (percentage) is saved when products are made with recycled plastics compared to virgin plastics?</h3>
+                    <h3>Is recycling at UGA good for the natural environment?</h3>
                 
                     <div class="answers">
                         <input type="text" name="answer2" maxlength="20" class="answerText" onkeypress="enterPressed(event, 2)">
@@ -333,7 +328,7 @@
         </div>
 
         <div class="centered">
-            <a id="lastPage" class="nextPageButton">Last Page</a>
+            <a id="lastPage" class="nextPageButton">Previous Page</a>
             <a onclick="postThings()" id="nextPage" class="nextPageButton disabled">Next Page</a>
         </div>
         
