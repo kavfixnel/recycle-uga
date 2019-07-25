@@ -61,10 +61,7 @@
             
             // logs the user out and redirects to home page
             function logout() {
-                $.get("/login/logout", function(data) {
-                   if(data.success)
-                       location.href="/";
-                });
+                location.href ="/login/logout";
             } // logout
         </script>
         <!-- Global site tag (gtag.js) - Google Analytics -->

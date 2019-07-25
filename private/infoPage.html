@@ -157,9 +157,9 @@
                     // answer values have been hashed prior to deplyoment and 
                     // are compared to their has values
                     case 1:
-                        if(SHA256(document.getElementsByName("answer1").item(0).value) === "bb79c732f7146b5f604f1ed98adb8ac501a31637ab64e87d03655f48b8d524f7" ||
+                        if(SHA256(document.getElementsByName("answer1").item(0).value) === "f369cb89fc627e668987007d121ed1eacdc01db9e28f8bb26f358b7d8c4f08ac" ||
                         SHA256(document.getElementsByName("answer1").item(0).value) === 
-                        "89ebff7bf414048f7ee3ad6f755dd41c755bf8916cf7d6c29ac8fea6f74fdb9c") {isCorrect = true;}
+                        "10963ac2db22b5b879edcf195eaacd3866b19571110462807b83133c98182864") {isCorrect = true;}
                         else {isCorrect = false;}
                         break;
 
@@ -174,18 +174,35 @@
                         break;
 
                     case 4:
-                        if(SHA256(document.getElementsByName("answer4").item(0).value) === "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35" || 
-                          SHA256(document.getElementsByName("answer4").item(0).value) === "c21365c7ea5b3c9d9326726c52d1ba5f14961d6767619fb1aa14255d4c42e759" ||
-                          SHA256(document.getElementsByName("answer4").item(0).value.toUpperCase()) ===
-                          "84747dcd831c7131207a1042d74b60ac54fdcc10e7aef9e1f7940dda2c95dcae") {isCorrect = true;}
+                        if(SHA256(document.getElementsByName("answer4").item(0).value.toUpperCase()) ===
+                          "f9171164593756e56fb197327b529a4955590566560dbe62d586bff41be9d297") {isCorrect = true;}
                 } // switch for each question depending on question number
                 
                 // if correct, show correct, else show incorrect
                 if(isCorrect) {
-                    document.getElementById("correct" + questionNumber.toString()).innerHTML = "Correct!";
                     document.getElementById("correct" + questionNumber.toString()).style.color = "green";
                     document.getElementById("submit" + questionNumber.toString()).classList.add("disabled");
                     document.getElementsByName("answer" + questionNumber.toString())[0].readOnly = true;
+                    
+                    document.getElementById("correct" + questionNumber.toString()).innerHTML = "Correct!";
+                    
+                    switch(questionNumber) {
+                        case 1:
+                             document.getElementById("correct" + questionNumber.toString()).innerHTML +=
+                                 " The EPA estimates that 75% of US waste is recyclable.  Unfortunately, in 2018 only 22% of the waste generated at UGA was recycled.  Dawgs can do better!";
+                            break;
+                        case 2:
+                            
+                            break;
+                            
+                        case 3:
+                            
+                            break;
+                        case 4:
+                            document.getElementById("correct" + questionNumber.toString()).innerHTML +=
+                                " Georgia’s economy relies on recycling.  Include stats about manufacturing, jobs, carpet industry, etc…";
+                            
+                    } // adding correct text for each question
                 } else {
                     incorrectAnswers[questionNumber - 1].push(document.getElementsByName("answer" + questionNumber.toString())[0].value);
                     
@@ -234,10 +251,7 @@
             
             // logs the user out and redirects to home page
             function logout() {
-                $.get("/login/logout", function(data) {
-                   if(data.success)
-                       location.href="/";
-                });
+                location.href ="/login/logout";
             } // logout
         </script>
     </head>
@@ -250,7 +264,7 @@
                     &thinsp; Roosevelt@UGA Sustainability Project
                 </div>
                 <div id="username" style="color: white;"></div>
-                <div><button type="button" onclick="logout();" class="btn btn-light">Logout</button></div>
+                <div><button type="button" onclick="logout()" class="btn btn-light">Logout</button></div>
             </div>
         </nav>
         
@@ -262,14 +276,14 @@
         <div>
             <!-- shows the answers bc everyone but me forgets them -->
             <p style="text-align: center; margin-top: 20px;">Hover over the graphs and answer all questions to continue!<br>
-                <b>answers in order: '21.9'/'21.9%', 'yes', 'wishful'/'wishful recycling', '2'/'2nd'/'second'</b>
+                <b>answers in order: '75'/'75%', 'yes', 'wishful'/'wishful recycling', '2'/'2nd'/'second'</b>
             </p>
 
             <!-- (some) Information from Slide 3 of PP module (uses window.onload function) -->
             <div id="graphArea1" class="graphArea">
                 <div id="graphContainer1" class="graphContainer"></div>
                 <div id="question1" class="question">
-                    <h3>What percentage of the UGA's waste stream is recycled?</h3>
+                    <h3>What percentage of waste generated in the US can be recycled?</h3>
                 
                     <div class="answers">
                         <input type="text" name="answer1" maxlength="20" class="answerText" onkeypress="enterPressed(event, 1)">
@@ -321,7 +335,7 @@
             <div id="graphArea4" class="graphArea">
                 <div id="graphContainer4" class="graphContainer"></div>
                 <div id="question4" class="question">
-                    <h3>Where does Georgia rank by state in terms of market for recycled materials?</h3>
+                    <h3>Does recycling at UGA help create jobs in Georgia?</h3>
                 
                     <div class="answers">
                         <input type="text" name="answer4" maxlength="20" class="answerText" onkeypress="enterPressed(event, 4)">
@@ -336,7 +350,7 @@
         </div>
 
         <div class="centered">
-            <a id="lastPage" class="nextPageButton">Last Page</a>
+            <a id="lastPage" class="nextPageButton">Previous Page</a>
             <a onclick="postThings()" id="nextPage" class="nextPageButton disabled">Next Page</a>
         </div>
         

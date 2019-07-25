@@ -15,8 +15,8 @@
         <!-- on page js, mainly window.onload -->
         <script>
             var pageOpened;
-            var numForms = 18;
-            var numQuestions = 13;
+            var numForms = 21;
+            var numQuestions = 16;
             // page number
             var page = 0;
 
@@ -122,10 +122,7 @@
             
             // logs the user out and redirects to home page
             function logout() {
-                $.get("/login/logout", function(data) {
-                   if(data.success)
-                       location.href="/";
-                });
+                location.href ="/login/logout";
             } // logout
         </script>
     </head>
@@ -211,13 +208,13 @@
             <br>
             <p id="value7" style="text-align: center;">50%</p>
             
-            <label class="instructions"><b>Answer True or False to the following questions:</b></label><br>
+            <label class="instructions"><b>Answer True or False to the following questions related to recyling at UGA:</b></label><br>
 
             <table class="table table-borderless" style="margin-top: 25px;">
                 <tbody>
                     <tr>
                         <td>
-                            <label>Styrofoam can be recycled anywhere.</label>
+                            <label>Plastic bags can be placed in all recycling bins at UGA.</label>
                         </td>
                         <td>
                             <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 8" onchange="checkIfCompletePreSurvey();">
@@ -233,7 +230,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <label>A used plastic food container can go into the recycling bin without being cleaned.</label>
+                            <label>Paper towels can be placed in all recycling bins at UGA.</label>
                         </td>
                         <td>
                             <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 9" onchange="checkIfCompletePreSurvey();">
@@ -249,7 +246,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <label>Hard plastic and film plastic can be recycled in the same place.</label>
+                            <label> Styrofoam can be placed in all recycling bins at UGA.</label>
                         </td>
                         <td>
                             <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 10" onchange="checkIfCompletePreSurvey();">
@@ -265,7 +262,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <label>You can recycle plastic bags.</label>
+                            <label>Leftover food can be placed in all recycling bins at UGA.</label>
                         </td>
                         <td>
                             <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 11" onchange="checkIfCompletePreSurvey();">
@@ -281,7 +278,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <label>You can recycle used paper towels.</label>
+                            <label>A used plastic food container does not need to be cleaned out before it is recycled.</label>
                         </td>
                         <td>
                             <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 12" onchange="checkIfCompletePreSurvey();">
@@ -297,7 +294,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <label>You can recycle pizza boxes.</label>
+                            <label>Greasy pizza boxes can be recycled.</label>
                         </td>
                         <td>
                             <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 13" onchange="checkIfCompletePreSurvey();">
@@ -307,6 +304,54 @@
                                 </label>
                                 <label class="btn btn-sm btn-secondary">
                                     <input type="radio" name="question13" value="False" autocomplete="off" >False
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>It is better to not generate waste than to recycle the waste that you generate.</label>
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 14" onchange="checkIfCompletePreSurvey();">
+                                &emsp;
+                                <label class="btn btn-sm btn-secondary">
+                                    <input type="radio" name="question14" value="True" autocomplete="off">True
+                                </label>
+                                <label class="btn btn-sm btn-secondary">
+                                    <input type="radio" name="question14" value="False" autocomplete="off" >False
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>There are many simple strategies that anyone can do to reduce waste.</label>
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 15" onchange="checkIfCompletePreSurvey();">
+                                &emsp;
+                                <label class="btn btn-sm btn-secondary">
+                                    <input type="radio" name="question15" value="True" autocomplete="off">True
+                                </label>
+                                <label class="btn btn-sm btn-secondary">
+                                    <input type="radio" name="question15" value="False" autocomplete="off" >False
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Small individual efforts have a cumulative and meaningful impact in reducing waste at UGA.</label>
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 16" onchange="checkIfCompletePreSurvey();">
+                                &emsp;
+                                <label class="btn btn-sm btn-secondary">
+                                    <input type="radio" name="question16" value="True" autocomplete="off">True
+                                </label>
+                                <label class="btn btn-sm btn-secondary">
+                                    <input type="radio" name="question16" value="False" autocomplete="off" >False
                                 </label>
                             </div>
                         </td>
