@@ -49,7 +49,13 @@
                 $.get("/module/progress", function(data){
                    if(data.found) {
                         document.getElementById('username').innerHTML = data.user;
-                        document.getElementsByClassName('progress-bar')[0].style.width = (data.progress/.01).toString() + "%";
+                        document.getElementsByClassName('progress-bar')[0].style.width = (data.progress*100).toString() + "%";
+                       
+                       // checking if page has already been completed
+                        if(data.progress > .6) {
+                            document.getElementById("nextPage").classList.remove("disabled");
+                            document.getElementById('nextPage').onclick = "";
+                        } // if this page has already been completed
                    } // if the data was found
                 });
                 
@@ -151,9 +157,7 @@
                         if(SHA256(document.getElementsByName("answer1").item(0).value) === "8a798890fe93817163b10b5f7bd2ca4d25d84c52739a645a889c173eee7d9d3d") {isCorrect = true;}
                         break;
                     case 2:
-                        if(SHA256(document.getElementsByName("answer2").item(0).value) === "69f59c273b6e669ac32a6dd5e1b2cb63333d8b004f9696447aee2d422ce63763" ||
-                        SHA256(document.getElementsByName("answer2").item(0).value) === 
-                        "883caeb7ca1165a22441d8487203cc8aa9284ad7c0f5664c704f98ecb10849b4") {isCorrect = true;}
+                        if(SHA256(document.getElementsByName("answer1").item(0).value) === "8a798890fe93817163b10b5f7bd2ca4d25d84c52739a645a889c173eee7d9d3d") {isCorrect = true;}
                         break;
                     case 3:
                         if(SHA256(document.getElementsByName("answer3").item(0).value) === "8a798890fe93817163b10b5f7bd2ca4d25d84c52739a645a889c173eee7d9d3d") {isCorrect = true;}
@@ -181,8 +185,10 @@
             // detects when enter is pressed
             function enterPressed(e, formnum) {
                 var key = (e.keyCode ? e.keyCode : e.which);
-                if(key === 13)
+                if(key === 13) {
                     checkAnswer(formnum);
+                    checkIfCompleteInfo();
+                } // if enter was pressed
             } // enterPressed
             
             // posts 'things' (data) to the server 
@@ -206,11 +212,17 @@
                     data: JSON.stringify(serverInfo),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: function(data){location.reload(true);},
+                    success: function(data){alert("post success");},
                     failure: function(){alert("post failed");}
                 });
 
+                return true;
             } // postThings
+            
+            // logs the user out and redirects to home page
+            function logout() {
+                location.href ="/login/logout";
+            } // logout
         </script>
     </head>
     <body>
@@ -222,18 +234,18 @@
                     &thinsp; Roosevelt@UGA Sustainability Project
                 </div>
                 <div id="username" style="color: white;"></div>
-                <div><button type="button" onclick="location.href='/login/logout';" class="btn btn-light">Logout</button></div>
+                <div><button type="button" onclick="logout();" class="btn btn-light">Logout</button></div>
             </div>
         </nav>
         
         <!-- Progress bar for entire module -->
         <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" >Your Progress</div>
+            <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">Your Progress</div>
         </div>
         
         <div>
             <p style="text-align: center; margin-top: 20px;">Hover over the graphs and answer all questions to continue!<br>
-                <b>answers in order: 'yes', '90'/'90%', 'yes', 'yes'</b>
+                <b>answers in order: 'yes', 'yes', 'yes', 'yes'</b>
             </p>
 
             <!-- (some) Information from Slide 3 of PP module (uses window.onload function) -->
@@ -269,7 +281,7 @@
             <div id="graphArea2" class="graphArea">
                 <div id="graphContainer2" class="graphContainer"></div>
                 <div id="question2" class="question">
-                    <h3>How much energy (percentage) is saved when products are made with recycled plastics compared to virgin plastics?</h3>
+                    <h3>Is recycling at UGA good for the natural environment?</h3>
                 
                     <div class="answers">
                         <input type="text" name="answer2" maxlength="20" class="answerText" onkeypress="enterPressed(event, 2)">
@@ -316,8 +328,8 @@
         </div>
 
         <div class="centered">
-            <a id="lastPage" class="nextPageButton">Last Page</a>
-            <a onclick="postThings()" id="nextPage" class="nextPageButton">Next Page</a>
+            <a id="lastPage" class="nextPageButton">Previous Page</a>
+            <a onclick="postThings()" id="nextPage" class="nextPageButton disabled">Next Page</a>
         </div>
         
         <!-- Load all the Bootstrap requirements at the end of the document -->

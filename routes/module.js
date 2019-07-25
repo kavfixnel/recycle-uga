@@ -1,7 +1,8 @@
 // Import the required modules
-let express = require('express')
-let router = express.Router()
-let path = require('path')
+const express = require('express')
+const router = express.Router()
+const path = require('path')
+const debug = require('debug')('recycle-uga:module-router')
 
 let userModule = require('../schemas/user.js')
 
@@ -13,35 +14,42 @@ router.use(async (req, res, next) => {
 
 		// Check if user exists
 		if (user) {
-			let daysSinceCookieIssue = ((new Date()).getTime() - (new Date(user.cookieExp)).getTime()) / (24 * 60 * 60 * 1000)
-			if (daysSinceCookieIssue > 1.0) {
+			// Check if users cookie is ''
+			if (user.cookie == '') {
 				res.redirect('/').send()
 			} else {
-				// Everyhting is fine
-				next()
-				return
+				let daysSinceCookieIssue = ((new Date()).getTime() - (new Date(user.cookieExp)).getTime()) / (24 * 60 * 60 * 1000)
+				if (daysSinceCookieIssue > 1.0) {
+					res.redirect('/').send()
+				} else {
+					// Everyhting is fine
+					debug(`Found user with cookie: ${req.cookies.sessionCookie}`)
+					req.user = user
+					next()
+					return
+				}
 			}
 		} else {
 			// No user with that cookie found
 			res.redirect('/').send()
 		}
 	} catch (error) {
-		console.error(error)
+		debug(`Error [1]: ${error}`)
 		res.status(500).send("Error [1] in module.js")
 	}
 	res.status(500).send("Error [2] in module.js")
 });
 
-/* Send the next avaliable module page */
+/* Send the next avaliable module page
+	or the requested page if that user is allowed to go there */
 router.get('/next', async (req, res) => {
 	try {
-		let user = await userModule.findOne({ cookie: req.cookies.sessionCookie })
-
+		// Check if user requested a certain page
 		let page
-		if(req.query.page && (req.query.page <= user.progress)) {
+		if (req.query.page && (req.query.page <= req.user.progress)) {
 			page = parseInt(req.query.page)
 		} else {
-			page = user.progress
+			page = req.user.progress
 		}
 
 		// Decide what page needs to be loaded
@@ -71,7 +79,7 @@ router.get('/next', async (req, res) => {
 				res.status(500).send("Error [5] in module.js")
 		}
 	} catch (error) {
-		console.error(error)
+		debug(`Error [3]: ${error}`)
 		res.status(500).send("Error [3] in module.js")
 	}
 	//res.status(500).send("Error [4] in module.js")
@@ -80,47 +88,72 @@ router.get('/next', async (req, res) => {
 /* Let the user post their progress to this endpoint */
 router.post('/progress', async (req, res) => {
 	try {
-		// Find user
-		console.log(req.body)
-		let user = await userModule.findOne({ cookie: req.cookies.sessionCookie })
-		if (req.body.page == user.progress && user.progress <= 5) {
+		debug(req.body)
+		// Check if someone is trying to bamboozle the system
+		if (req.body.page == req.user.progress && req.user.progress <= 5) {
 			let name = ['preSurvey', 'infoPage', 'gamePage', 'infoPage2', 'mapPage', 'postSurvey']
-			user.set('progress', user.progress + 1)
-			user.set(name[req.body.page], req.body.data)
-			await user.save()
+			req.user.set('progress', req.user.progress + 1)
+			req.user.set(name[req.body.page], req.body.data)
+			await req.user.save()
 			res.status(200).send()
 		} else {
 			res.status(400).send()
 		}
 	} catch (error) {
-		console.error(error)
+		// Error occured
+		debug(`Error [6]: ${error}`)
 		res.status(500).send('Error [6] in module.js /progress')
 	}
-	//res.status(400).send()
 });
 
+/**
+ * Retrieve the newest user data
+ */
+router.get('/data', (req, res) => {
+	console.log('Test')
+	try {
+		if (req.query.page) {
+			let name = ['preSurvey', 'infoPage', 'gamePage', 'infoPage2', 'mapPage', 'postSurvey']
+			let userData = req.user[name[req.query.page]]
+			if (!userData) {
+				let obj = { success: false, msg: 'No data found here' }
+				debug(obj)
+				res.status(400).send(obj)
+			} else {
+				userData.success = true
+				debug(userData)
+				res.send(userData)
+			}
+		} else {
+			let obj = { success: 'false', msg: 'No page number' }
+			debug(obj)
+			res.status(400).send(obj)
+		}
+	} catch (error) {
+		debug(`Error [9]: ${error}`)
+		res.status(500).send('Error [9] in module.js')
+	}
+})
+
+/* Get the current progress of a user */
 router.get('/progress', async (req, res) => {
 	try {
-		// Find user
-		console.log(req.body)
-		let user = await userModule.findOne({ cookie: req.cookies.sessionCookie })
-
-		if(user.progress) {
+		debug(req.body)
+		if (req.user.progress) {
 			let obj = { found: true }
-			obj.user = user.id
-			obj.progress = user.progress / 5
+			obj.user = req.user.id
+			obj.progress = req.user.progress / 5
 			res.send(obj)
 		} else {
-			let obj = { found: false, msg: 'Error [7] in module.js'}
+			let obj = { found: false, msg: 'Error [7] in module.js' }
 			res.status(500).send(obj)
 		}
-
 	} catch (error) {
-		let obj = { found: false, msg: 'Error [6] in module.js'}
-		console.error(error)
-		res.status(500).send('Error [6] in module.js /progress')
+		let obj = { found: false, msg: 'Error [8] in module.js' }
+		debug(`Error [8]: ${error}`)
+		res.status(500).send('Error [8] in module.js /progress')
 	}
-	//res.status(400).send()
 });
 
+// Export the module router
 module.exports = router

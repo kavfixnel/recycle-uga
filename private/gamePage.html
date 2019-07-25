@@ -72,6 +72,8 @@
             // page number
             var page = 2;
             
+            document.addEventListener()
+            
             window.onload = function() {
                 startGame();
                 
@@ -90,6 +92,10 @@
                 document.getElementById('nextPage').href = '/module/next?page=' + (page+1).toString();
             } // on window load
             
+            function checkIfComplete() {
+                
+            } // checkIfComplete
+            
             // posts 'things' (data) to the server 
             function postThings() {
                 // time the page was closed for timeOnPage
@@ -98,6 +104,8 @@
                 // data variable to be posted to the backend
                 var serverInfo = {page: page,
                         data: {
+                            allMissed: allMissed,
+                            endScore: endScore,
                             metaData: {timeOnPage: pageClosed - pageOpened}
                         }
                 };
@@ -109,11 +117,17 @@
                     data: JSON.stringify(serverInfo),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: function(data){location.reload(true);},
+                    success: function(){alert("post success");},
                     failure: function(){alert("post failed");}
                 });
                 
+                return true;
             } // postThings
+            
+            // logs the user out and redirects to home page
+            function logout() {
+                location.href ="/login/logout";
+            } // logout
         </script>
     </head>
 	
@@ -128,19 +142,18 @@
                     &thinsp; Roosevelt@UGA Sustainability Project
                 </div>
                 <div id="username" style="color: white;"></div>
-                <div><button type="button" onclick="location.href='/login/logout';" class="btn btn-light">Logout</button></div>
+                <div><button type="button" onclick="logout();" class="btn btn-light">Logout</button></div>
             </div>
         </nav>
         
         <!-- Progress bar for entire module -->
         <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 42.85%">Your Progress</div>
+            <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">Your Progress</div>
         </div>
 		
 		<br>
 		
         <!-- Game 1 Page -->
-        
         <div id="canvasheader">
             <h2 id="progress"></h2>
             
@@ -160,8 +173,8 @@
 		</div>
         
         <div class="centered">
-            <a id="lastPage" class="nextPageButton">Last Page</a>
-            <a onclick="postThings()" id="nextPage" class="nextPageButton">Next Page</a>
+            <a id="lastPage" class="nextPageButton">Previous Page</a>
+            <a onclick="postThings()" id="nextPage" class="nextPageButton disabled">Next Page</a>
         </div>
 
         <!-- Load all the Bootstrap requirements at the end of the document -->

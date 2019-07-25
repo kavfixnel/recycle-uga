@@ -26,7 +26,7 @@
                 $.get("/users/", function(data){
                    if(data.found) {
                         document.getElementById('header').innerHTML += 
-                            '<div><button type="button" onclick="location.href=\'/login/logout\';" class="btn btn-light">Logout</button></div>';
+                            '<div><button type="button" onclick="logout();" class="btn btn-light">Logout</button></div>';
                    } else {
                        document.getElementById('header').innerHTML += 
                            '<div class="nav-item dropdown"> \
@@ -59,6 +59,10 @@
                 });
             } // postThings
             
+            // logs the user out and redirects to home page
+            function logout() {
+                location.href ="/login/logout";
+            } // logout
         </script>
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143547293-1"></script>

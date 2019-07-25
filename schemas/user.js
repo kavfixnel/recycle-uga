@@ -1,7 +1,10 @@
+// Require mongoose 
 let mongoose = require('mongoose');
 
+// Creat a new Schema
 let schema = mongoose.Schema;
 
+/* Define the user object */
 let userSchema = new schema({
 	id: {
 		type: String,
@@ -12,7 +15,7 @@ let userSchema = new schema({
 		type: Boolean,
 		default: false
 	},
-	cookie:  String,
+	cookie: String,
 	cookieExp: Date,
 	created: {
 		type: Date,
@@ -29,6 +32,8 @@ let userSchema = new schema({
 	postSurvey: Object
 });
 
+// Compile the schema into a model
 const User = mongoose.model('User', userSchema);
 
+// Export the module
 module.exports = User;

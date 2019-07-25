@@ -25,14 +25,12 @@ app.use('/users', usersRouter)
 app.use('/login', loginRouter)
 app.use('/module', moduleRouter)
 
+// Set up the public folder
 app.use(express.static('public'))
-
-if(process.env.DEVMODE == 'TRUE') {
-    console.log('Server started!')
-}
 
 app.use((req, res, next) => {
     res.status(404).sendFile(path.join(__dirname, '/private/404Page.html'))
 })
 
+// Export the app object
 module.exports = app
