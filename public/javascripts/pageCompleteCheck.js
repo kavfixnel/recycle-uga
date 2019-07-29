@@ -45,7 +45,7 @@ function checkIfCompletePostSurvey() {
         if(i > 7) {
             if(document.getElementsByName('question' + i.toString())[0].parentElement.classList.contains('active') ||
               document.getElementsByName('question' + i.toString())[1].parentElement.classList.contains('active'))
-                        finishedFormCount++;
+                finishedFormCount++;
         } // if t/f question
     } // for each question w/o text form
 

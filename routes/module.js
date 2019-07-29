@@ -52,6 +52,10 @@ router.get('/next', async (req, res) => {
 			page = req.user.progress
 		}
 
+		debug('User:\n~~~~~')
+		debug(req.user)
+		debug('~~~~~')
+
 		// Decide what page needs to be loaded
 		switch (page) {
 			case 0:
@@ -89,11 +93,19 @@ router.post('/progress', async (req, res) => {
 	try {
 		debug(req.body)
 		// Check if someone is trying to bamboozle the system
-		if (req.body.page == req.user.progress && req.user.progress <= 5) {
-			let name = ['preSurvey', 'infoPage', 'gamePage', 'infoPage2', 'mapPage', 'postSurvey']
-			req.user.set('progress', req.user.progress + 1)
-			req.user.set(name[req.body.page], req.body.data)
-			await req.user.save()
+		let name = ['preSurvey', 'infoPage', 'gamePage', 'infoPage2', 'mapPage', 'postSurvey']
+		if (req.body.page <= name.length) {
+			debug('Inside')
+			if (req.body.page == req.user.progress) {
+				req.user.set('progress', req.user.progress + 1)
+				debug('Progress: ' + req.user.progress)
+			}
+			req.user[name[req.body.page]].push(req.body.data)
+			debug('User: ')
+			debug(req.user.pages)
+			let ret = await req.user.save()
+			debug('Return:')
+			debug(ret)
 			res.status(200).send()
 		} else {
 			res.status(400).send()
