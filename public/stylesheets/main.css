@@ -183,6 +183,21 @@
     padding-left: 0;
 }
 
+.btn-sm {
+    background-color: #BA0C2F;
+    border-color: #a4061b;
+}
+
+.btn-sm:hover {
+    background-color: #74061b;
+    border-color: #64061b;
+}
+
+.btn-sm.active {
+    background-color: #74061b;
+    border-color: #64061b;
+}
+
 /* for answer fields on infoPage */
 .answerText {
     width: 50%;
