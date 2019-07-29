@@ -71,6 +71,7 @@ var myGameArea =
 						var missedTrashAndBin = myTrash[i].name + " was placed in " + myTrash[i].wrongBin;
 						allMissed.push(missedTrashAndBin);
 					}
+				}
 			}
 			
 			//If Player Clicks on Play Again -> Resets Game
