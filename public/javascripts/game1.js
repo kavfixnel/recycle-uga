@@ -68,7 +68,7 @@ var myGameArea =
 				{
 					if(!myTrash[i].correct)
 					{
-						var missedTrashAndBin = "Item: " + "'"myTrash[i].name"'" + ", Bin: " + "'"myTrash[i].wrongBin"'";
+						var missedTrashAndBin = "Item: " + "'" + myTrash[i].name + "'" + ", Bin: " + "'" + myTrash[i].wrongBin + "'";
 						allMissed.push(missedTrashAndBin);
 					}
 				}
@@ -115,10 +115,6 @@ var myGameArea =
 					if(!myTrash[i].correct && !alreadyPrintedMissed)
 					{
 						missedNames.push(myTrash[i].name);
-						
-						var missedTrashAndBin = myTrash[i].name + " was placed in " + myTrash[i].wrongBin;
-						allMissed.push(missedTrashAndBin);
-						console.log(allMissed[i]);
 					}
 					showMissed = true;					
 					backText.clickable = true;
