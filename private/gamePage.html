@@ -163,7 +163,7 @@
         
 		<div id="container">
             <canvas id="canvas"></canvas>
-			<img src="/../images/recycleInfo.jpg" id="info" alt="Recycle InfoGraphic" style="width:500px;height:600px;">
+			<img src="/../images/recycleInfo.jpg" id="info" alt="Recycle InfoGraphic" style="width:800px;height:600px;">
 			
             <div class="key centeredGame">
                 <h2 >Instructions</h2>
@@ -173,7 +173,6 @@
                 <b id="feedback"></b>
 				
 				<div id = "Hints">
-				<button onclick="toggleHints()">Show Hints</button>
 					<script>
 						document.getElementById("info").style.display = "none";
 					
@@ -193,6 +192,8 @@
 								game.style.display = 'intital';
 							}
 					</script>
+				<button onclick="toggleHints()">Show Hints</button>
+					
 				</div>
                 
                 <small id="hint">Not all items can be recycled. Many that can require a special bin called a CHaRM bin.</small>
