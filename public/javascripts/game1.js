@@ -105,6 +105,7 @@ var myGameArea =
 						
 						var missedTrashAndBin = myTrash[i].name + " was placed in " + myTrash[i].wrongBin;
 						allMissed.push(missedTrashAndBin);
+						console.log(allMissed[i]);
 					}
 					showMissed = true;					
 					backText.clickable = true;
