@@ -66,7 +66,7 @@
             } // isNumber
             
             // posts 'things' data to the server 
-            function postThings() {
+            async function postThings() {
                 var questionAnswers = [];
                 var tfAnswers = [];
                 var recycleLocations = [];
@@ -106,7 +106,7 @@
                               }
                         };
 
-                $.ajax({
+                await $.ajax({
                     type: "POST",
                     url: "/module/progress",
                     data: JSON.stringify(serverInfo),
@@ -115,6 +115,8 @@
                     success: function(){alert("post success");},
                     failure: function(){alert("post failed");}
                 });
+                
+                
                 
                 return true;
             } // postThings
