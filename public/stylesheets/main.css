@@ -183,6 +183,11 @@
     padding-left: 0;
 }
 
+.btn-danger {
+    background-color: dimgray;
+    border-color: dimgray;
+}
+
 /* for answer fields on infoPage */
 .answerText {
     width: 50%;
