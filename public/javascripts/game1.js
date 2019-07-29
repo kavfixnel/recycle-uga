@@ -68,7 +68,7 @@ var myGameArea =
 				{
 					if(!myTrash[i].correct)
 					{
-						var missedTrashAndBin = myTrash[i].name + " was placed in " + myTrash[i].wrongBin;
+						var missedTrashAndBin = "Item: " + "'"myTrash[i].name"'" + ", Bin: " + "'"myTrash[i].wrongBin"'";
 						allMissed.push(missedTrashAndBin);
 					}
 				}
