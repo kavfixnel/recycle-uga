@@ -60,6 +60,18 @@ var myGameArea =
 			
 			
 			//A GAME IS FINISHED
+			if(gameIsOver)
+			{
+				//Looping through trash and pushing missed trash info to array
+				//To post to database
+				for(i = 0; i < myTrash.length; i++)
+				{
+					if(!myTrash[i].correct)
+					{
+						var missedTrashAndBin = myTrash[i].name + " was placed in " + myTrash[i].wrongBin;
+						allMissed.push(missedTrashAndBin);
+					}
+			}
 			
 			//If Player Clicks on Play Again -> Resets Game
 			if(gameIsOver && isCollided(hand,playAgainBox) && playAgainBox.clickable) 
@@ -96,7 +108,7 @@ var myGameArea =
 				//Initial Text
 				missedText.text = "MISSED: "
 				
-				//Looping through trash and pushing missed trash info to arrays
+				//Looping through trash and pushing missed trash info to array
 				for(i = 0; i < myTrash.length; i++)
 				{
 					if(!myTrash[i].correct && !alreadyPrintedMissed)
