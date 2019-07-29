@@ -60,6 +60,19 @@ var myGameArea =
 			
 			
 			//A GAME IS FINISHED
+			if(gameIsOver)
+			{
+				//Looping through trash and pushing missed trash info to array
+				//To post to database
+				for(i = 0; i < myTrash.length; i++)
+				{
+					if(!myTrash[i].correct)
+					{
+						var missedTrashAndBin = "Item: " + "'" + myTrash[i].name + "'" + ", Bin: " + "'" + myTrash[i].wrongBin + "'";
+						allMissed.push(missedTrashAndBin);
+					}
+				}
+			}
 			
 			//If Player Clicks on Play Again -> Resets Game
 			if(gameIsOver && isCollided(hand,playAgainBox) && playAgainBox.clickable) 
@@ -96,16 +109,12 @@ var myGameArea =
 				//Initial Text
 				missedText.text = "MISSED: "
 				
-				//Looping through trash and pushing missed trash info to arrays
+				//Looping through trash and pushing missed trash info to array
 				for(i = 0; i < myTrash.length; i++)
 				{
 					if(!myTrash[i].correct && !alreadyPrintedMissed)
 					{
 						missedNames.push(myTrash[i].name);
-						
-						var missedTrashAndBin = myTrash[i].name + " was placed in " + myTrash[i].wrongBin;
-						allMissed.push(missedTrashAndBin);
-						console.log(allMissed[i]);
 					}
 					showMissed = true;					
 					backText.clickable = true;
@@ -305,11 +314,11 @@ function startGame()
 	
 	playAgainText = new component("50px", "Consolas", "white", 50, 470, "text");
 	playAgainText.text = "Play Again";
-	playAgainBox = new component(280, 60, "black", 50, 430, "box");
+	playAgainBox = new component(290, 60, "black", 45, 430, "box");
 	
 	viewMissedText = new component("50px", "Consolas", "white", 585, 470, "text");
 	viewMissedText.text = "View Missed";
-	viewMissedBox = new component(310, 60, "black", 585, 430, "box");
+	viewMissedBox = new component(320, 60, "black", 580, 430, "box");
 	
 	missedText = new component("40px", "Consolas", "black", 30, 50, "text");
 	missedText.text = "MISSED:";

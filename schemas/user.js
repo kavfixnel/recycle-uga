@@ -25,11 +25,12 @@ let userSchema = new schema({
 		type: Number,
 		default: 0,
 	},
-	preSurvey: Object,
-	pageOne: Object,
-	pageTwo: Object,
-	pageThree: Object,
-	postSurvey: Object
+	preSurvey: 	Array,
+	infoPage:	Array,
+	gamePage:	Array,
+	infoPage2:	Array,
+	mapPage:	Array,
+	postSurvey:	Array
 });
 
 // Compile the schema into a model
