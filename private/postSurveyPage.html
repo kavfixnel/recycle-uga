@@ -89,6 +89,7 @@
                 $.ajax({
                     type: "POST",
                     url: "/module/progress",
+                    async: false,
                     data: JSON.stringify(serverInfo),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -129,7 +130,7 @@
 			<h1>Post-Survey</h1>
             
             <label>Feedback:</label><br>
-            <textarea type="text" class="form-control" name="feedback" rows="3" oninput="checkIfCompletePostSurvey();"></textarea>
+            <textarea type="text" class="form-control" name="feedback" rows="3" oninput="checkIfCompletePostSurvey(false);"></textarea>
             <small style="margin-top: 0;">This is where you can tell us what you thought of the module, including things you learned, enjoyed, or found useful.</small>
             
             <label class="instructions"><b>Answer the following questions on a scale of 0 to 10.</b></label>
@@ -137,24 +138,24 @@
 
             <label>Now that you have taken the module, how likely are you to recycle on any given day?</label>
             <br>
-            <input class="custom-range" name="question1" type="range" min="0" max="10" oninput="updateValue(1);checkIfCompletePostSurvey();">
+            <input class="custom-range" name="question1" type="range" min="0" max="10" oninput="updateValue(1);checkIfCompletePostSurvey(false);">
             <br>
             <p id="value1" style="text-align: center;">5/10</p>
             	
             <label>Now that you have taken the module, how knowledgable do you feel about common recycling practices?</label>
             <br>
-            <input class="custom-range" name="question2" type="range" min="0" max="10" oninput="updateValue(2);checkIfCompletePostSurvey();">
+            <input class="custom-range" name="question2" type="range" min="0" max="10" oninput="updateValue(2);checkIfCompletePostSurvey(false);">
             <br>
             <p id="value2" style="text-align: center;">5/10</p>
                 
             <label>Now that you have taken the module, how knowledgable do you feel about recycling practices in Athens?</label><br>
-            <input class="custom-range" name="question3" type="range" min="0" max="10" oninput="updateValue(3);checkIfCompletePostSurvey();">
+            <input class="custom-range" name="question3" type="range" min="0" max="10" oninput="updateValue(3);checkIfCompletePostSurvey(false);">
             <br>
             <p id="value3" style="text-align: center;">5/10</p>
             
             <label>Now that you have taken the module, with any given item, how confident are you that you will place it in the correct bin (with options being trash or recycling)?</label>
             <br>
-            <input class="custom-range" name="question4" type="range" min="0" max="10" oninput="updateValue(4);checkIfCompletePostSurvey();">
+            <input class="custom-range" name="question4" type="range" min="0" max="10" oninput="updateValue(4);checkIfCompletePostSurvey(false);">
             <br>
             <p id="value4" style="text-align: center;">5/10</p>
             
@@ -162,19 +163,19 @@
             
             <label>Now that you have taken the module, how much material do you think is compostable?</label>
             <br>
-            <input class="custom-range" name="question5" type="range" min="0" max="100" oninput="updateValue(5);checkIfCompletePostSurvey();">
+            <input class="custom-range" name="question5" type="range" min="0" max="100" oninput="updateValue(5);checkIfCompletePostSurvey(false);">
             <br>
             <p id="value5" style="text-align: center;">50%</p>
             
             <label>Now that you have taken the module, how much material do you think is recyclable?</label>
             <br>
-            <input class="custom-range" name="question6" type="range" min="0" max="100" oninput="updateValue(6);checkIfCompletePostSurvey();">
+            <input class="custom-range" name="question6" type="range" min="0" max="100" oninput="updateValue(6);checkIfCompletePostSurvey(false);">
             <br>
             <p id="value6" style="text-align: center;">50%</p>
         
             <label>Now that you have taken the module, how much material do you think UGA recycles?</label>
             <br>
-            <input class="custom-range" name="question7" type="range" min="0" max="100" oninput="updateValue(7);checkIfCompletePostSurvey();">
+            <input class="custom-range" name="question7" type="range" min="0" max="100" oninput="updateValue(7);checkIfCompletePostSurvey(false);">
             <br>
             <p id="value7" style="text-align: center;">50%</p>
             
@@ -187,7 +188,7 @@
                             <label>Plastic bags can be placed in all recycling bins at UGA.</label>
                         </td>
                         <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 8" onchange="checkIfCompletePostSurvey();">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 8" onchange="checkIfCompletePostSurvey(true);">
                                 &emsp;
                                 <label class="btn btn-sm btn-danger">
                                     <input type="radio" name="question8" value="True" autocomplete="off">True
@@ -203,7 +204,7 @@
                             <label>Paper towels can be placed in all recycling bins at UGA.</label>
                         </td>
                         <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 9" onchange="checkIfCompletePostSurvey();">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 9" onchange="checkIfCompletePostSurvey(true);">
                                 &emsp;
                                 <label class="btn btn-sm btn-danger">
                                     <input type="radio" name="question9" value="True" autocomplete="off">True
@@ -219,7 +220,7 @@
                             <label> Styrofoam can be placed in all recycling bins at UGA.</label>
                         </td>
                         <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 10" onchange="checkIfCompletePostSurvey();">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 10" onchange="checkIfCompletePostSurvey(true);">
                                 &emsp;
                                 <label class="btn btn-sm btn-danger">
                                     <input type="radio" name="question10" value="True" autocomplete="off">True
@@ -235,7 +236,7 @@
                             <label>Leftover food can be placed in all recycling bins at UGA.</label>
                         </td>
                         <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 11" onchange="checkIfCompletePostSurvey();">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 11" onchange="checkIfCompletePostSurvey(true);">
                                 &emsp;
                                 <label class="btn btn-sm btn-danger">
                                     <input type="radio" name="question11" value="True" autocomplete="off">True
@@ -251,7 +252,7 @@
                             <label>A used plastic food container does not need to be cleaned out before it is recycled.</label>
                         </td>
                         <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 12" onchange="checkIfCompletePostSurvey();">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 12" onchange="checkIfCompletePostSurvey(true);">
                                 &emsp;
                                 <label class="btn btn-sm btn-danger">
                                     <input type="radio" name="question12" value="True" autocomplete="off">True
@@ -267,7 +268,7 @@
                             <label>Greasy pizza boxes can be recycled.</label>
                         </td>
                         <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 13" onchange="checkIfCompletePostSurvey();">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 13" onchange="checkIfCompletePostSurvey(true);">
                                 &emsp;
                                 <label class="btn btn-sm btn-danger">
                                     <input type="radio" name="question13" value="True" autocomplete="off">True
@@ -283,7 +284,7 @@
                             <label>It is better to not generate waste than to recycle the waste that you generate.</label>
                         </td>
                         <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 14" onchange="checkIfCompletePostSurvey();">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 14" onchange="checkIfCompletePostSurvey(true);">
                                 &emsp;
                                 <label class="btn btn-sm btn-danger">
                                     <input type="radio" name="question14" value="True" autocomplete="off">True
@@ -299,7 +300,7 @@
                             <label>There are many simple strategies that anyone can do to reduce waste.</label>
                         </td>
                         <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 15" onchange="checkIfCompletePostSurvey();">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 15" onchange="checkIfCompletePostSurvey(true);">
                                 &emsp;
                                 <label class="btn btn-sm btn-danger">
                                     <input type="radio" name="question15" value="True" autocomplete="off">True
@@ -315,7 +316,7 @@
                             <label>Small individual efforts have a cumulative and meaningful impact in reducing waste at UGA.</label>
                         </td>
                         <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 16" onchange="checkIfCompletePostSurvey();">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Question 16" onchange="checkIfCompletePostSurvey(true);">
                                 &emsp;
                                 <label class="btn btn-sm btn-danger">
                                     <input type="radio" name="question16" value="True" autocomplete="off">True
