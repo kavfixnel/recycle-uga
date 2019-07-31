@@ -109,6 +109,7 @@
                 $.ajax({
                     type: "POST",
                     url: "/module/progress",
+                    async: false,
                     data: JSON.stringify(serverInfo),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
