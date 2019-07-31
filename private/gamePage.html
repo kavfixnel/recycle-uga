@@ -131,6 +131,26 @@
             function logout() {
                 location.href ="/login/logout";
             } // logout
+			
+			document.getElementById("info").style.display = "none";
+					
+			function toggleHints()
+			{
+				var infographic = document.getElementById("info");
+				var game = document.getElementById("canvas");
+							
+				if (infographic.style.display === 'none') 
+				{
+					infographic.style.display = 'initial';
+					game.style.display = 'none';
+				} 
+				else 
+				{
+					infographic.style.display = 'none'
+					game.style.display = 'intital';
+				}
+			}
+			
         </script>
     </head>
 	
@@ -164,14 +184,20 @@
         
 		<div id="container">
             <canvas id="canvas"></canvas>
+			<img src="/../images/recycleInfo.jpg" id="info" alt="Recycle InfoGraphic" style="width:800px;height:600px;">
+			
             <div class="key centeredGame">
                 <h2 >Instructions</h2>
                 <hr>
                 <label>Grab the items and place them in the correct bins! You have to get 80% correct to move on.</label>
                 <br>
                 <b id="feedback"></b>
+				
+				<div id = "Hints">
+				<button onclick="toggleHints()">Show Hints</button>
+				</div>
                 
-                <small id="hint">Hint: Not all items can be recycled. Many that can require a special bin called a CHaRM bin.</small>
+                <small id="hint">Not all items can be recycled. Many that can require a special bin called a CHaRM bin.</small>
             </div>
 		</div>
         
