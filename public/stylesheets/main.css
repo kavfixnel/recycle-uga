@@ -62,21 +62,20 @@
     font-weight: bold;
 }
 
-/* represents the radio input section of the question div */
+/* represents the input section of the question div */
 .answers {
-    margin: 30px auto;
+    margin: 25px auto;
     font-weight: normal;
 }
 
 /* represents the correct/incorrect popup on question answer */
 .correct {
-    margin: 25px;
+    margin: 15px;
     font-size: 9pt;
 }
 
 /* button for answering questions */
 .submitButton {
-    margin-top: 10px;
     width: 120px;
     cursor: pointer;
     color: #FFFFFF;

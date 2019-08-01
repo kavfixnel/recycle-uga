@@ -44,7 +44,12 @@
             window.onload = function() {
                 // time the page was opened for timeOnPage
                 pageOpened = new Date();
-                console.log(SHA256('YES'));
+                
+                // enabling popovers for first grapharea
+                $(function () {
+                  $('[data-toggle="popover"]').popover()
+                });
+                
                 // getting username and progress
                 $.get("/module/progress", function(data){
                    if(data.found) {
@@ -67,7 +72,7 @@
                 
                 // making graphs
                 var id, title, type, pieData;
-                for(var i = 2; i <= graphCount; i++) {
+                for(var i = 1; i <= graphCount; i++) {
                     id = "graphContainer" + i.toString();
                     
                     switch(i) {
@@ -85,10 +90,7 @@
                             break; 
                             
                         case 3: // info for graph 3
-                            title = "This is a Graph";
-                            type = "pie";
-                            pieData = [{y: 17.5, indexLabel: "Contaminated", label: "Contaminated", exploded: true},
-                                        {y: 82.5, indexLabel: "Recycled", label: "Recycled"}];
+                            // replaced with waste hierarchy triangle
                             break; 
                             
                         case 4:  // info for graph 4
@@ -98,7 +100,8 @@
                                            {y: 78.1, indexLabel: "Landfilled", label: "Landfilled"}];
                     } // creating each of the different graph info variables
                     
-                    makeGraph(id, title, type, pieData);
+                    if(i % 2 == 0)
+                        makeGraph(id, title, type, pieData);
                 } // for each of the four graphs, assign graph info                
                 
                 // for each graph, starting at one, alternate the side of the window the graph is on
@@ -153,13 +156,15 @@
                     // answer values have been hashed prior to deplyoment and 
                     // are compared to their has values
                     case 1:
-                        if(SHA256(document.getElementsByName("answer1").item(0).value.toUpperCase()) === "f9171164593756e56fb197327b529a4955590566560dbe62d586bff41be9d297") {isCorrect = true;}
+                        if(document.getElementsByName("answer1")[2].checked)
+                            isCorrect = true;
                         break;
                     case 2:
                         if(SHA256(document.getElementsByName("answer2").item(0).value.toUpperCase()) === "f9171164593756e56fb197327b529a4955590566560dbe62d586bff41be9d297") {isCorrect = true;}
                         break;
                     case 3:
-                        if(SHA256(document.getElementsByName("answer3").item(0).value.toUpperCase()) === "f9171164593756e56fb197327b529a4955590566560dbe62d586bff41be9d297") {isCorrect = true;}
+                        if(document.getElementsByName("answer3")[0].checked)
+                            isCorrect = true;
                         break;
                     case 4:
                         if(SHA256(document.getElementsByName("answer4").item(0).value.toUpperCase()) === "f9171164593756e56fb197327b529a4955590566560dbe62d586bff41be9d297") {isCorrect = true;}
@@ -244,37 +249,41 @@
         
         <div>
             <p style="text-align: center; margin-top: 20px;">Hover over the graphs and answer all questions to continue!<br>
-                <b>answers in order: 'yes', 'yes', 'yes', 'yes'</b>
+                <b>answers in order: 'yes', 'yes', 'bring your own', 'yes'</b>
             </p>
 
             <!-- (some) Information from Slide 3 of PP module (uses window.onload function) -->
             <div id="graphArea1" class="graphArea">
                 <div id="graphContainer1" class="graphContainer" style="font-size:0;">
                     <div class="icon">
-                        <img src="../images/can-icon.png" width="120px" height="120px">
+                        <img src="../images/can-icon.png" width="120px" height="120px" data-toggle="popover" title="Cans" data-content="In only three months, enough aluminum cans are thrown out in the United States to rebuild ALL of our commercial air fleets.">
                     </div>
                     <div class="icon">
-                        <img src="../images/bulb-icon.png" width="90px" height="90px" style="margin-left: 15px; margin-top: 20px;">
+                        <img src="../images/bulb-icon.png" width="90px" height="90px" style="margin-left: 15px; margin-top: 20px;" data-toggle="popover" title="Paper Saves Water" data-content="7,000 gallons of water are conserved for each ton of paper made from recycled materials.">
                     </div>
                     <div class="icon">
-                        <img src="../images/recycle-icon.png" width="100px" height="100px" style="margin-left: 10px; margin-top: 15px;">
+                        <img src="../images/recycle-icon.png" width="100px" height="100px" style="margin-left: 10px; margin-top: 15px;" data-toggle="popover" title="Oceans" data-content="18 BILLION pounds of plastic trash winds up in our oceans each year.">
                     </div>
                     <div class="icon">
-                        <img src="../images/leaf-icon.png" width="80px" height="80px" style="margin-left: 25px; margin-top: 25px;">
+                        <img src="../images/leaf-icon.png" width="80px" height="80px" style="margin-left: 25px; margin-top: 25px;" data-toggle="popover" title="Newspaper" data-content="If we recycled all newspapers, we could save over 250 million trees each and every year.">
                     </div>
                 </div>
                 <div id="question1" class="question">
-                    <h3>Put a question here once the icons are complete?</h3>
+                    <h3>How much plastic waste ends up in our oceans each year?</h3>
                 
-                    <div class="answers">
-                        <input type="text" name="answer1" maxlength="20" class="answerText" onkeypress="enterPressed(event, 1)">
+                    <div class="answers" style="width: 30%; margin: 30px 35%; text-align: left">
+                        <input type="radio" value="180,000" name="answer1" onkeypress="enterPressed(event, 1)" style="margin-top: 10px;">&thinsp;180,000 pounds.
+                        <br>
+                        <input type="radio" value="18million" name="answer1" onkeypress="enterPressed(event, 1)" style="margin-top: 10px;">&thinsp;18 million pounds.
+                        <br>
+                        <input type="radio" value="18billion" name="answer1" onkeypress="enterPressed(event, 1)" style="margin-top: 10px;">&thinsp;18 billion pounds.
                     </div>
                     
                     <a href="javascript:checkAnswer(1);checkIfCompleteInfo()" id="submit1" class="submitButton">Check Answer</a>
                     
                     <p id="correct1" class="correct"></p>
                 </div>
-                <p id="infoText1" class="popup">&emsp; If we as a country or world were to recycle, the results would be tremendous - you can see some incredible statistics by hovering over the icons on the right. The amound of wasted materials that could be used to preserve valuable natural resources or be used as crucial building material is nearly unfathomable. While it may seem like a stretch to recycle <i>all</i> materials of a given kind, progress towards this goal happens one person at a time.</p>
+                <p id="infoText1" class="popup">&emsp; If we as a country or world were to recycle, the results would be tremendous - you can see some incredible statistics by clicking on the icons on the right. The amound of wasted materials that could be used to preserve valuable natural resources or be used as crucial building material is nearly unfathomable. While it may seem like a stretch to recycle <i>all</i> materials of a given kind, progress towards this goal happens one person at a time.</p>
             </div>
 
             <div id="graphArea2" class="graphArea">
@@ -294,19 +303,23 @@
             </div>
 
             <div id="graphArea3" class="graphArea">
-                <div id="graphContainer3" class="graphContainer"></div>
+                <div id="graphContainer3" class="graphContainer">
+                    <img src="../images/waste_hierarchy.png" width="300px" height="300px" style="margin: 10px;">
+                </div>
                 <div id="question3" class="question">
-                    <h3>Are there more example questions?</h3>
+                    <h3>Is it better to recycle disposable plastic water bottles or to bring your own reusable bottle?</h3>
                 
-                    <div class="answers">
-                        <input type="text" name="answer3" maxlength="20" class="answerText" onkeypress="enterPressed(event, 3)">
+                    <div class="answers" style="width: 27%; margin: 30px 36.5%; text-align: left">
+                        <input type="radio" value= "Bring your own" name="answer3" onkeypress="enterPressed(event, 3)">&thinsp;Bring your own.
+                        <br>
+                        <input type="radio" value="Recycle" name="answer3" onkeypress="enterPressed(event, 3)" style="margin-top: 10px;">&thinsp;Recycle.
                     </div>
                     
                     <a href="javascript:checkAnswer(3);checkIfCompleteInfo()" id="submit3" class="submitButton">Check Answer</a>
                     
                     <p id="correct3" class="correct"></p>
                 </div>
-                <p id="infoText3" class="popup">&emsp; This is example text. I call it this because I am using it as an example in the place of actual information. While not the same, it adds value through showcasing what future informational text might look like. I really wanted to fill up this space. I still want to. It's all I could ever really want.</p>
+                <p id="infoText3" class="popup">&emsp; While recycling helps the earth and saves loads of energy, better than recycling is not generating waste at all! Although recycling may seem intuitive, bringing your own shopping bag, reusable water bottle, and coffee mug are just a few of the simple ways UGA students can help to reduce waste. Each of your small individual actions have a cumulative and meaningful impact over time to increase the health people and the planet.</p>
             </div>
 
             <div id="graphArea4" class="graphArea">
