@@ -52,6 +52,7 @@ router.get('/next', async (req, res) => {
 			page = req.user.progress
 		}
 
+		debug('Checking user progress')
 		debug('User:\n~~~~~')
 		debug(req.user)
 		debug('~~~~~')
@@ -106,6 +107,7 @@ router.post('/progress', async (req, res) => {
 			let ret = await req.user.save()
 			debug('Return:')
 			debug(ret)
+			debug('Done saving user progress')
 			res.status(200).send()
 		} else {
 			res.status(400).send()
@@ -150,7 +152,7 @@ router.get('/data', (req, res) => {
 router.get('/progress', async (req, res) => {
 	try {
 		debug(req.body)
-		if (req.user.progress) {
+		if (req.user.progress != undefined) {
 			let obj = { found: true }
 			obj.user = req.user.id
 			obj.progress = req.user.progress / 5
