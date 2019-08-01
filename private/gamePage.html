@@ -22,6 +22,13 @@
                 margin: 0 2.5% 0 5%;
 			}
 			
+			#info {
+				border:1px solid #B7BF10;
+				background-color: #f3efee;
+				position: relative;
+                margin: 0 2.5% 0 5%;
+			}
+			
 			.key {
 				border:1px solid #B7BF10;
 				background-color: #f3efee;
@@ -53,7 +60,7 @@
                 display: inline-block;
             }
             
-            #hint {
+            .hintz {
                 position: absolute;
                 bottom: 5%;
                 left: 5%;
@@ -116,6 +123,7 @@
                 $.ajax({
                     type: "POST",
                     url: "/module/progress",
+                    async: false,
                     data: JSON.stringify(serverInfo),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -130,6 +138,7 @@
             function logout() {
                 location.href ="/login/logout";
             } // logout
+			
         </script>
     </head>
 	
@@ -162,15 +171,48 @@
         </div>
         
 		<div id="container">
-            <canvas id="canvas"></canvas>
+
+			<canvas id="canvas"></canvas>
+			
+			<img id="info" src="/../images/recycleInfo.jpg" alt="Recycle InfoGraphic" style="width:960px;height:540px;">
+			
             <div class="key centeredGame">
                 <h2 >Instructions</h2>
                 <hr>
                 <label>Grab the items and place them in the correct bins! You have to get 80% correct to move on.</label>
                 <br>
-                <b id="feedback"></b>
-                
-                <small id="hint">Hint: Not all items can be recycled. Many that can require a special bin called a CHaRM bin.</small>
+                <b id="feedback">You can play as many times as you want</b>
+				
+				<div id = "Hints">
+				
+					<script>
+						document.getElementById("info").style.display = "none";
+					
+						function toggleHints()
+						{
+							var infographic = document.getElementById("info");
+							var game = document.getElementById("canvas");
+										
+							if (infographic.style.display === 'none') 
+							{
+								infographic.style.display = 'initial';
+								game.style.display = 'none';
+							} 
+							else 
+							{
+								infographic.style.display = 'none';
+								game.style.display = 'initial';
+							}
+						}
+					</script>
+				
+				</div>
+				
+				<div class="hintz">
+				<button id="toggleHints" onclick="toggleHints()" class="btn btn-light">Toggle Hints</button>
+                <br>
+                <small id="hint">Not all items can be recycled. Many that can require a special bin called a CHaRM bin.</small>
+				</div>
             </div>
 		</div>
         

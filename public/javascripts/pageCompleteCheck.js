@@ -1,7 +1,10 @@
 // checks to see if all forms are filled (for preSurveyPage)
-function checkIfCompletePreSurvey() {
+function checkIfCompletePreSurvey(isButton) {
     // counts the total amount of forms completed (if all, should be 8 at end)
     var finishedFormCount = 7;
+    
+    if(isButton)
+        finishedFormCount++;
     
     if(document.getElementsByName('name')[0].value.length > 0) 
         finishedFormCount++;
@@ -32,10 +35,16 @@ function checkIfCompletePreSurvey() {
 } // checkIfCompletePreSurvey
 
 // checks to see if all forms are filled (for preSurveyPage)
-function checkIfCompletePostSurvey() {
+function checkIfCompletePostSurvey(isButton) {
     // counts the total amount of forms completed (if all, should be 8 at end)
     var finishedFormCount = 7;
-
+    
+    // if a button is clicked, it will not be active until after this method call
+    // this line circumvents this bug and increments the total finished
+    // form count correctly
+    if(isButton)
+        finishedFormCount++;
+    
     // checking if length of name input is greater than zero
     if(document.getElementsByName("feedback")[0].value.length > 0)
         finishedFormCount++;
@@ -44,11 +53,12 @@ function checkIfCompletePostSurvey() {
     for(var i = 1; i <= numQuestions; i++) {
         if(i > 7) {
             if(document.getElementsByName('question' + i.toString())[0].parentElement.classList.contains('active') ||
-              document.getElementsByName('question' + i.toString())[1].parentElement.classList.contains('active'))
-                        finishedFormCount++;
+              document.getElementsByName('question' + i.toString())[1].parentElement.classList.contains('active')) {
+                finishedFormCount++;
+            }
         } // if t/f question
     } // for each question w/o text form
-
+    
     if(finishedFormCount === numForms) 
         document.getElementById("nextPage").classList.remove("disabled");
 } // checkIfCompletePostSurvey

@@ -52,6 +52,7 @@
                     type: "POST",
                     url: "/module/progress",
                     data: JSON.stringify(serverInfo),
+                    async: false,
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function(data){alert("post sucessful");},
