@@ -273,11 +273,11 @@
                     <h3>How much plastic waste ends up in our oceans each year?</h3>
                 
                     <div class="answers" style="width: 30%; margin: 30px 35%; text-align: left">
-                        <input type="radio" value="180,000" name="answer1" onkeypress="enterPressed(event, 1);" style="margin-top: 10px;">&thinsp;180,000 pounds.
+                        <input type="radio" value="180,000" name="answer1" onkeypress="enterPressed(event, 1);" onclick="$('input[name=answer1]')[0].focus()" style="margin-top: 10px;">&thinsp;180,000 pounds.
                         <br>
-                        <input type="radio" value="18million" name="answer1" onkeypress="enterPressed(event, 1)" style="margin-top: 10px;">&thinsp;18 million pounds.
+                        <input type="radio" value="18million" name="answer1" onkeypress="enterPressed(event, 1)" onclick="$('input[name=answer1]')[1].focus()" style="margin-top: 10px;">&thinsp;18 million pounds.
                         <br>
-                        <input type="radio" value="18billion" name="answer1" onkeypress="enterPressed(event, 1)" style="margin-top: 10px;">&thinsp;18 billion pounds.
+                        <input type="radio" value="18billion" name="answer1" onkeypress="enterPressed(event, 1)" onclick="$('input[name=answer1]')[2].focus()" style="margin-top: 10px;">&thinsp;18 billion pounds.
                     </div>
                     
                     <a href="javascript:checkAnswer(1);checkIfCompleteInfo()" id="submit1" class="submitButton">Check Answer</a>
@@ -311,9 +311,9 @@
                     <h3>Is it better to recycle disposable plastic water bottles or to bring your own reusable bottle?</h3>
                 
                     <div class="answers" style="width: 27%; margin: 30px 36.5%; text-align: left">
-                        <input type="radio" value= "Bring your own" name="answer3" onkeypress="enterPressed(event, 3)">&thinsp;Bring your own.
+                        <input type="radio" value= "Bring your own" name="answer3" onkeypress="enterPressed(event, 3)" onclick="$('input[name=answer3]')[0].focus()">&thinsp;Bring your own.
                         <br>
-                        <input type="radio" value="Recycle" name="answer3" onkeypress="enterPressed(event, 3)" style="margin-top: 10px;">&thinsp;Recycle.
+                        <input type="radio" value="Recycle" name="answer3" onkeypress="enterPressed(event, 3)" onclick="$('input[name=answer3]')[1].focus()"style="margin-top: 10px;">&thinsp;Recycle.
                     </div>
                     
                     <a href="javascript:checkAnswer(3);checkIfCompleteInfo()" id="submit3" class="submitButton">Check Answer</a>
