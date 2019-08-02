@@ -175,7 +175,17 @@
                     document.getElementById("correct" + questionNumber.toString()).innerHTML = "Correct!";
                     document.getElementById("correct" + questionNumber.toString()).style.color = "green";
                     document.getElementById("submit" + questionNumber.toString()).classList.add("disabled");
-                    document.getElementsByName("answer" + questionNumber.toString())[0].readOnly = true;
+                    
+                    if(questionNumber % 2 == 0)
+                        document.getElementsByName("answer" + questionNumber.toString())[0].readOnly = true;
+                    else {
+                        var radios = $('input[name=answer' + questionNumber.toString() + ']');
+                        console.log(radios.length.toString());
+                        for(var i = 0; i < radios.length; i++) {
+                            if(!radios[i].checked)
+                                radios[i].disabled = true;
+                        } // for each answer choice
+                    } // if text, else radio
                 } else {
                     incorrectAnswers[questionNumber - 1].push(document.getElementsByName("answer" + questionNumber.toString())[0].value);
                     
