@@ -187,6 +187,7 @@
             
             // detects when enter is pressed
             function enterPressed(e, formnum) {
+                console.log(e.keyCode);
                 var key = (e.keyCode ? e.keyCode : e.which);
                 if(key === 13) {
                     checkAnswer(formnum);
@@ -249,30 +250,30 @@
         
         <div>
             <p style="text-align: center; margin-top: 20px;">Hover over the graphs and answer all questions to continue!<br>
-                <b>answers in order: 'yes', 'yes', 'bring your own', 'yes'</b>
+                <b>answers in order: '18 billion pounds', 'yes', 'bring your own', 'yes'</b>
             </p>
 
             <!-- (some) Information from Slide 3 of PP module (uses window.onload function) -->
             <div id="graphArea1" class="graphArea">
                 <div id="graphContainer1" class="graphContainer" style="font-size:0;">
                     <div class="icon">
-                        <img src="../images/can-icon.png" width="120px" height="120px" data-toggle="popover" title="Cans" data-content="In only three months, enough aluminum cans are thrown out in the United States to rebuild ALL of our commercial air fleets.">
+                        <img src="../images/can-icon.png" width="120px" height="120px" data-toggle="popover" data-trigger="hover"  data-content="In only three months, enough aluminum cans are thrown out in the United States to rebuild ALL of our commercial air fleets.">
                     </div>
                     <div class="icon">
-                        <img src="../images/bulb-icon.png" width="90px" height="90px" style="margin-left: 15px; margin-top: 20px;" data-toggle="popover" title="Paper Saves Water" data-content="7,000 gallons of water are conserved for each ton of paper made from recycled materials.">
+                        <img src="../images/bulb-icon.png" width="90px" height="90px" style="margin-left: 15px; margin-top: 20px;" data-toggle="popover" data-trigger="hover" data-content="7,000 gallons of water are conserved for each ton of paper made from recycled materials.">
                     </div>
                     <div class="icon">
-                        <img src="../images/recycle-icon.png" width="100px" height="100px" style="margin-left: 10px; margin-top: 15px;" data-toggle="popover" title="Oceans" data-content="18 BILLION pounds of plastic trash winds up in our oceans each year.">
+                        <img src="../images/recycle-icon.png" width="100px" height="100px" style="margin-left: 10px; margin-top: 15px;" data-toggle="popover" data-trigger="hover"  data-content="18 BILLION pounds of plastic trash winds up in our oceans each year.">
                     </div>
                     <div class="icon">
-                        <img src="../images/leaf-icon.png" width="80px" height="80px" style="margin-left: 25px; margin-top: 25px;" data-toggle="popover" title="Newspaper" data-content="If we recycled all newspapers, we could save over 250 million trees each and every year.">
+                        <img src="../images/leaf-icon.png" width="80px" height="80px" style="margin-left: 25px; margin-top: 25px;" data-toggle="popover" data-trigger="hover" data-content="If we recycled all newspapers, we could save over 250 million trees each and every year.">
                     </div>
                 </div>
                 <div id="question1" class="question">
                     <h3>How much plastic waste ends up in our oceans each year?</h3>
                 
                     <div class="answers" style="width: 30%; margin: 30px 35%; text-align: left">
-                        <input type="radio" value="180,000" name="answer1" onkeypress="enterPressed(event, 1)" style="margin-top: 10px;">&thinsp;180,000 pounds.
+                        <input type="radio" value="180,000" name="answer1" onkeypress="enterPressed(event, 1);" style="margin-top: 10px;">&thinsp;180,000 pounds.
                         <br>
                         <input type="radio" value="18million" name="answer1" onkeypress="enterPressed(event, 1)" style="margin-top: 10px;">&thinsp;18 million pounds.
                         <br>
@@ -283,7 +284,7 @@
                     
                     <p id="correct1" class="correct"></p>
                 </div>
-                <p id="infoText1" class="popup">&emsp; If we as a country or world were to recycle, the results would be tremendous - you can see some incredible statistics by clicking on the icons on the right. The amound of wasted materials that could be used to preserve valuable natural resources or be used as crucial building material is nearly unfathomable. While it may seem like a stretch to recycle <i>all</i> materials of a given kind, progress towards this goal happens one person at a time.</p>
+                <p id="infoText1" class="popup">&emsp; If we as a country or world were to recycle, the results would be tremendous - you can see some incredible statistics by hovering over the icons on the right. The amound of wasted materials that could be used to preserve valuable natural resources or be used as crucial building material is nearly unfathomable. While it may seem like a stretch to recycle <i>all</i> materials of a given kind, progress towards this goal happens one person at a time.</p>
             </div>
 
             <div id="graphArea2" class="graphArea">
