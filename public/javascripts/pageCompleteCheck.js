@@ -66,15 +66,15 @@ function checkIfCompletePostSurvey(isButton) {
 // checks if all questions are answered to enable the next page
 // button (for infoPage)
 function checkIfCompleteInfo() {
-    var answerBlanks = document.getElementsByClassName("answerText");
+    var answerBlanks = 4;
     var notEmptyCount = 0;
 
     // counts the amount of filled blanks (should be four to continue)
-    for(var i = 1; i <= answerBlanks.length; i++) {
+    for(var i = 1; i <= answerBlanks; i++) {
         if(document.getElementById("correct" + i.toString()).style.color === "green")
             notEmptyCount++;
     } // for each answer section
-
+    
     if(notEmptyCount === 4)
         document.getElementById("nextPage").classList.remove("disabled");
 } // checkIfCompleteInfo
