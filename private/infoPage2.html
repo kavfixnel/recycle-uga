@@ -45,6 +45,10 @@
                 // time the page was opened for timeOnPage
                 pageOpened = new Date();
                 
+                console.log(SHA256('50%'));
+                console.log(SHA256('HALF'));
+                console.log(SHA256('ABOUT HALF'));
+                
                 // enabling popovers for first grapharea
                 $(function () {
                   $('[data-toggle="popover"]').popover()
@@ -94,10 +98,10 @@
                             break; 
                             
                         case 4:  // info for graph 4
-                            title = "Another Graph";
+                            title = "Amount of Plastic Recycled, Worldwide";
                             type = "pie";            
-                            pieData = [{y: 21.9, indexLabel: "Recycled", label: "Recycled", exploded: true}, 
-                                           {y: 78.1, indexLabel: "Landfilled", label: "Landfilled"}];
+                            pieData = [{y: 9, indexLabel: "Recycled", label: "Recycled", exploded: true}, 
+                                           {y: 91, indexLabel: "Landfilled", label: "Landfilled"}];
                     } // creating each of the different graph info variables
                     
                     if(i % 2 == 0)
@@ -167,7 +171,7 @@
                             isCorrect = true;
                         break;
                     case 4:
-                        if(SHA256(document.getElementsByName("answer4").item(0).value.toUpperCase()) === "f9171164593756e56fb197327b529a4955590566560dbe62d586bff41be9d297") {isCorrect = true;}
+                        if(SHA256(document.getElementsByName("answer4").item(0).value.toUpperCase()) === "28fdae8deae31d6eafd18b70d878f6d8a3136f267ce273777c089a42ac590438" || SHA256(document.getElementsByName("answer4").item(0).value.toUpperCase()) === "214058ba87504d8fe1c25a16c5efacc9764c7c7cc7cd8400ea9c70593d4b1a1c" || SHA256(document.getElementsByName("answer4").item(0).value.toUpperCase()) === "4095c9c29c00cf0162cf490e2923846fe8393203b65879f8fd8021243946dfca") {isCorrect = true;}
                 } // switch for each question depending on question number
                 
                 // if correct, show correct, else show incorrect
@@ -250,7 +254,7 @@
         
         <div>
             <p style="text-align: center; margin-top: 20px;">Hover over the graphs and answer all questions to continue!<br>
-                <b>answers in order: '18 billion pounds', 'yes', 'bring your own', 'yes'</b>
+                <b>answers in order: '18 billion pounds', 'yes', 'bring your own', '50%'/'half'/'about half'</b>
             </p>
 
             <!-- (some) Information from Slide 3 of PP module (uses window.onload function) -->
@@ -326,7 +330,7 @@
             <div id="graphArea4" class="graphArea">
                 <div id="graphContainer4" class="graphContainer"></div>
                 <div id="question4" class="question">
-                    <h3>Are there more example questions?</h3>
+                    <h3>How much plastic enters a landfill within a year of its production?</h3>
                 
                     <div class="answers">
                         <input type="text" name="answer4" maxlength="20" class="answerText" onkeypress="enterPressed(event, 4)">
@@ -336,7 +340,7 @@
                         
                     <p id="correct4" class="correct"></p>
                 </div>
-                <p id="infoText4" class="popup">&emsp; This is example text. I call it this because I am using it as an example in the place of actual information. While not the same, it adds value through showcasing what future informational text might look like. I really wanted to fill up this space. I still want to. It's all I could ever really want.</p>
+                <p id="infoText4" class="popup">&emsp; If our current worldwide rate of plastic recycling continues, in 2050, there will be <i>12 billion</i> metric tons of plastic in landfills. For perspective, that's approximately <b>26,455,471,462,185 pounds</b> of plastic. About half of this plastic enters a landfill within a year of its production - in other words, plastic is being tossed away into the trash before the recycling bin at an alarming rate. We also continue to produce more plastic as a planet every single year, and without change, our world will soon face severe problems.</p>
             </div>
         </div>
 
