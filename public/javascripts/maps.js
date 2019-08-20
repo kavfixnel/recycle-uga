@@ -1,6 +1,6 @@
 function createMap() {
     mapboxgl.accessToken = 'pk.eyJ1IjoicmVjeWNsZXVnYSIsImEiOiJjanhuZDRrengwZGhzM2NxZGYyczN0cmtxIn0.90gL17oBS0iAABYgzydKtQ';
-
+     console.log('boop');
     var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
